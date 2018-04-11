@@ -1,0 +1,54 @@
+<div class="col-md-8">
+  <div class="box box-info">
+    <div class="box-header with-border">
+      <h3 class="box-title">Novo usuário</h3>
+    </div>
+
+    <form class="form-horizontal" #form="ngForm" (ngSubmit)="create()">
+
+      <div [ngClass]="classCss" role="alert" *ngIf="message">
+        <strong>{{ message.text }}</strong>
+      </div>
+
+      <div class="box-body">
+
+        <!-- name -->
+        <div [ngClass]="getFromGroupClass(name.invalid, name.dirty)">
+          <label for="name" class="col-sm-2 control-label">Nome</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" name="name" placeholder="nome" [(ngModel)]="user.name" #name="ngModel"
+              required>
+          </div>
+        </div>
+
+        <!-- email -->
+        <div [ngClass]="getFromGroupClass(email.invalid, email.dirty)">
+          <label for="email" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="email" name="email" placeholder="e-mail" [(ngModel)]="user.email" #email="ngModel"
+              email>
+          </div>
+        </div>
+
+        <!-- password -->
+        <div [ngClass]="getFromGroupClass(password.invalid, password.dirty)">
+          <label for="password" class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="password" name="password" placeholder="senha" [(ngModel)]="user.password"
+              #password="ngModel" required>
+          </div>
+        </div>
+
+        <div class="col-sm-10 offset-sm-2 alert alert-danger pull-right" role="alert" *ngIf="(name.invalid && name.dirty) || (email.invalid && email.dirty) || (email.password && email.dirty)">
+          <p *ngIf="name.invalid && name.dirty">* nome inválido</p>
+          <p *ngIf="email.invalid && email.dirty">* e-mail inválido</p>
+          <p *ngIf="password.invalid && password.dirty">* senha inválida</p>
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button type="submit" [disabled]="!form.valid" class="btn btn-info pull-right">salvar</button>
+      </div>
+    </form>
+  </div>
+</div>

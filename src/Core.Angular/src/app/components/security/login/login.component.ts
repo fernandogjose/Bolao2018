@@ -9,9 +9,10 @@ import { UserService } from '../../../services/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
-  user = new User('', '', '', '');
+  user = new User('', '', '', '', '');
   shared: SharedService;
   message: string;
 
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
     return {
       'form-group': true,
       'has-error': isInvalid && isDirty,
-      'has-success': !isInvalid && isDirty
+      'has-default': !isInvalid && isDirty
     }
   }
 
