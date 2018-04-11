@@ -1,0 +1,11 @@
+/src/Core.Data/bin/
+/src/Core.Data/obj/
+/src/Core.DI/bin/
+/src/Core.DI/obj/
+/src/Core.Domain/bin/
+/src/Core.Domain/obj/
+/src/Core.WebApi/bin/
+/src/Core.WebApi/obj/
+/test/Core.Xunit/bin/
+/test/Core.Xunit/obj/
+/src/Core.Angular/node_modules
