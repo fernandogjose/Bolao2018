@@ -16,7 +16,7 @@ namespace Core.Data.Repositories
             response.Id = 1;
             response.Email = "fernando.jose@viavarejo.com.br";
             response.Name = "Fernando José";
-            response.Token = "teste";
+            response.Token = "token";
             return response;
         }
     }
