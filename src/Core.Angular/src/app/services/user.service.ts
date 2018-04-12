@@ -9,7 +9,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   login(user: User) {
-    return this.http.get(`${BASE_URL_API}/user/login/${user.email}/${user.password}`);
+    return this.http.get(`${BASE_URL_API}/user/login/${user.Email}/${user.Password}`);
   }
 
   get(id: string) {

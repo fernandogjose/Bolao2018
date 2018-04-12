@@ -22,6 +22,6 @@ export class SharedService {
   }
 
   isLoggedIn(): boolean {
-    return this.user != null && this.user.email != '';
+    return this.user != null && this.user.Email != '';
   }
 }

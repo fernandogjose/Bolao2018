@@ -39,7 +39,10 @@ namespace Core.WebApi
             app.UseMiddleware(typeof(ErrorMiddleware));
 
             app.UseCors(
-                options => options.WithOrigins("http://localhost:4200").AllowAnyMethod()
+                options => options.WithOrigins("http://localhost:4200")
+                                  .AllowAnyHeader()
+                                  .AllowAnyMethod()
+                                  .AllowAnyOrigin()
             );
 
             app.UseMvc();

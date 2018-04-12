@@ -17,13 +17,21 @@ export class AuthInterceptor implements HttpInterceptor {
         if (this.shared.isLoggedIn()) {
             authRequest = req.clone({
                 setHeaders: {
+                    'Content-Type': 'application/json',
                     'Authorization': this.shared.token
                 }
             });
 
             return next.handle(authRequest);
         } else {
-            return next.handle(req);
+
+            authRequest = req.clone({
+                setHeaders: {
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            });
+
+            return next.handle(authRequest);
         }
     }
 }

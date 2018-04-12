@@ -16,7 +16,7 @@ export class UserNewComponent implements OnInit {
   @ViewChild("form")
   form: NgForm
 
-  user = new User('', '', '', '', '');
+  user = this.resetUser();
   shared: SharedService;
   message: {};
   classCss: {};
@@ -29,7 +29,7 @@ export class UserNewComponent implements OnInit {
   }
 
   private resetUser(): User {
-    return new User('', '', '', '', '');
+    return new User('0', '', '', '', '');
   }
 
   private showMessage(message: { type: string, text: string }): void {
@@ -61,7 +61,7 @@ export class UserNewComponent implements OnInit {
       .get(id)
       .subscribe((responseApi: ResponseApi) => {
         this.user = responseApi.data;
-        this.user.password = '';
+        this.user.Password = '';
       }, err => {
         this.showMessage({
           type: 'error',

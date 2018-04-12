@@ -28,7 +28,7 @@ namespace Core.WebApi.Controllers {
         }
 
         [HttpPost]
-        public void Post (UserModel request) {
+        public void Post ([FromBody]UserModel request) {
             _userService.Create (request);
         }
     }
