@@ -27,9 +27,26 @@ namespace Core.WebApi.Controllers {
             return response;
         }
 
+        [HttpGet]
+        public UserModel Get (string token) {
+            var request = new UserModel {
+                Token = token
+            };
+
+            var response = _userService.Get (request);
+            return response;
+        }
+
         [HttpPost]
-        public void Post ([FromBody]UserModel request) {
-            _userService.Create (request);
+        public UserModel Post ([FromBody] UserModel request) {
+            var response = _userService.Create (request);
+            return response;
+        }
+
+        [HttpPut]
+        public UserModel Put ([FromBody] UserModel request) {
+            var response = _userService.Update (request);
+            return response;
         }
     }
 }

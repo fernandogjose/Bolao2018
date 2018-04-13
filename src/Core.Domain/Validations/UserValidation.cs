@@ -4,6 +4,18 @@ namespace Core.Domain.Validations
 {
     public class UserValidation
     {
+        public void ValidateToken(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+                throw new ArgumentException("token é obrigatório");
+        }
+
+        public void ValidateName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("name é obrigatório");
+        }
+
         public void ValidateEmail(string email)
         {
             if (string.IsNullOrEmpty(email))
