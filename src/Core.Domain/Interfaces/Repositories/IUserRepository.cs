@@ -9,7 +9,5 @@ namespace Core.Domain.Interfaces.Repositories {
         UserModel Login (UserModel request);
 
         UserModel Get (UserModel request);
-
-        string UpdateToken(UserModel request);
     }
 }

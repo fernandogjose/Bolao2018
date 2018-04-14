@@ -26,7 +26,7 @@ namespace Core.Data.Repositories {
                     cmd.Parameters.AddWithValue ("@Name", GetDbValue (request.Name));
                     cmd.Parameters.AddWithValue ("@Email", GetDbValue (request.Email));
                     cmd.Parameters.AddWithValue ("@Password", GetDbValue (request.Password));
-                    cmd.Parameters.AddWithValue ("@Token", CreateToken ());
+
                     conn.Open ();
                     response.Id = Convert.ToInt32 (cmd.ExecuteScalar ());
                 }
@@ -44,29 +44,10 @@ namespace Core.Data.Repositories {
                     cmd.Connection = conn;
                     cmd.CommandText = _userSql.SqlUpdate ();
                     cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue ("@Id", GetDbValue (request.Id));
                     cmd.Parameters.AddWithValue ("@Name", GetDbValue (request.Name));
                     cmd.Parameters.AddWithValue ("@Email", GetDbValue (request.Email));
                     cmd.Parameters.AddWithValue ("@Password", GetDbValue (request.Password));
-                    cmd.Parameters.AddWithValue ("@Token", GetDbValue (request.Token));
-                    conn.Open ();
-                    cmd.ExecuteNonQuery ();
-                }
-            }
-
-            return response;
-        }
-
-        public string UpdateToken (UserModel request) {
-
-            var response = CreateToken ();
-
-            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
-                using (var cmd = new SqlCommand ()) {
-                    cmd.Connection = conn;
-                    cmd.CommandText = _userSql.SqlUpdateToken ();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue ("@Token", response);
-                    cmd.Parameters.AddWithValue ("@Id", GetDbValue (request.Id));
                     conn.Open ();
                     cmd.ExecuteNonQuery ();
                 }
@@ -92,7 +73,6 @@ namespace Core.Data.Repositories {
                             response.Id = Convert.ToInt32 (dr["Id"].ToString ());
                             response.Name = dr["Name"].ToString ();
                             response.Email = dr["Email"].ToString ();
-                            response.Token = dr["Token"].ToString ();
                         }
                     }
                 }
@@ -109,7 +89,7 @@ namespace Core.Data.Repositories {
                     cmd.Connection = conn;
                     cmd.CommandText = _userSql.SqlGet ();
                     cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue ("@Token", GetDbValue (request.Token));
+                    cmd.Parameters.AddWithValue ("@Id", GetDbValue (request.Id));
 
                     conn.Open ();
                     using (DbDataReader dr = cmd.ExecuteReader ()) {
@@ -117,7 +97,6 @@ namespace Core.Data.Repositories {
                             response.Id = Convert.ToInt32 (dr["Id"].ToString ());
                             response.Name = dr["Name"].ToString ();
                             response.Email = dr["Email"].ToString ();
-                            response.Token = dr["Token"].ToString ();
                         }
                     }
                 }

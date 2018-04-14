@@ -13,10 +13,5 @@ namespace Core.Data.Repositories {
         public int GetDbValue (int? value) {
             return value == null ? 0 : Convert.ToInt32 (value);
         }
-
-        public string CreateToken () {
-            var response = Guid.NewGuid () + DateTime.Now.ToString ("yyyyMMddHHmmssFFF");
-            return response;
-        }
     }
 }

@@ -3,8 +3,8 @@ namespace Core.Data.Sql
     public class UserSql
     {
         public string SqlCreate(){
-            return "INSERT INTO BolaoUser (Name, Email, Password, Token) " +
-                   "VALUES (@Name, @Email, @Password, @Token) SELECT @@IDENTITY";
+            return "INSERT INTO BolaoUser (Name, Email, Password) " +
+                   "VALUES (@Name, @Email, @Password) SELECT @@IDENTITY";
         }
 
         public string SqlUpdate(){
@@ -12,12 +12,6 @@ namespace Core.Data.Sql
                    "   Name = @Name " +
                    " , Email = @Email " +
                    " , Password = @Password " +
-                   " WHERE Token = @Token";
-        }
-
-        public string SqlUpdateToken(){
-            return " UPDATE BolaoUser SET " +
-                   "   Token = @Token " +
                    " WHERE Id = @Id";
         }
 
@@ -27,7 +21,7 @@ namespace Core.Data.Sql
                    "      , BolaoUser.Email " +
                    "      , BolaoUser.Password " +
                    " FROM BolaoUser " +
-                   " WHERE Token = @Token";
+                   " WHERE Id = @Id";
         }
 
         public string SqlLogin(){

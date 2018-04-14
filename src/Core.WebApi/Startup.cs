@@ -11,41 +11,36 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Core.WebApi
-{
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
+namespace Core.WebApi {
+    public class Startup {
+        public Startup (IConfiguration configuration) {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddCors();
-            Bootstrap.Configure(services);
-            services.AddMvc();
+        public void ConfigureServices (IServiceCollection services) {
+            services.AddCors ();
+            services.AddMvc ();
+
+            Bootstrap.Configure (services);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
+        public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
+            if (env.IsDevelopment ()) {
+                app.UseDeveloperExceptionPage ();
             }
 
-            app.UseMiddleware(typeof(ErrorMiddleware));
+            app.UseMiddleware (typeof (ErrorMiddleware));
 
-            app.UseCors(
-                options => options.WithOrigins("http://localhost:4200")
-                                  .AllowAnyHeader()
-                                  .AllowAnyMethod()
-                                  .AllowAnyOrigin()
+            app.UseCors (
+                options => options.WithOrigins ("http://localhost:4200")
+                .AllowAnyHeader ()
+                .AllowAnyMethod ()
+                .AllowAnyOrigin ()
             );
 
-            app.UseMvc();
+            app.UseMvc ();
         }
     }
 }

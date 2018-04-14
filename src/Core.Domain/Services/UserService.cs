@@ -1,7 +1,9 @@
+using System;
 using Core.Domain.Exceptions;
 using Core.Domain.Interfaces.Repositories;
 using Core.Domain.Models;
 using Core.Domain.Validations;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Core.Domain.Services {
     public class UserService {
@@ -10,18 +12,31 @@ namespace Core.Domain.Services {
 
         private readonly IUserRepository _userRepository;
 
-        public UserService (UserValidation userValidation, IUserRepository userRepository) {
+        private readonly IMemoryCache _memoryCache;
+
+        private string CreateToken () {
+            var response = Guid.NewGuid () + DateTime.Now.ToString ("yyyyMMddHHmmssFFF");
+            return response;
+        }
+
+        public UserService (UserValidation userValidation, IUserRepository userRepository, IMemoryCache memoryCache) {
             _userValidation = userValidation;
             _userRepository = userRepository;
+            _memoryCache = memoryCache;
         }
 
         public UserModel Login (UserModel request) {
-
             _userValidation.ValidateEmail (request.Email);
             _userValidation.ValidatePassword (request.Password);
-            var response = _userRepository.Login (request);
-            AuthException.IsValid (response != null && response.Id > 0, "e-mail ou senha inválido");
-            _userRepository.UpdateToken(response);
+
+            UserModel response = _userRepository.Login (request);
+
+            _userValidation.IsLogged(response);
+
+            response.Token = CreateToken ();
+            
+            _memoryCache.Set<UserModel>($"userId-{response.Id}", response);
+
             return response;
         }
 
