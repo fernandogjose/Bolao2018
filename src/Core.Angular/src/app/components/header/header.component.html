@@ -1,12 +1,12 @@
 <header class="main-header">
 
-  <a href="index2.html" class="logo">
+  <a [routerLink]="['/']" class="logo">
     <span class="logo-mini">
-      <b>ADM</b>
+      <b>BO</b>
     </span>
 
     <span class="logo-lg">
-      <b>Admin</b>
+      <b>Bolão 2018</b>
     </span>
   </a>
 
@@ -16,10 +16,9 @@
     </a>
 
     <div class="navbar-custom-menu">
-      <p style="color: white;">
-        fernando.jose@viavarejo.com.br - Admin |
-        <button>SAIR</button>
-      </p>
+      <span *ngIf="shared.user">{{shared.user.name}} - {{shared.user.email}}</span>
+      <span>|</span>
+      <button class="btn btn-link" (click)="signOut()">Sair</button>
     </div>
   </nav>
 

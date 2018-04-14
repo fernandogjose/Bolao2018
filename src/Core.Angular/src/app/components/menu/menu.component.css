@@ -1,0 +1,9 @@
+.menu-header {
+    color: #8aa4af !important;
+    font-size: 15px !important;
+}
+
+.sidebar-menu>li .label, .sidebar-menu>li .badge {
+    margin-top: 2px;
+    padding-top: 3px;
+}

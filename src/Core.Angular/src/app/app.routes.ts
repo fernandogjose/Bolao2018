@@ -1,4 +1,4 @@
-import { LoginComponent } from './components/security/login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';

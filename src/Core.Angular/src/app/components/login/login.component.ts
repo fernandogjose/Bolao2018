@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../../models/user.model';
-import { SharedService } from '../../../services/shared.service';
-import { UserService } from '../../../services/user.service';
+import { User } from '../../models/user.model';
+import { SharedService } from '../../services/shared.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ import { UserService } from '../../../services/user.service';
 
 export class LoginComponent implements OnInit {
 
-  user = new User('', '', '', '', '');
+  user = new User('0', '', '', '', '');
   shared: SharedService;
   message: string;
 

@@ -1,0 +1,15 @@
+.navbar-custom-menu {
+    margin-top: 8px;
+}
+
+.navbar-custom-menu button {
+    color: #fff;
+}
+
+.navbar-custom-menu button:hover {
+    text-decoration: none;
+}
+
+.navbar-custom-menu span {
+    color: #fff;
+}

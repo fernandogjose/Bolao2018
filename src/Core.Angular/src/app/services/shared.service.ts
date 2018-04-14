@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { Injectable, EventEmitter } from '@angular/core';
 import { User } from '../models/user.model';
 
@@ -17,11 +18,11 @@ export class SharedService {
     if (this.instance == null) {
       this.instance = new SharedService();
     }
-
     return this.instance;
   }
 
   isLoggedIn(): boolean {
-    return this.user != null && this.user.Email != '';
+    return this.user != null && this.user.email != '';
   }
+
 }

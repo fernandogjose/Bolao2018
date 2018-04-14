@@ -1,41 +1,37 @@
 <aside class="main-sidebar">
   <section class="sidebar">
-    <div class="user-panel">
-      <div class="pull-left image">
-        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-      </div>
-      <div class="pull-left info">
-        <p>Alexander Pierce</p>
-        <a href="#">
-          <i class="fa fa-circle text-success"></i> Online</a>
-      </div>
-    </div>
-
-
     <ul class="sidebar-menu" data-widget="tree">
-      <li class="header">MAIN NAVIGATION</li>
-      <li class="treeview">
+      <li class="header menu-header">
+        {{ shared.user.name }}
+        <small class="label pull-right bg-blue">17</small>
+      </li>
+
+      <li>
+        <a href="#">
+          <i class="fa fa-dashboard"></i>
+          <span>Meu Jogo</span>
+        </a>
+      </li>
+
+      <li>
         <a href="#">
           <i class="fa fa-edit"></i>
-          <span>Forms</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
+          <span>Resultado Oficial</span>
         </a>
-        <ul class="treeview-menu">
-          <li>
-            <a href="pages/forms/general.html">
-              <i class="fa fa-circle-o"></i> General Elements</a>
-          </li>
-          <li>
-            <a href="pages/forms/advanced.html">
-              <i class="fa fa-circle-o"></i> Advanced Elements</a>
-          </li>
-          <li>
-            <a href="pages/forms/editors.html">
-              <i class="fa fa-circle-o"></i> Editors</a>
-          </li>
-        </ul>
+      </li>
+
+      <li>
+        <a href="#">
+          <i class="fa fa-table"></i>
+          <span>Classificação</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#">
+          <i class="fa fa-book"></i>
+          <span>Regulamento</span>
+        </a>
       </li>
     </ul>
   </section>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../../services/shared.service';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-menu',
@@ -7,7 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  public shared: SharedService;
+
+  constructor() { 
+    this.shared = SharedService.getInstance();
+    this.shared.user = new User('0', '','','','');
+  }
 
   ngOnInit() {
   }

@@ -61,7 +61,7 @@ export class UserNewComponent implements OnInit {
       .get(id)
       .subscribe((responseApi: ResponseApi) => {
         this.user = responseApi.data;
-        this.user.Password = '';
+        this.user.password = '';
       }, err => {
         this.showMessage({
           type: 'error',
