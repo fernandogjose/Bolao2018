@@ -28,6 +28,7 @@ namespace Core.WebApi.Middlewares {
 
             if (exception is ArgumentException) code = HttpStatusCode.BadRequest;
             else if (exception is AuthException) code = HttpStatusCode.Unauthorized;
+            else if (exception is DuplicateException) code = HttpStatusCode.Ambiguous;
 
             var result = JsonConvert.SerializeObject (new { error = exception.Message });
             context.Response.ContentType = "application/json";

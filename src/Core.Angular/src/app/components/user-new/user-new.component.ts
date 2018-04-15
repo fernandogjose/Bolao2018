@@ -38,7 +38,7 @@ export class UserNewComponent implements OnInit {
 
     setTimeout(() => {
       this.message = undefined;
-    }, 3000);
+    }, 10000);
   }
 
   private buildClasses(type: string): void {
@@ -84,10 +84,10 @@ export class UserNewComponent implements OnInit {
       }, err => {
         this.showMessage({
           type: 'error',
-          text: err['error']['errors'][0]
+          text: err.error.error
         });
       });
-  }  
+  }
 
   getFromGroupClass(isInvalid: boolean, isDirty): {} {
     return {

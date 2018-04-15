@@ -2,9 +2,9 @@ using System;
 
 namespace Core.Domain.Exceptions
 {
-    public class AuthException : Exception
+    public class DuplicateException : Exception
     {
-        public AuthException(string message)
+        public DuplicateException(string message)
             : base(message)
         {
 

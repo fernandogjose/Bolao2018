@@ -49,6 +49,7 @@ namespace Core.Domain.Services {
             _userValidation.ValidateName (request.Name);
             _userValidation.ValidateEmail (request.Email);
             _userValidation.ValidatePassword (request.Password);
+
             var response = _userRepository.Create (request);
             return response;
         }
