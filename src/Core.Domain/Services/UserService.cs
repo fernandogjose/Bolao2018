@@ -48,6 +48,7 @@ namespace Core.Domain.Services {
         public UserModel Create (UserModel request) {
             _userValidation.ValidateName (request.Name);
             _userValidation.ValidateEmail (request.Email);
+            _userValidation.ValidateDuplicateEmail (request.Email);
             _userValidation.ValidatePassword (request.Password);
 
             var response = _userRepository.Create (request);

@@ -35,20 +35,21 @@
           </div>
         </div>
 
-        <div class="col-sm-10 offset-sm-2 alert alert-danger pull-right" role="alert" *ngIf="(name.invalid && name.dirty) || (email.invalid && email.dirty) || (password.invalid && password.dirty)">
-          <p *ngIf="name.invalid && name.dirty">* nome inválido</p>
-          <p *ngIf="email.invalid && email.dirty">* e-mail inválido</p>
-          <p *ngIf="password.invalid && password.dirty">* senha inválida</p>
+        <div class="box-footer">
+          <button type="submit" [disabled]="!form.valid" class="btn btn-info pull-right">salvar</button>
+          <a [routerLink]="['/login']">Login</a>
         </div>
 
-        <div [ngClass]="classCss" class="col-sm-10 offset-sm-2 pull-right" role="alert" *ngIf="message">
-          <strong>{{ message.text }}</strong>
+        <div [ngClass]="classCss" class="col-sm-12 text-right" role="alert" *ngIf="message">
+          <p>{{ message.text }}</p>
         </div>
-      </div>
 
-      <div class="box-footer">
-        <button type="submit" [disabled]="!form.valid" class="btn btn-info pull-right">salvar</button>
-        <a [routerLink]="['/login']">Login</a>
+        <div class="col-sm-12 alert alert-danger text-right" role="alert" *ngIf="(name.invalid && name.dirty) || (email.invalid && email.dirty) || (password.invalid && password.dirty)">
+          <p *ngIf="name.invalid && name.dirty">nome inválido</p>
+          <p *ngIf="email.invalid && email.dirty">e-mail inválido</p>
+          <p *ngIf="password.invalid && password.dirty">senha inválida</p>
+        </div>
+
       </div>
     </form>
   </div>

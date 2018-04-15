@@ -25,7 +25,9 @@ namespace Core.Domain.Validations {
         public void ValidateEmail (string email) {
             if (string.IsNullOrEmpty (email))
                 throw new ArgumentException ("e-mail é obrigatório");
+        }
 
+        public void ValidateDuplicateEmail (string email) {
             if (_userRepository.GetByEmail (email) != null) {
                 throw new DuplicateException ("e-mail já cadastrado");
             }

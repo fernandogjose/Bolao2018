@@ -14,7 +14,8 @@ export class LoginComponent implements OnInit {
 
   user = new User('0', '', '', '', '');
   shared: SharedService;
-  message: string;
+  message: {};
+  classCss: {};
 
   constructor(
     private userService: UserService,
@@ -24,6 +25,23 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  private showMessage(message: { type: string, text: string }): void {
+    this.message = message;
+    this.buildClasses(message.type);
+
+    setTimeout(() => {
+      this.message = undefined;
+    }, 10000);
+  }
+
+  private buildClasses(type: string): void {
+    this.classCss = {
+      'alert': true
+    }
+
+    this.classCss['alert-' + type] = true;
   }
 
   login() {
@@ -36,7 +54,10 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/']);
       }, err => {
         this.shared.user = null;
-        this.message = 'Erro';
+        this.showMessage({
+          type: 'error',
+          text: err.error.error
+        });
         this.shared.showTemplate.emit(false);
       });
   }
