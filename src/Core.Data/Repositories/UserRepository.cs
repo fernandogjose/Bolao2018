@@ -56,7 +56,7 @@ namespace Core.Data.Repositories {
             return response;
         }
 
-        public UserModel Login (UserModel request) {
+        public UserModel Login (string email, string password) {
             var response = new UserModel ();
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
@@ -64,8 +64,8 @@ namespace Core.Data.Repositories {
                     cmd.Connection = conn;
                     cmd.CommandText = _userSql.SqlLogin ();
                     cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue ("@Email", GetDbValue (request.Email));
-                    cmd.Parameters.AddWithValue ("@Password", GetDbValue (request.Password));
+                    cmd.Parameters.AddWithValue ("@Email", GetDbValue (email));
+                    cmd.Parameters.AddWithValue ("@Password", GetDbValue (password));
 
                     conn.Open ();
                     using (DbDataReader dr = cmd.ExecuteReader ()) {
@@ -81,15 +81,39 @@ namespace Core.Data.Repositories {
             return response;
         }
 
-        public UserModel Get (UserModel request) {
+        public UserModel GetById (int id) {
             var response = new UserModel ();
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
                     cmd.Connection = conn;
-                    cmd.CommandText = _userSql.SqlGet ();
+                    cmd.CommandText = _userSql.SqlGetById ();
                     cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue ("@Id", GetDbValue (request.Id));
+                    cmd.Parameters.AddWithValue ("@Id", GetDbValue (id));
+
+                    conn.Open ();
+                    using (DbDataReader dr = cmd.ExecuteReader ()) {
+                        if (dr.Read ()) {
+                            response.Id = Convert.ToInt32 (dr["Id"].ToString ());
+                            response.Name = dr["Name"].ToString ();
+                            response.Email = dr["Email"].ToString ();
+                        }
+                    }
+                }
+            }
+
+            return response;
+        }
+
+        public UserModel GetByEmail (string email) {
+            var response = new UserModel ();
+
+            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
+                using (var cmd = new SqlCommand ()) {
+                    cmd.Connection = conn;
+                    cmd.CommandText = _userSql.SqlGetByEmail ();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue ("@Email", GetDbValue (email));
 
                     conn.Open ();
                     using (DbDataReader dr = cmd.ExecuteReader ()) {

@@ -1,9 +1,17 @@
 using System;
 using Core.Domain.Exceptions;
+using Core.Domain.Interfaces.Repositories;
 using Core.Domain.Models;
 
 namespace Core.Domain.Validations {
+
     public class UserValidation {
+        private readonly IUserRepository _userRepository;
+
+        public UserValidation (IUserRepository userRepository) {
+            _userRepository = userRepository;
+        }
+
         public void ValidateToken (string token) {
             if (string.IsNullOrEmpty (token))
                 throw new ArgumentException ("token é obrigatório");
@@ -17,6 +25,10 @@ namespace Core.Domain.Validations {
         public void ValidateEmail (string email) {
             if (string.IsNullOrEmpty (email))
                 throw new ArgumentException ("e-mail é obrigatório");
+
+            if (_userRepository.GetByEmail (email) != null) {
+                throw new ArgumentException ("e-mail já cadastrado");
+            }
         }
 
         public void ValidatePassword (string password) {

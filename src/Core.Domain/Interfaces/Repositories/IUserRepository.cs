@@ -6,8 +6,10 @@ namespace Core.Domain.Interfaces.Repositories {
 
         UserModel Update (UserModel request);
 
-        UserModel Login (UserModel request);
+        UserModel Login (string email, string password);
 
-        UserModel Get (UserModel request);
+        UserModel GetById (int id);
+
+        UserModel GetByEmail (string email);
     }
 }

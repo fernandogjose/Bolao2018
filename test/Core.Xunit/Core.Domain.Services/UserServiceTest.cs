@@ -53,13 +53,8 @@ namespace Core.Xunit.Core.Domain.Services
         public void DeveRetornarUmArgumentExceptionNoLoginQuandoEmailForInvalido(string email)
         {
             const string messageExpected = "e-mail é obrigatório";
-            var request = new UserModel
-            {
-                Email = email,
-                Password = _password
-            };
 
-            var ex = Assert.Throws<ArgumentException>(() => _userService.Login(request));
+            var ex = Assert.Throws<ArgumentException>(() => _userService.Login(email, _password));
 
             Assert.Equal(ex.Message, messageExpected);
         }
@@ -70,13 +65,8 @@ namespace Core.Xunit.Core.Domain.Services
         public void DeveRetornarUmArgumentExceptionNoLoginQuandoPasswordForInvalido(string password)
         {
             const string messageExpected = "senha é obrigatório";
-            var request = new UserModel
-            {
-                Email = _email,
-                Password = password
-            };
 
-            var ex = Assert.Throws<ArgumentException>(() => _userService.Login(request));
+            var ex = Assert.Throws<ArgumentException>(() => _userService.Login(_email, password));
             
             Assert.Equal(ex.Message, messageExpected);
         }
@@ -84,14 +74,8 @@ namespace Core.Xunit.Core.Domain.Services
         [Fact]
         public void DeveRealizarOLoginERetornarOUsuarioLogado()
         {
-            var request = new UserModel
-            {
-                Email = _email,
-                Password = _password
-            };
-
             _userRepositoryMock
-                .Setup(r => r.Login(request))
+                .Setup(r => r.Login(_email, _password))
                 .Returns(new UserModel
                 {
                     Id = _faker.Random.Number(1, 1000),
@@ -99,13 +83,11 @@ namespace Core.Xunit.Core.Domain.Services
                     Password = _password
                 });
 
-            var response = _userService.Login(request);
+            var response = _userService.Login(_email, _password);
 
             _userRepositoryMock.Verify(r => r.Login(
-               It.Is<UserModel>(
-                   u => u.Email == _email &&
-                       u.Password == _password
-                   )));
+               It.Is<string>(u => u == _email), 
+               It.Is<string>(u => u == _password)));
 
             Assert.True(response.Id > 0);
         }
@@ -114,15 +96,10 @@ namespace Core.Xunit.Core.Domain.Services
         public void DeveDarErroDeUsuarioOuSenha()
         {
             const string messageExpected = "e-mail ou senha inválido";
-            var request = new UserModel
-            {
-                Email = _email,
-                Password = _password
-            };
 
-            _userRepositoryMock.Setup(r => r.Login(request));
+            _userRepositoryMock.Setup(r => r.Login(_email, _password));
 
-            var response = Assert.Throws<AuthException>(() => _userService.Login(request));
+            var response = Assert.Throws<AuthException>(() => _userService.Login(_email, _password));
             Assert.Equal(response.Message, messageExpected);
         }
     }

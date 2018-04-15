@@ -15,13 +15,22 @@ namespace Core.Data.Sql
                    " WHERE Id = @Id";
         }
 
-        public string SqlGet(){
+        public string SqlGetById(){
             return " SELECT BolaoUser.Id " +
                    "      , BolaoUser.Name " +
                    "      , BolaoUser.Email " +
                    "      , BolaoUser.Password " +
                    " FROM BolaoUser " +
                    " WHERE Id = @Id";
+        }
+
+        public string SqlGetByEmail(){
+            return " SELECT BolaoUser.Id " +
+                   "      , BolaoUser.Name " +
+                   "      , BolaoUser.Email " +
+                   "      , BolaoUser.Password " +
+                   " FROM BolaoUser " +
+                   " WHERE Email = @Email";
         }
 
         public string SqlLogin(){

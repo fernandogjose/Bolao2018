@@ -18,22 +18,13 @@ namespace Core.WebApi.Controllers {
 
         [HttpGet ("login/{email}/{password}")]
         public UserModel Get (string email, string password) {
-            var request = new UserModel {
-                Email = email,
-                Password = password
-            };
-
-            var response = _userService.Login (request);
+            var response = _userService.Login (email, password);
             return response;
         }
 
         [HttpGet]
-        public UserModel Get (string token) {
-            var request = new UserModel {
-                Token = token
-            };
-
-            var response = _userService.Get (request);
+        public UserModel Get (int id) {
+            var response = _userService.GetById (id);
             return response;
         }
 

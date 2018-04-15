@@ -25,25 +25,23 @@ namespace Core.Domain.Services {
             _memoryCache = memoryCache;
         }
 
-        public UserModel Login (UserModel request) {
-            _userValidation.ValidateEmail (request.Email);
-            _userValidation.ValidatePassword (request.Password);
+        public UserModel Login (string email, string password) {
+            _userValidation.ValidateEmail (email);
+            _userValidation.ValidatePassword (password);
 
-            UserModel response = _userRepository.Login (request);
+            UserModel response = _userRepository.Login (email, password);
 
-            _userValidation.IsLogged(response);
+            _userValidation.IsLogged (response);
 
             response.Token = CreateToken ();
-            
-            _memoryCache.Set<UserModel>($"userId-{response.Id}", response);
+
+            _memoryCache.Set<UserModel> ($"userId-{response.Id}", response);
 
             return response;
         }
 
-        public UserModel Get (UserModel request) {
-
-            _userValidation.ValidateToken (request.Token);
-            var response = _userRepository.Get (request);
+        public UserModel GetById (int id) {
+            var response = _userRepository.GetById (id);
             return response;
         }
 
