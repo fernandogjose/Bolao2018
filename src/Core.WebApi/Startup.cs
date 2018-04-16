@@ -31,14 +31,18 @@ namespace Core.WebApi {
                 app.UseDeveloperExceptionPage ();
             }
 
-            app.UseMiddleware (typeof (ErrorMiddleware));
-
             app.UseCors (
                 options => options.WithOrigins ("http://localhost:4200")
                 .AllowAnyHeader ()
                 .AllowAnyMethod ()
                 .AllowAnyOrigin ()
             );
+
+            app.UseMiddleware (typeof (ErrorMiddleware));
+
+            app.UseWhen (context => !context.Request.Path.StartsWithSegments ("/api/user"), appBuilder => {
+                appBuilder.ApplyUserKeyValidation ();
+            });
 
             app.UseMvc ();
         }

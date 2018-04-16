@@ -25,7 +25,7 @@ namespace Core.Data.Repositories {
                     cmd.CommandText = _userGameSql.SqlCreate ();
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue ("@UserId", GetDbValue (request.UserId));
-                    cmd.Parameters.AddWithValue ("@GameId", GetDbValue (request.GameId));
+                    cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (request.OficialGameId));
                     cmd.Parameters.AddWithValue ("@ScoreTeamA", GetDbValue (request.ScoreTeamA));
                     cmd.Parameters.AddWithValue ("@ScoreTeamB", GetDbValue (request.ScoreTeamB));
                     cmd.Parameters.AddWithValue ("@Points", GetDbValue (request.Points));
@@ -47,7 +47,7 @@ namespace Core.Data.Repositories {
                     cmd.CommandText = _userGameSql.SqlUpdate ();
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue ("@UserId", GetDbValue (request.UserId));
-                    cmd.Parameters.AddWithValue ("@GameId", GetDbValue (request.GameId));
+                    cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (request.OficialGameId));
                     cmd.Parameters.AddWithValue ("@ScoreTeamA", GetDbValue (request.ScoreTeamA));
                     cmd.Parameters.AddWithValue ("@ScoreTeamB", GetDbValue (request.ScoreTeamB));
                     cmd.Parameters.AddWithValue ("@Points", GetDbValue (request.Points));
@@ -74,7 +74,7 @@ namespace Core.Data.Repositories {
                         if (dr.Read ()) {
                             response.Id = Convert.ToInt32 (dr["Id"].ToString ());
                             response.UserId = Convert.ToInt32 (dr["UserId"].ToString ());
-                            response.GameId = Convert.ToInt32 (dr["GameId"].ToString ());
+                            response.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
                         }
                     }
                 }
@@ -98,7 +98,7 @@ namespace Core.Data.Repositories {
                             var userGame = new UserGameModel ();
                             userGame.Id = Convert.ToInt32 (dr["Id"].ToString ());
                             userGame.UserId = Convert.ToInt32 (dr["UserId"].ToString ());
-                            userGame.GameId = Convert.ToInt32 (dr["GameId"].ToString ());
+                            userGame.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
                             userGame.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
                             userGame.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
                             userGame.Points = Convert.ToInt32 (dr["Points"].ToString ());
@@ -107,23 +107,23 @@ namespace Core.Data.Repositories {
                             userGame.User.Id = Convert.ToInt32 (dr["UserId"].ToString ());
                             userGame.User.Name = dr["UserName"].ToString ();
 
-                            userGame.Game = new GameModel ();
-                            userGame.Game.Id = Convert.ToInt32 (dr["GameId"].ToString ());
-                            userGame.Game.GroupId = Convert.ToInt32 (dr["GroupId"].ToString ());
-                            userGame.Game.TeamAId = Convert.ToInt32 (dr["TeamAId"].ToString ());
-                            userGame.Game.TeamBId = Convert.ToInt32 (dr["TeamBId"].ToString ());
+                            userGame.OficialGame = new OficialGameModel ();
+                            userGame.OficialGame.Id = Convert.ToInt32 (dr["GameId"].ToString ());
+                            userGame.OficialGame.GroupId = Convert.ToInt32 (dr["GroupId"].ToString ());
+                            userGame.OficialGame.TeamAId = Convert.ToInt32 (dr["TeamAId"].ToString ());
+                            userGame.OficialGame.TeamBId = Convert.ToInt32 (dr["TeamBId"].ToString ());
 
-                            userGame.Game.Group = new GroupModel ();
-                            userGame.Game.Group.Id = Convert.ToInt32 (dr["GroupId"].ToString ());
-                            userGame.Game.Group.Name = dr["GroupName"].ToString ();
+                            userGame.OficialGame.Group = new GroupModel ();
+                            userGame.OficialGame.Group.Id = Convert.ToInt32 (dr["GroupId"].ToString ());
+                            userGame.OficialGame.Group.Name = dr["GroupName"].ToString ();
 
-                            userGame.Game.TeamA = new TeamModel ();
-                            userGame.Game.TeamA.Id = Convert.ToInt32 (dr["TeamAId"].ToString ());
-                            userGame.Game.TeamA.Name = dr["TeamAName"].ToString ();
+                            userGame.OficialGame.TeamA = new TeamModel ();
+                            userGame.OficialGame.TeamA.Id = Convert.ToInt32 (dr["TeamAId"].ToString ());
+                            userGame.OficialGame.TeamA.Name = dr["TeamAName"].ToString ();
 
-                            userGame.Game.TeamB = new TeamModel ();
-                            userGame.Game.TeamB.Id = Convert.ToInt32 (dr["TeamBId"].ToString ());
-                            userGame.Game.TeamB.Name = dr["TeamBName"].ToString ();
+                            userGame.OficialGame.TeamB = new TeamModel ();
+                            userGame.OficialGame.TeamB.Id = Convert.ToInt32 (dr["TeamBId"].ToString ());
+                            userGame.OficialGame.TeamB.Name = dr["TeamBName"].ToString ();
 
                             response.Add (userGame);
                         }
@@ -134,15 +134,15 @@ namespace Core.Data.Repositories {
             return response;
         }
 
-        public List<UserGameModel> ListByUser (UserGameModel request) {
+        public List<UserGameModel> ListByUserId (int userId) {
             var response = new List<UserGameModel> ();
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
                     cmd.Connection = conn;
-                    cmd.CommandText = _userGameSql.SqlListByUser ();
+                    cmd.CommandText = _userGameSql.SqlListByUserId ();
                     cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue ("@UserId", GetDbValue (request.UserId));
+                    cmd.Parameters.AddWithValue ("@UserId", GetDbValue (userId));
 
                     conn.Open ();
                     using (DbDataReader dr = cmd.ExecuteReader ()) {
@@ -150,7 +150,7 @@ namespace Core.Data.Repositories {
                             var userGame = new UserGameModel ();
                             userGame.Id = Convert.ToInt32 (dr["Id"].ToString ());
                             userGame.UserId = Convert.ToInt32 (dr["UserId"].ToString ());
-                            userGame.GameId = Convert.ToInt32 (dr["GameId"].ToString ());
+                            userGame.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
                             userGame.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
                             userGame.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
                             userGame.Points = Convert.ToInt32 (dr["Points"].ToString ());
@@ -159,23 +159,23 @@ namespace Core.Data.Repositories {
                             userGame.User.Id = Convert.ToInt32 (dr["UserId"].ToString ());
                             userGame.User.Name = dr["UserName"].ToString ();
 
-                            userGame.Game = new GameModel ();
-                            userGame.Game.Id = Convert.ToInt32 (dr["GameId"].ToString ());
-                            userGame.Game.GroupId = Convert.ToInt32 (dr["GroupId"].ToString ());
-                            userGame.Game.TeamAId = Convert.ToInt32 (dr["TeamAId"].ToString ());
-                            userGame.Game.TeamBId = Convert.ToInt32 (dr["TeamBId"].ToString ());
+                            userGame.OficialGame = new OficialGameModel ();
+                            userGame.OficialGame.Id = Convert.ToInt32 (dr["GameId"].ToString ());
+                            userGame.OficialGame.GroupId = Convert.ToInt32 (dr["GroupId"].ToString ());
+                            userGame.OficialGame.TeamAId = Convert.ToInt32 (dr["TeamAId"].ToString ());
+                            userGame.OficialGame.TeamBId = Convert.ToInt32 (dr["TeamBId"].ToString ());
 
-                            userGame.Game.Group = new GroupModel ();
-                            userGame.Game.Group.Id = Convert.ToInt32 (dr["GroupId"].ToString ());
-                            userGame.Game.Group.Name = dr["GroupName"].ToString ();
+                            userGame.OficialGame.Group = new GroupModel ();
+                            userGame.OficialGame.Group.Id = Convert.ToInt32 (dr["GroupId"].ToString ());
+                            userGame.OficialGame.Group.Name = dr["GroupName"].ToString ();
 
-                            userGame.Game.TeamA = new TeamModel ();
-                            userGame.Game.TeamA.Id = Convert.ToInt32 (dr["TeamAId"].ToString ());
-                            userGame.Game.TeamA.Name = dr["TeamAName"].ToString ();
+                            userGame.OficialGame.TeamA = new TeamModel ();
+                            userGame.OficialGame.TeamA.Id = Convert.ToInt32 (dr["TeamAId"].ToString ());
+                            userGame.OficialGame.TeamA.Name = dr["TeamAName"].ToString ();
 
-                            userGame.Game.TeamB = new TeamModel ();
-                            userGame.Game.TeamB.Id = Convert.ToInt32 (dr["TeamBId"].ToString ());
-                            userGame.Game.TeamB.Name = dr["TeamBName"].ToString ();
+                            userGame.OficialGame.TeamB = new TeamModel ();
+                            userGame.OficialGame.TeamB.Id = Convert.ToInt32 (dr["TeamBId"].ToString ());
+                            userGame.OficialGame.TeamB.Name = dr["TeamBName"].ToString ();
 
                             response.Add (userGame);
                         }

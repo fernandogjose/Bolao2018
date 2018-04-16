@@ -23,6 +23,7 @@ namespace Core.DI
             services.AddSingleton<UserGameValidation>();
             
             services.AddSingleton<UserService>();
+            services.AddSingleton<UserGameService>();
         }
     }
 }

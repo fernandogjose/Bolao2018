@@ -9,7 +9,7 @@ namespace Core.Domain.Models
 
         public int UserId { get; set; }
 
-        public int GameId { get; set; }
+        public int OficialGameId { get; set; }
 
         public int ScoreTeamA { get; set; }
 
@@ -19,6 +19,6 @@ namespace Core.Domain.Models
 
         public UserModel User { get; set; }
 
-        public GameModel Game { get; set; }
+        public OficialGameModel OficialGame { get; set; }
     }
 }

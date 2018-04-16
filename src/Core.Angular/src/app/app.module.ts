@@ -14,6 +14,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './components/security/auth.interceptor';
 import { UserNewComponent } from './components/user-new/user-new.component';
+import { UserGameComponent } from './components/user-game/user-game.component';
+import { UserGameService } from './services/user-game.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { UserNewComponent } from './components/user-new/user-new.component';
     FooterComponent,
     HomeComponent,
     LoginComponent,
-    UserNewComponent
+    UserNewComponent,
+    UserGameComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,7 @@ import { UserNewComponent } from './components/user-new/user-new.component';
   ],
   providers: [
     UserService,
+    UserGameService,
     SharedService,
     AuthGuard,
     {

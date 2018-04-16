@@ -1,4 +1,4 @@
-import { HttpInterceptor, HttpHandler, HttpEvent, HttpRequest } from "@angular/common/http";
+import { HttpInterceptor, HttpHandler, HttpEvent, HttpRequest, HttpHeaders } from "@angular/common/http";
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { SharedService } from "../../services/shared.service";
@@ -11,27 +11,18 @@ export class AuthInterceptor implements HttpInterceptor {
         this.shared = SharedService.getInstance();
     }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let authRequest: any;
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         if (this.shared.isLoggedIn()) {
-            authRequest = req.clone({
-                setHeaders: {
-                    'Content-Type': 'application/json',
-                    'Authorization': this.shared.token
-                }
+            const clonedRequest = request.clone({
+                headers: request.headers
+                    .set('token', this.shared.user.token)
+                    .set('userId', this.shared.user.id.toString())
             });
 
-            return next.handle(authRequest);
-        } else {
-
-            authRequest = req.clone({
-                setHeaders: {
-                    'Content-Type': 'application/json; charset=UTF-8'
-                }
-            });
-
-            return next.handle(authRequest);
+            return next.handle(clonedRequest);
         }
+
+        return next.handle(request);
     }
 }

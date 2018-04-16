@@ -2,14 +2,25 @@ using System;
 using Core.Domain.Exceptions;
 using Core.Domain.Interfaces.Repositories;
 using Core.Domain.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Core.Domain.Validations {
 
     public class UserValidation {
         private readonly IUserRepository _userRepository;
 
-        public UserValidation (IUserRepository userRepository) {
+        private readonly IMemoryCache _memoryCache;
+
+        public UserValidation (IUserRepository userRepository, IMemoryCache memoryCache) {
             _userRepository = userRepository;
+            _memoryCache = memoryCache;
+        }
+
+        public bool RequestIsValid (string token, int userId) {
+            var userCache = _memoryCache.Get<UserModel> ($"userId-{userId}");
+            if (userCache == null)
+                return false;
+            return userCache.Token == token && userCache.Id == userId;
         }
 
         public void ValidateToken (string token) {

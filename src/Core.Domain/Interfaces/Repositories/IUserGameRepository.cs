@@ -11,6 +11,6 @@ namespace Core.Domain.Interfaces.Repositories {
 
         List<UserGameModel> List();
 
-        List<UserGameModel> ListByUser(UserGameModel request);
+        List<UserGameModel> ListByUserId(int userId);
     }
 }
