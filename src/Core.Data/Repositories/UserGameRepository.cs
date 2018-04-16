@@ -134,8 +134,58 @@ namespace Core.Data.Repositories {
             return response;
         }
 
-        public List<UserGameModel> ListByUserId (int userId) {
-            var response = new List<UserGameModel> ();
+        public List<UserGameByGroupViewModel> ListByUserId (int userId) {
+            var response = new List<UserGameByGroupViewModel> ();
+
+            var groupIdAux = 0;
+            for (int i = 1; i < 20; i++) {
+                UserGameByGroupViewModel userGameByGroup = new UserGameByGroupViewModel ();
+
+                int groupId = 1;
+                if (i < 5)
+                    groupId = 1;
+                else if (i > 5 && i <= 10)
+                    groupId = 2;
+                else if (i > 10 && i <= 15)
+                    groupId = 3;
+                else if (i > 20)
+                    groupId = 4;
+
+                if (groupIdAux != groupId) {
+                    userGameByGroup.Group = $"Grupo {groupId}";
+                }
+                
+                userGameByGroup.Games = new List<GameViewModel> ();
+                userGameByGroup.Games.Add
+
+                userGame.UserId = 1;
+                userGame.OficialGameId = i;
+
+                userGame.User = new UserModel ();
+                userGame.User.Id = 1;
+                userGame.User.Name = "Fernando José";
+
+                userGame.OficialGame = new OficialGameModel ();
+                userGame.OficialGame.Id = i;
+
+                userGame.OficialGame.GroupId = groupId;
+
+                userGame.OficialGame.Group = new GroupModel ();
+                userGame.OficialGame.Group.Id = groupId;
+                userGame.OficialGame.Group.Name = groupId.ToString ();
+
+                userGame.OficialGame.TeamA = new TeamModel ();
+                userGame.OficialGame.TeamA.Id = i;
+                userGame.OficialGame.TeamA.Name = $"Time {i}";
+
+                userGame.OficialGame.TeamB = new TeamModel ();
+                userGame.OficialGame.TeamB.Id = i;
+                userGame.OficialGame.TeamB.Name = $"Time {i}";
+
+                response.Add (userGame);
+            }
+
+            return response;
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {

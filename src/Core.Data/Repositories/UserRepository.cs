@@ -59,6 +59,13 @@ namespace Core.Data.Repositories {
         public UserModel Login (string email, string password) {
             var response = new UserModel ();
 
+            response.Id = 1;
+            response.Email = "fernandogjose@gmail.com";
+            response.Name = "Fernando José";
+            response.Token = "dskfjhasdjkfhf8s9ad7f897df89sa7f897fds";
+
+            return response;
+
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
                     cmd.Connection = conn;

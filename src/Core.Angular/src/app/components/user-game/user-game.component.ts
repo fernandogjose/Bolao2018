@@ -15,6 +15,7 @@ export class UserGameComponent implements OnInit {
   shared: SharedService;
   message: {};
   classCss: {};
+  userGames: UserGame[];
 
   constructor(private userGameService: UserGameService,
     private activatedRoute: ActivatedRoute,
@@ -49,8 +50,8 @@ export class UserGameComponent implements OnInit {
   getByUserId(userId: number) {
     this.userGameService
       .listByUserId(userId)
-      .subscribe((userGames: any) => {
-        var teste = userGames;
+      .subscribe((userGames: UserGame[]) => {
+        this.userGames = userGames;
       }, err => {
         if (err.status == 401) {
           this.shared.showTemplate.emit(false);

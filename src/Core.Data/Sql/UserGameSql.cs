@@ -1,91 +1,89 @@
-namespace Core.Data.Sql
-{
-    public class UserGameSql
-    {
-        public string SqlCreate(){
+namespace Core.Data.Sql {
+    public class UserGameSql {
+        public string SqlCreate () {
             return "INSERT INTO BolaoUserGame (UserId, GameId, ScoreTeamA, ScoreTeamB, Points) " +
-                   "VALUES (@UserId, @GameId, @ScoreTeamA, @ScoreTeamB, @Points) SELECT @@IDENTITY";
+                "VALUES (@UserId, @GameId, @ScoreTeamA, @ScoreTeamB, @Points) SELECT @@IDENTITY";
         }
 
-        public string SqlUpdate(){
+        public string SqlUpdate () {
             return " UPDATE BolaoUserGame SET " +
-                   "   UserId = @UserId " +
-                   " , GameId = @GameId " +
-                   " , ScoreTeamA = @ScoreTeamA " +
-                   " , ScoreTeamB = @ScoreTeamB " +
-                   " , Points = @Points " +
-                   " WHERE Id = @Id";
+                "   UserId = @UserId " +
+                " , GameId = @GameId " +
+                " , ScoreTeamA = @ScoreTeamA " +
+                " , ScoreTeamB = @ScoreTeamB " +
+                " , Points = @Points " +
+                " WHERE Id = @Id";
         }
 
-        public string SqlGet(){
+        public string SqlGet () {
             return " SELECT BolaoUser.Id as UserId" +
-                   "      , BolaoUser.Name as UserName " +
-                   "      , BolaoUser.Email as UserEmail " +
-                   "      , BolaoUser.Password as UserPassword " +
-                   "      , BolaoOficialGame.Id as GameId " +
-                   "      , BolaoGroup.Id as GroupId " +
-                   "      , BolaoGroup.Name as GroupName " +
-                   "      , BolaoTeamA.Id as TeamAId " +
-                   "      , BolaoTeamA.Name as TeamAName " +
-                   "      , BolaoTeamB.Id as TeamBId " +
-                   "      , BolaoTeamB.Name as TeamBName " +
-                   "      , BolaoUserGame.ScoreTeamA as BolaoUserGameScoreTeamA " +
-                   "      , BolaoUserGame.ScoreTeamB as BolaoUserGameScoreTeamB " +
-                   "      , BolaoUserGame.Points as BolaoUserGamePoints " +
-                   " FROM BolaoUserGame " + 
-                   " INNER JOIN BolaoUser ON BolaoUserGame.UserId = BolaoUser.Id" + 
-                   " INNER JOIN BolaoOficialGame ON BolaoUserGame.GameId = BolaoOficialGame.Id" +
-                   " INNER JOIN BolaoGroup ON BolaoOficialGame.GroupId = BolaoGroup.Id" + 
-                   " INNER JOIN BolaoTeam as BolaoTeamA ON BolaoOficialGame.BolaoTeamAId = BolaoTeamA.Id" +
-                   " INNER JOIN BolaoTeam as BolaoTeamB ON BolaoOficialGame.BolaoTeamBId = BolaoTeamB.Id" + 
-                   " WHERE Id = @Id";
+                "      , BolaoUser.Name as UserName " +
+                "      , BolaoUser.Email as UserEmail " +
+                "      , BolaoUser.Password as UserPassword " +
+                "      , BolaoOficialGame.Id as GameId " +
+                "      , BolaoGroup.Id as GroupId " +
+                "      , BolaoGroup.Name as GroupName " +
+                "      , BolaoTeamA.Id as TeamAId " +
+                "      , BolaoTeamA.Name as TeamAName " +
+                "      , BolaoTeamB.Id as TeamBId " +
+                "      , BolaoTeamB.Name as TeamBName " +
+                "      , BolaoUserGame.ScoreTeamA as BolaoUserGameScoreTeamA " +
+                "      , BolaoUserGame.ScoreTeamB as BolaoUserGameScoreTeamB " +
+                "      , BolaoUserGame.Points as BolaoUserGamePoints " +
+                " FROM BolaoUserGame " +
+                " INNER JOIN BolaoUser ON BolaoUserGame.UserId = BolaoUser.Id" +
+                " INNER JOIN BolaoOficialGame ON BolaoUserGame.GameId = BolaoOficialGame.Id" +
+                " INNER JOIN BolaoGroup ON BolaoOficialGame.GroupId = BolaoGroup.Id" +
+                " INNER JOIN BolaoTeam as BolaoTeamA ON BolaoOficialGame.BolaoTeamAId = BolaoTeamA.Id" +
+                " INNER JOIN BolaoTeam as BolaoTeamB ON BolaoOficialGame.BolaoTeamBId = BolaoTeamB.Id" +
+                " WHERE Id = @Id";
         }
 
-        public string SqlListByUserId(){
+        public string SqlListByUserId () {
             return " SELECT BolaoUser.Id as UserId" +
-                   "      , BolaoUser.Name as UserName " +
-                   "      , BolaoUser.Email as UserEmail " +
-                   "      , BolaoUser.Password as UserPassword " +
-                   "      , BolaoOficialGame.Id as OficialGameId " +
-                   "      , BolaoGroup.Id as GroupId " +
-                   "      , BolaoGroup.Name as GroupName " +
-                   "      , BolaoTeamA.Id as TeamAId " +
-                   "      , BolaoTeamA.Name as TeamAName " +
-                   "      , BolaoTeamB.Id as TeamBId " +
-                   "      , BolaoTeamB.Name as TeamBName " +
-                   "      , BolaoUserGame.ScoreTeamA as UserGameScoreTeamA " +
-                   "      , BolaoUserGame.ScoreTeamB as UserGameScoreTeamB " +
-                   "      , BolaoUserGame.Points as UserGamePoints " +
-                   " FROM BolaoUserGame " + 
-                   " INNER JOIN BolaoUser ON BolaoUserGame.UserId = BolaoUser.Id" + 
-                   " INNER JOIN BolaoOficialGame ON BolaoUserGame.OficialGameId = BolaoOficialGame.Id" +
-                   " INNER JOIN BolaoGroup ON BolaoOficialGame.GroupId = BolaoGroup.Id" + 
-                   " INNER JOIN BolaoTeam as BolaoTeamA ON BolaoOficialGame.TeamAId = BolaoTeamA.Id" +
-                   " INNER JOIN BolaoTeam as BolaoTeamB ON BolaoOficialGame.TeamBId = BolaoTeamB.Id" + 
-                   " WHERE UserId = @UserId";
+                "      , BolaoUser.Name as UserName " +
+                "      , BolaoUser.Email as UserEmail " +
+                "      , BolaoUser.Password as UserPassword " +
+                "      , BolaoOficialGame.Id as OficialGameId " +
+                "      , BolaoGroup.Id as GroupId " +
+                "      , BolaoGroup.Name as GroupName " +
+                "      , BolaoTeamA.Id as TeamAId " +
+                "      , BolaoTeamA.Name as TeamAName " +
+                "      , BolaoTeamB.Id as TeamBId " +
+                "      , BolaoTeamB.Name as TeamBName " +
+                "      , BolaoUserGame.ScoreTeamA as UserGameScoreTeamA " +
+                "      , BolaoUserGame.ScoreTeamB as UserGameScoreTeamB " +
+                "      , BolaoUserGame.Points as UserGamePoints " +
+                " FROM BolaoOficialGame " +
+                " INNER JOIN BolaoGroup ON BolaoOficialGame.GroupId = BolaoGroup.Id" +
+                " INNER JOIN BolaoTeam as BolaoTeamA ON BolaoOficialGame.TeamAId = BolaoTeamA.Id" +
+                " INNER JOIN BolaoTeam as BolaoTeamB ON BolaoOficialGame.TeamBId = BolaoTeamB.Id" +
+                " LEFT OUTER JOIN BolaoUserGame ON BolaoOficialGame.Id = BolaoUserGame.OficialGameId" +
+                " LEFT OUTER JOIN BolaoUser ON BolaoUserGame.UserId = BolaoUser.Id" +
+                " WHERE BolaoUser.Id = @UserId";
         }
 
-        public string SqlList(){
+        public string SqlList () {
             return " SELECT BolaoUser.Id as UserId" +
-                   "      , BolaoUser.Name as UserName " +
-                   "      , BolaoUser.Email as UserEmail " +
-                   "      , BolaoUser.Password as UserPassword " +
-                   "      , BolaoOficialGame.Id as GameId " +
-                   "      , BolaoGroup.Id as GroupId " +
-                   "      , BolaoGroup.Name as GroupName " +
-                   "      , BolaoTeamA.Id as TeamAId " +
-                   "      , BolaoTeamA.Name as TeamAName " +
-                   "      , BolaoTeamB.Id as TeamBId " +
-                   "      , BolaoTeamB.Name as TeamBName " +
-                   "      , BolaoUserGame.ScoreTeamA as BolaoUserGameScoreTeamA " +
-                   "      , BolaoUserGame.ScoreTeamB as BolaoUserGameScoreTeamB " +
-                   "      , BolaoUserGame.Points as BolaoUserGamePoints " +
-                   " FROM BolaoUserGame " + 
-                   " INNER JOIN BolaoUser ON BolaoUserGame.UserId = BolaoUser.Id" + 
-                   " INNER JOIN BolaoOficialGame ON BolaoUserGame.GameId = BolaoOficialGame.Id" +
-                   " INNER JOIN BolaoGroup ON BolaoOficialGame.GroupId = BolaoGroup.Id" + 
-                   " INNER JOIN BolaoTeam as BolaoTeamA ON BolaoOficialGame.BolaoTeamAId = BolaoTeamA.Id" +
-                   " INNER JOIN BolaoTeam as BolaoTeamB ON BolaoOficialGame.BolaoTeamBId = BolaoTeamB.Id";
+                "      , BolaoUser.Name as UserName " +
+                "      , BolaoUser.Email as UserEmail " +
+                "      , BolaoUser.Password as UserPassword " +
+                "      , BolaoOficialGame.Id as GameId " +
+                "      , BolaoGroup.Id as GroupId " +
+                "      , BolaoGroup.Name as GroupName " +
+                "      , BolaoTeamA.Id as TeamAId " +
+                "      , BolaoTeamA.Name as TeamAName " +
+                "      , BolaoTeamB.Id as TeamBId " +
+                "      , BolaoTeamB.Name as TeamBName " +
+                "      , BolaoUserGame.ScoreTeamA as BolaoUserGameScoreTeamA " +
+                "      , BolaoUserGame.ScoreTeamB as BolaoUserGameScoreTeamB " +
+                "      , BolaoUserGame.Points as BolaoUserGamePoints " +
+                " FROM BolaoUserGame " +
+                " INNER JOIN BolaoUser ON BolaoUserGame.UserId = BolaoUser.Id" +
+                " INNER JOIN BolaoOficialGame ON BolaoUserGame.GameId = BolaoOficialGame.Id" +
+                " INNER JOIN BolaoGroup ON BolaoOficialGame.GroupId = BolaoGroup.Id" +
+                " INNER JOIN BolaoTeam as BolaoTeamA ON BolaoOficialGame.BolaoTeamAId = BolaoTeamA.Id" +
+                " INNER JOIN BolaoTeam as BolaoTeamB ON BolaoOficialGame.BolaoTeamBId = BolaoTeamB.Id";
         }
     }
 }
