@@ -29,7 +29,7 @@ export class UserNewComponent implements OnInit {
   }
 
   private resetUser(): User {
-    return new User('0', '', '', '', '');
+    return new User(0, '', '', '', '');
   }
 
   private showMessage(message: { type: string, text: string }): void {

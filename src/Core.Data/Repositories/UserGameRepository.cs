@@ -7,6 +7,7 @@ using System.Linq;
 using Core.Data.Sql;
 using Core.Domain.Interfaces.Repositories;
 using Core.Domain.Models;
+using Core.WebApi.Models;
 
 namespace Core.Data.Repositories {
     public class UserGameRepository : BaseRepository, IUserGameRepository {
@@ -16,10 +17,22 @@ namespace Core.Data.Repositories {
             _userGameSql = userGameSql;
         }
 
-        public UserGameModel Create (UserGameModel request) {
+        public void DeleteByUserIdAndOficialGameId (int userId, int oficialGameId) {
+            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
+                using (var cmd = new SqlCommand ()) {
+                    cmd.Connection = conn;
+                    cmd.CommandText = _userGameSql.SqlDelete ();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue ("@UserId", GetDbValue (userId));
+                    cmd.Parameters.AddWithValue ("@UserId", GetDbValue (oficialGameId));
 
-            var response = request;
+                    conn.Open ();
+                    cmd.ExecuteNonQuery ();
+                }
+            }
+        }
 
+        public void Create (UserGameSaveRequest request) {
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
                     cmd.Connection = conn;
@@ -29,29 +42,26 @@ namespace Core.Data.Repositories {
                     cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (request.OficialGameId));
                     cmd.Parameters.AddWithValue ("@ScoreTeamA", GetDbValue (request.ScoreTeamA));
                     cmd.Parameters.AddWithValue ("@ScoreTeamB", GetDbValue (request.ScoreTeamB));
-                    cmd.Parameters.AddWithValue ("@Points", GetDbValue (request.Points));
+
                     conn.Open ();
-                    response.Id = Convert.ToInt32 (cmd.ExecuteScalar ());
+                    cmd.ExecuteNonQuery();
                 }
             }
-
-            return response;
         }
 
-        public UserGameModel Update (UserGameModel request) {
+        public UserGame UpdatePoints (UserGame request) {
 
             var response = request;
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
                     cmd.Connection = conn;
-                    cmd.CommandText = _userGameSql.SqlUpdate ();
+                    cmd.CommandText = _userGameSql.SqlUpdatePoints ();
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue ("@UserId", GetDbValue (request.UserId));
                     cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (request.OficialGameId));
-                    cmd.Parameters.AddWithValue ("@ScoreTeamA", GetDbValue (request.ScoreTeamA));
-                    cmd.Parameters.AddWithValue ("@ScoreTeamB", GetDbValue (request.ScoreTeamB));
                     cmd.Parameters.AddWithValue ("@Points", GetDbValue (request.Points));
+
                     conn.Open ();
                     cmd.ExecuteNonQuery ();
                 }
@@ -60,8 +70,8 @@ namespace Core.Data.Repositories {
             return response;
         }
 
-        public List<UserGameByGroupViewModel> ListByUserId (int userId) {
-            List<GameViewModel> games = new List<GameViewModel> ();
+        public List<UserGameByGroup> ListByUserId (int userId) {
+            List<Game> games = new List<Game> ();
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
@@ -74,7 +84,7 @@ namespace Core.Data.Repositories {
                     using (DbDataReader dr = cmd.ExecuteReader ()) {
                         while (dr.Read ()) {
 
-                            GameViewModel game = new GameViewModel ();
+                            Game game = new Game ();
                             game.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
                             game.GameDate = Convert.ToDateTime (dr["GameDate"].ToString ()).ToString ("dd/MM/yyyy HH:mm");
                             game.TeamA = dr["TeamA"].ToString ();
@@ -90,26 +100,26 @@ namespace Core.Data.Repositories {
             }
 
             //--- monta o objeto de retorno
-            var response = new List<UserGameByGroupViewModel> ();
+            var response = new List<UserGameByGroup> ();
 
             foreach (var group in games.GroupBy (g => g.GroupName)) {
-                UserGameByGroupViewModel userGameByGroup = new UserGameByGroupViewModel ();
+                UserGameByGroup userGameByGroup = new UserGameByGroup ();
                 userGameByGroup.GroupName = group.Key;
-                userGameByGroup.Games = new List<GameViewModel> ();
+                userGameByGroup.Games = new List<Game> ();
 
                 foreach (var game in games.Where (m => m.GroupName == userGameByGroup.GroupName)) {
-                    userGameByGroup.Games.Add (new GameViewModel {
+                    userGameByGroup.Games.Add (new Game {
                         OficialGameId = game.OficialGameId,
-                        GroupName = group.Key,
-                        GameDate = game.GameDate,
-                        TeamA = game.TeamA,
-                        TeamB = game.TeamB,
-                        ScoreTeamA = game.ScoreTeamA,
-                        ScoreTeamB = game.ScoreTeamB,
+                            GroupName = group.Key,
+                            GameDate = game.GameDate,
+                            TeamA = game.TeamA,
+                            TeamB = game.TeamB,
+                            ScoreTeamA = game.ScoreTeamA,
+                            ScoreTeamB = game.ScoreTeamB,
                     });
                 }
 
-                response.Add(userGameByGroup);
+                response.Add (userGameByGroup);
             }
 
             return response;

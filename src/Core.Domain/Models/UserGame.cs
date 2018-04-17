@@ -3,7 +3,7 @@ using Core.Domain.Exceptions;
 
 namespace Core.Domain.Models
 {
-    public class UserGameModel
+    public class UserGame
     {
         public int Id { get; set; }
 
@@ -16,9 +16,5 @@ namespace Core.Domain.Models
         public int ScoreTeamB { get; set; }
 
         public int Points { get; set; }
-
-        public UserModel User { get; set; }
-
-        public OficialGameModel OficialGame { get; set; }
     }
 }

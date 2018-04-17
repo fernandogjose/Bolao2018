@@ -1,4 +1,4 @@
-<div class="row" *ngFor="let userGameByGroup of userGamesByGroup">
+<div class="row" *ngFor="let userGameByGroup of userGamesByGroup; let indexGroup = index">
   <div class="col-xs-12">
     <div class="box">
       <!-- Grupo -->
@@ -7,24 +7,22 @@
       </div>
 
       <!-- Jogos -->
-      <div class="box-body table-responsive no-padding">
+      <div class="box-body table-responsive">
         <table class="table table-striped">
           <tbody>
-            <tr *ngFor="let game of userGameByGroup.games">
+            <tr *ngFor="let game of userGameByGroup.userGames; let indexUserGame = index">
               <td>{{ game.gameDate }}</td>
               <td class="text-right">{{ game.teamA }}</td>
               <td>
-                <input type="number" class="form-control" id="scoreTeamA{{game.oficialGameId}}" name="scoreTeamA{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamA"
-                  required>
+                <input type="number" class="form-control" id="scoreTeamA{{game.oficialGameId}}" name="scoreTeamA{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamA" required>
               </td>
               <td> x </td>
               <td>
-                <input type="number" class="form-control" id="scoreTeamB{{game.oficialGameId}}" name="scoreTeamB{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamB"
-                  required>
+                <input type="number" class="form-control" id="scoreTeamB{{game.oficialGameId}}" name="scoreTeamB{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamB" required>
               </td>
               <td class="text-left">{{ game.teamB }}</td>
               <td>
-                <button type="button" class="btn btn-info">salvar</button>
+                <button type="button" class="btn btn-info" (click)="save(indexGroup, indexUserGame)" [disabled]="isLoading">salvar</button>
               </td>
           </tbody>
         </table>

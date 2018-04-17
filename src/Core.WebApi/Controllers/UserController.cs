@@ -17,25 +17,25 @@ namespace Core.WebApi.Controllers {
         }
 
         [HttpGet ("login/{email}/{password}")]
-        public UserModel Get (string email, string password) {
+        public User Get (string email, string password) {
             var response = _userService.Login (email, password);
             return response;
         }
 
         [HttpGet]
-        public UserModel Get (int id) {
+        public User Get (int id) {
             var response = _userService.GetById (id);
             return response;
         }
 
         [HttpPost]
-        public UserModel Post ([FromBody] UserModel request) {
+        public User Post ([FromBody] User request) {
             var response = _userService.Create (request);
             return response;
         }
 
         [HttpPut]
-        public UserModel Put ([FromBody] UserModel request) {
+        public User Put ([FromBody] User request) {
             var response = _userService.Update (request);
             return response;
         }

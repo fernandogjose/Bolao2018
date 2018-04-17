@@ -3,7 +3,7 @@ using Core.Domain.Exceptions;
 
 namespace Core.Domain.Models
 {
-    public class TeamModel
+    public class Group
     {
         public int Id { get; set; }
 

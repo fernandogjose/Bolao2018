@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Domain.Models;
 using Core.Domain.Services;
+using Core.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Core.WebApi.Controllers {
@@ -16,10 +17,15 @@ namespace Core.WebApi.Controllers {
             _userGameService = userGameService;
         }
 
-        [HttpGet("listbyuserid/{userId:int}")]
-        public List<UserGameByGroupViewModel> ListByUserId (int userId) {
+        [HttpGet ("listbyuserid/{userId:int}")]
+        public List<UserGameByGroup> ListByUserId (int userId) {
             var response = _userGameService.ListByUserId (userId);
             return response;
+        }
+
+        [HttpPost]
+        public void Save ([FromBody] UserGameSaveRequest userGameSaveRequest) {
+            _userGameService.Save (userGameSaveRequest);
         }
     }
 }

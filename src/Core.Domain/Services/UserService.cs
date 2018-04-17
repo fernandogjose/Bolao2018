@@ -25,27 +25,27 @@ namespace Core.Domain.Services {
             _memoryCache = memoryCache;
         }
 
-        public UserModel Login (string email, string password) {
+        public User Login (string email, string password) {
             _userValidation.ValidateEmail (email);
             _userValidation.ValidatePassword (password);
 
-            UserModel response = _userRepository.Login (email, password);
+            User response = _userRepository.Login (email, password);
 
             _userValidation.IsLogged (response);
 
             response.Token = CreateToken ();
 
-            _memoryCache.Set<UserModel> ($"userId-{response.Id}", response);
+            _memoryCache.Set<User> ($"userId-{response.Id}", response);
 
             return response;
         }
 
-        public UserModel GetById (int id) {
+        public User GetById (int id) {
             var response = _userRepository.GetById (id);
             return response;
         }
 
-        public UserModel Create (UserModel request) {
+        public User Create (User request) {
             _userValidation.ValidateName (request.Name);
             _userValidation.ValidateEmail (request.Email);
             _userValidation.ValidateDuplicateEmail (request.Email);
@@ -55,7 +55,7 @@ namespace Core.Domain.Services {
             return response;
         }
 
-        public UserModel Update (UserModel request) {
+        public User Update (User request) {
             _userValidation.ValidateName (request.Name);
             _userValidation.ValidateEmail (request.Email);
             _userValidation.ValidatePassword (request.Password);

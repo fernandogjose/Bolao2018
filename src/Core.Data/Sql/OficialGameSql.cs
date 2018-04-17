@@ -1,8 +1,8 @@
 namespace Core.Data.Sql {
-    public class UserGameSql {
+    public class OficialGameSql {
 
-        public string SqlDelete () {
-            return "DELETE FROM BolaoUserGame WHERE UserId = @UserId && OficialGameId = @OficialGameId";
+        public string SqlGet () {
+            return "SELECT * FROM BolaoOficialGame WHERE Id = @Id";
         }
 
         public string SqlCreate () {

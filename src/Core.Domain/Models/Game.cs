@@ -3,7 +3,7 @@ using Core.Domain.Exceptions;
 
 namespace Core.Domain.Models
 {
-    public class OficialGameModel
+    public class OficialGame
     {
         public int Id { get; set; }
 
@@ -19,10 +19,10 @@ namespace Core.Domain.Models
 
         public DateTime Date { get; set; }
 
-        public GroupModel Group { get; set; }
+        public Group Group { get; set; }
 
-        public TeamModel TeamA { get; set; }
+        public Team TeamA { get; set; }
 
-        public TeamModel TeamB { get; set; }
+        public Team TeamB { get; set; }
     }
 }

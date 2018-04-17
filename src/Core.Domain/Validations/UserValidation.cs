@@ -17,7 +17,7 @@ namespace Core.Domain.Validations {
         }
 
         public bool RequestIsValid (string token, int userId) {
-            var userCache = _memoryCache.Get<UserModel> ($"userId-{userId}");
+            var userCache = _memoryCache.Get<User> ($"userId-{userId}");
             if (userCache == null)
                 return false;
             return userCache.Token == token && userCache.Id == userId;
@@ -49,8 +49,8 @@ namespace Core.Domain.Validations {
                 throw new ArgumentException ("senha é obrigatório");
         }
 
-        public void IsLogged (UserModel userModel) {
-            if (userModel == null || userModel.Id == 0)
+        public void IsLogged (User user) {
+            if (user == null || user.Id == 0)
                 throw new AuthException ("e-mail ou senha inválido");
         }
     }

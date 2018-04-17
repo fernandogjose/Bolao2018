@@ -3,7 +3,7 @@ using Core.Domain.Exceptions;
 
 namespace Core.Domain.Models
 {
-    public class UserModel
+    public class User
     {
         public int Id { get; set; }
 

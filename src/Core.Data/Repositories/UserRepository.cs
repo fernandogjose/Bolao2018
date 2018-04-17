@@ -14,7 +14,7 @@ namespace Core.Data.Repositories {
             _userSql = userSql;
         }
 
-        public UserModel Create (UserModel request) {
+        public User Create (User request) {
 
             var response = request;
 
@@ -35,7 +35,7 @@ namespace Core.Data.Repositories {
             return response;
         }
 
-        public UserModel Update (UserModel request) {
+        public User Update (User request) {
 
             var response = request;
 
@@ -56,15 +56,15 @@ namespace Core.Data.Repositories {
             return response;
         }
 
-        public UserModel Login (string email, string password) {
-            var response = new UserModel ();
+        public User Login (string email, string password) {
+            var response = new User ();
 
-            // response.Id = 1;
-            // response.Email = "fernandogjose@gmail.com";
-            // response.Name = "Fernando José";
-            // response.Token = "dskfjhasdjkfhf8s9ad7f897df89sa7f897fds";
+            response.Id = 1;
+            response.Email = "fernandogjose@gmail.com";
+            response.Name = "Fernando José";
+            response.Token = "dskfjhasdjkfhf8s9ad7f897df89sa7f897fds";
 
-            // return response;
+            return response;
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
@@ -88,8 +88,8 @@ namespace Core.Data.Repositories {
             return response;
         }
 
-        public UserModel GetById (int id) {
-            var response = new UserModel ();
+        public User GetById (int id) {
+            var response = new User ();
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
@@ -112,8 +112,8 @@ namespace Core.Data.Repositories {
             return response;
         }
 
-        public UserModel GetByEmail (string email) {
-            var response = new UserModel ();
+        public User GetByEmail (string email) {
+            var response = new User ();
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {

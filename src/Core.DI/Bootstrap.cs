@@ -15,9 +15,11 @@ namespace Core.DI
         {
             services.AddSingleton<UserSql>();
             services.AddSingleton<UserGameSql>();
+            services.AddSingleton<OficialGameSql>();
             
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IUserGameRepository, UserGameRepository>();
+            services.AddSingleton<IOficialGameRepository, OficialGameRepository>();
             
             services.AddSingleton<UserValidation>();
             services.AddSingleton<UserGameValidation>();

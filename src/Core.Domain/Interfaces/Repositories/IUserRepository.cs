@@ -2,14 +2,14 @@ using Core.Domain.Models;
 
 namespace Core.Domain.Interfaces.Repositories {
     public interface IUserRepository {
-        UserModel Create (UserModel request);
+        User Create (User request);
 
-        UserModel Update (UserModel request);
+        User Update (User request);
 
-        UserModel Login (string email, string password);
+        User Login (string email, string password);
 
-        UserModel GetById (int id);
+        User GetById (int id);
 
-        UserModel GetByEmail (string email);
+        User GetByEmail (string email);
     }
 }
