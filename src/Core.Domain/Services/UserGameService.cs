@@ -15,7 +15,7 @@ namespace Core.Domain.Services {
             _userGameRepository = userGameRepository;
         }
 
-        public List<UserGameModel> ListByUserId (int id) {
+        public List<UserGameByGroupViewModel> ListByUserId (int id) {
             var response = _userGameRepository.ListByUserId (id);
             return response;
         }

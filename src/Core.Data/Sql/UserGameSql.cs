@@ -40,27 +40,19 @@ namespace Core.Data.Sql {
         }
 
         public string SqlListByUserId () {
-            return " SELECT BolaoUser.Id as UserId" +
-                "      , BolaoUser.Name as UserName " +
-                "      , BolaoUser.Email as UserEmail " +
-                "      , BolaoUser.Password as UserPassword " +
-                "      , BolaoOficialGame.Id as OficialGameId " +
-                "      , BolaoGroup.Id as GroupId " +
-                "      , BolaoGroup.Name as GroupName " +
-                "      , BolaoTeamA.Id as TeamAId " +
-                "      , BolaoTeamA.Name as TeamAName " +
-                "      , BolaoTeamB.Id as TeamBId " +
-                "      , BolaoTeamB.Name as TeamBName " +
-                "      , BolaoUserGame.ScoreTeamA as UserGameScoreTeamA " +
-                "      , BolaoUserGame.ScoreTeamB as UserGameScoreTeamB " +
-                "      , BolaoUserGame.Points as UserGamePoints " +
-                " FROM BolaoOficialGame " +
-                " INNER JOIN BolaoGroup ON BolaoOficialGame.GroupId = BolaoGroup.Id" +
-                " INNER JOIN BolaoTeam as BolaoTeamA ON BolaoOficialGame.TeamAId = BolaoTeamA.Id" +
-                " INNER JOIN BolaoTeam as BolaoTeamB ON BolaoOficialGame.TeamBId = BolaoTeamB.Id" +
-                " LEFT OUTER JOIN BolaoUserGame ON BolaoOficialGame.Id = BolaoUserGame.OficialGameId" +
-                " LEFT OUTER JOIN BolaoUser ON BolaoUserGame.UserId = BolaoUser.Id" +
-                " WHERE BolaoUser.Id = @UserId";
+            return " SELECT BolaoGroup.[Name] as GroupName" +
+                   "      , BolaoOficialGame.Id as OficialGameId" +
+                   "      , BolaoOficialGame.[Date] as GameDate" +
+                   "      , BolaoTeamA.[Name] as TeamA" +
+                   "      , BolaoTeamB.[Name] as TeamB" +
+                   "      , ISNULL((SELECT ScoreTeamA FROM BolaoUserGame WHERE OficialGameId = BolaoOficialGame.Id AND UserId = @UserId), 0) as ScoreTeamA" +
+                   "      , ISNULL((SELECT ScoreTeamB FROM BolaoUserGame WHERE OficialGameId = BolaoOficialGame.Id AND UserId = @UserId), 0) as ScoreTeamB" +
+                   " FROM BolaoOficialGame" +
+                   " INNER JOIN BolaoGroup ON BolaoOficialGame.GroupId = BolaoGroup.Id" +
+                   " INNER JOIN BolaoTeam as BolaoTeamA ON BolaoOficialGame.TeamAId = BolaoTeamA.Id" +
+                   " INNER JOIN BolaoTeam as BolaoTeamB ON BolaoOficialGame.TeamBId = BolaoTeamB.Id" +
+                   " ORDER BY BolaoGroup.[Name]" +
+                   "         ,BolaoOficialGame.[Date]";
         }
 
         public string SqlList () {

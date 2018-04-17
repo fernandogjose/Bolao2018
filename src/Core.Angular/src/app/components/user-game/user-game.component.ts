@@ -3,7 +3,7 @@ import { UserGameService } from '../../services/user-game.service';
 import { SharedService } from '../../services/shared.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ResponseApi } from '../../models/response-api';
-import { UserGame } from '../../models/user-game.model';
+import { UserGameByGroup } from '../../models/user-game-by-group.model';
 
 @Component({
   selector: 'app-user-game',
@@ -15,7 +15,7 @@ export class UserGameComponent implements OnInit {
   shared: SharedService;
   message: {};
   classCss: {};
-  userGames: UserGame[];
+  userGamesByGroup: UserGameByGroup[];
 
   constructor(private userGameService: UserGameService,
     private activatedRoute: ActivatedRoute,
@@ -48,10 +48,17 @@ export class UserGameComponent implements OnInit {
   }
 
   getByUserId(userId: number) {
+
+    let userGamesByGroupMock = '[{"groupName":"A","games":[{"oficialGameId":1,"gameDate":"14/06/2018 12:00","teamA":"Rússia","teamB":"Arábia Saudita","groupName":"A","scoreTeamA":0,"scoreTeamB":0},{"oficialGameId":3,"gameDate":"15/06/2018 09:00","teamA":"Egito","teamB":"Uruguai","groupName":"A","scoreTeamA":0,"scoreTeamB":0},{"oficialGameId":4,"gameDate":"19/06/2018 15:00","teamA":"Rússia","teamB":"Egito","groupName":"A","scoreTeamA":0,"scoreTeamB":0},{"oficialGameId":5,"gameDate":"20/06/2018 12:00","teamA":"Uruguai","teamB":"Arábia Saudita","groupName":"A","scoreTeamA":0,"scoreTeamB":0},{"oficialGameId":7,"gameDate":"25/06/2018 11:00","teamA":"Arábia Saudita","teamB":"Egito","groupName":"A","scoreTeamA":0,"scoreTeamB":0},{"oficialGameId":6,"gameDate":"25/06/2018 12:00","teamA":"Uruguai","teamB":"Rússia","groupName":"A","scoreTeamA":0,"scoreTeamB":0}]},{"groupName":"B","games":[{"oficialGameId":2,"gameDate":"15/06/2018 12:00","teamA":"Marrocos","teamB":"Irã","groupName":"B","scoreTeamA":0,"scoreTeamB":0}]}]';
+    this.userGamesByGroup = JSON.parse(userGamesByGroupMock);
+    return;
+
     this.userGameService
       .listByUserId(userId)
-      .subscribe((userGames: UserGame[]) => {
-        this.userGames = userGames;
+      .subscribe((userGamesByGroup: UserGameByGroup[]) => {
+        this.userGamesByGroup = userGamesByGroup;
+        var teste = JSON.stringify(userGamesByGroup);
+        var teste1 = JSON.parse(teste);
       }, err => {
         if (err.status == 401) {
           this.shared.showTemplate.emit(false);

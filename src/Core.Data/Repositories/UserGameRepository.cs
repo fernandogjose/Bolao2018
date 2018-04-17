@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Linq;
 using Core.Data.Sql;
 using Core.Domain.Interfaces.Repositories;
 using Core.Domain.Models;
@@ -59,133 +60,8 @@ namespace Core.Data.Repositories {
             return response;
         }
 
-        public UserGameModel Get (UserGameModel request) {
-            var response = new UserGameModel ();
-
-            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
-                using (var cmd = new SqlCommand ()) {
-                    cmd.Connection = conn;
-                    cmd.CommandText = _userGameSql.SqlGet ();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue ("@Id", GetDbValue (request.Id));
-
-                    conn.Open ();
-                    using (DbDataReader dr = cmd.ExecuteReader ()) {
-                        if (dr.Read ()) {
-                            response.Id = Convert.ToInt32 (dr["Id"].ToString ());
-                            response.UserId = Convert.ToInt32 (dr["UserId"].ToString ());
-                            response.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
-                        }
-                    }
-                }
-            }
-
-            return response;
-        }
-
-        public List<UserGameModel> List () {
-            var response = new List<UserGameModel> ();
-
-            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
-                using (var cmd = new SqlCommand ()) {
-                    cmd.Connection = conn;
-                    cmd.CommandText = _userGameSql.SqlList ();
-                    cmd.CommandType = CommandType.Text;
-
-                    conn.Open ();
-                    using (DbDataReader dr = cmd.ExecuteReader ()) {
-                        while (dr.Read ()) {
-                            var userGame = new UserGameModel ();
-                            userGame.Id = Convert.ToInt32 (dr["Id"].ToString ());
-                            userGame.UserId = Convert.ToInt32 (dr["UserId"].ToString ());
-                            userGame.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
-                            userGame.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
-                            userGame.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
-                            userGame.Points = Convert.ToInt32 (dr["Points"].ToString ());
-
-                            userGame.User = new UserModel ();
-                            userGame.User.Id = Convert.ToInt32 (dr["UserId"].ToString ());
-                            userGame.User.Name = dr["UserName"].ToString ();
-
-                            userGame.OficialGame = new OficialGameModel ();
-                            userGame.OficialGame.Id = Convert.ToInt32 (dr["GameId"].ToString ());
-                            userGame.OficialGame.GroupId = Convert.ToInt32 (dr["GroupId"].ToString ());
-                            userGame.OficialGame.TeamAId = Convert.ToInt32 (dr["TeamAId"].ToString ());
-                            userGame.OficialGame.TeamBId = Convert.ToInt32 (dr["TeamBId"].ToString ());
-
-                            userGame.OficialGame.Group = new GroupModel ();
-                            userGame.OficialGame.Group.Id = Convert.ToInt32 (dr["GroupId"].ToString ());
-                            userGame.OficialGame.Group.Name = dr["GroupName"].ToString ();
-
-                            userGame.OficialGame.TeamA = new TeamModel ();
-                            userGame.OficialGame.TeamA.Id = Convert.ToInt32 (dr["TeamAId"].ToString ());
-                            userGame.OficialGame.TeamA.Name = dr["TeamAName"].ToString ();
-
-                            userGame.OficialGame.TeamB = new TeamModel ();
-                            userGame.OficialGame.TeamB.Id = Convert.ToInt32 (dr["TeamBId"].ToString ());
-                            userGame.OficialGame.TeamB.Name = dr["TeamBName"].ToString ();
-
-                            response.Add (userGame);
-                        }
-                    }
-                }
-            }
-
-            return response;
-        }
-
         public List<UserGameByGroupViewModel> ListByUserId (int userId) {
-            var response = new List<UserGameByGroupViewModel> ();
-
-            var groupIdAux = 0;
-            for (int i = 1; i < 20; i++) {
-                UserGameByGroupViewModel userGameByGroup = new UserGameByGroupViewModel ();
-
-                int groupId = 1;
-                if (i < 5)
-                    groupId = 1;
-                else if (i > 5 && i <= 10)
-                    groupId = 2;
-                else if (i > 10 && i <= 15)
-                    groupId = 3;
-                else if (i > 20)
-                    groupId = 4;
-
-                if (groupIdAux != groupId) {
-                    userGameByGroup.Group = $"Grupo {groupId}";
-                }
-                
-                userGameByGroup.Games = new List<GameViewModel> ();
-                userGameByGroup.Games.Add
-
-                userGame.UserId = 1;
-                userGame.OficialGameId = i;
-
-                userGame.User = new UserModel ();
-                userGame.User.Id = 1;
-                userGame.User.Name = "Fernando José";
-
-                userGame.OficialGame = new OficialGameModel ();
-                userGame.OficialGame.Id = i;
-
-                userGame.OficialGame.GroupId = groupId;
-
-                userGame.OficialGame.Group = new GroupModel ();
-                userGame.OficialGame.Group.Id = groupId;
-                userGame.OficialGame.Group.Name = groupId.ToString ();
-
-                userGame.OficialGame.TeamA = new TeamModel ();
-                userGame.OficialGame.TeamA.Id = i;
-                userGame.OficialGame.TeamA.Name = $"Time {i}";
-
-                userGame.OficialGame.TeamB = new TeamModel ();
-                userGame.OficialGame.TeamB.Id = i;
-                userGame.OficialGame.TeamB.Name = $"Time {i}";
-
-                response.Add (userGame);
-            }
-
-            return response;
+            List<GameViewModel> games = new List<GameViewModel> ();
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
@@ -197,40 +73,43 @@ namespace Core.Data.Repositories {
                     conn.Open ();
                     using (DbDataReader dr = cmd.ExecuteReader ()) {
                         while (dr.Read ()) {
-                            var userGame = new UserGameModel ();
-                            userGame.Id = Convert.ToInt32 (dr["Id"].ToString ());
-                            userGame.UserId = Convert.ToInt32 (dr["UserId"].ToString ());
-                            userGame.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
-                            userGame.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
-                            userGame.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
-                            userGame.Points = Convert.ToInt32 (dr["Points"].ToString ());
 
-                            userGame.User = new UserModel ();
-                            userGame.User.Id = Convert.ToInt32 (dr["UserId"].ToString ());
-                            userGame.User.Name = dr["UserName"].ToString ();
+                            GameViewModel game = new GameViewModel ();
+                            game.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
+                            game.GameDate = Convert.ToDateTime (dr["GameDate"].ToString ()).ToString ("dd/MM/yyyy HH:mm");
+                            game.TeamA = dr["TeamA"].ToString ();
+                            game.TeamB = dr["TeamB"].ToString ();
+                            game.GroupName = dr["GroupName"].ToString ();
+                            game.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
+                            game.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
 
-                            userGame.OficialGame = new OficialGameModel ();
-                            userGame.OficialGame.Id = Convert.ToInt32 (dr["GameId"].ToString ());
-                            userGame.OficialGame.GroupId = Convert.ToInt32 (dr["GroupId"].ToString ());
-                            userGame.OficialGame.TeamAId = Convert.ToInt32 (dr["TeamAId"].ToString ());
-                            userGame.OficialGame.TeamBId = Convert.ToInt32 (dr["TeamBId"].ToString ());
-
-                            userGame.OficialGame.Group = new GroupModel ();
-                            userGame.OficialGame.Group.Id = Convert.ToInt32 (dr["GroupId"].ToString ());
-                            userGame.OficialGame.Group.Name = dr["GroupName"].ToString ();
-
-                            userGame.OficialGame.TeamA = new TeamModel ();
-                            userGame.OficialGame.TeamA.Id = Convert.ToInt32 (dr["TeamAId"].ToString ());
-                            userGame.OficialGame.TeamA.Name = dr["TeamAName"].ToString ();
-
-                            userGame.OficialGame.TeamB = new TeamModel ();
-                            userGame.OficialGame.TeamB.Id = Convert.ToInt32 (dr["TeamBId"].ToString ());
-                            userGame.OficialGame.TeamB.Name = dr["TeamBName"].ToString ();
-
-                            response.Add (userGame);
+                            games.Add (game);
                         }
                     }
                 }
+            }
+
+            //--- monta o objeto de retorno
+            var response = new List<UserGameByGroupViewModel> ();
+
+            foreach (var group in games.GroupBy (g => g.GroupName)) {
+                UserGameByGroupViewModel userGameByGroup = new UserGameByGroupViewModel ();
+                userGameByGroup.GroupName = group.Key;
+                userGameByGroup.Games = new List<GameViewModel> ();
+
+                foreach (var game in games.Where (m => m.GroupName == userGameByGroup.GroupName)) {
+                    userGameByGroup.Games.Add (new GameViewModel {
+                        OficialGameId = game.OficialGameId,
+                        GroupName = group.Key,
+                        GameDate = game.GameDate,
+                        TeamA = game.TeamA,
+                        TeamB = game.TeamB,
+                        ScoreTeamA = game.ScoreTeamA,
+                        ScoreTeamB = game.ScoreTeamB,
+                    });
+                }
+
+                response.Add(userGameByGroup);
             }
 
             return response;

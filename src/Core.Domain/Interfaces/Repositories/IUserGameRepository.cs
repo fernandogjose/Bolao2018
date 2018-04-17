@@ -7,10 +7,6 @@ namespace Core.Domain.Interfaces.Repositories {
 
         UserGameModel Update (UserGameModel request);
 
-        UserGameModel Get (UserGameModel request);
-
-        List<UserGameModel> List();
-
-        List<UserGameModel> ListByUserId(int userId);
+        List<UserGameByGroupViewModel> ListByUserId(int userId);
     }
 }
