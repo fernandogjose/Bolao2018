@@ -50,7 +50,7 @@ namespace Core.Domain.Services {
             userResponse.Token = CreateToken ();
 
             //--- grava o usuário em cache por id para a autenticacao dos usuários nos httprequest
-            _memoryCache.Set<User> ($"userId-{userResponse.Id}", userResponse);            
+            _memoryCache.Set<User> ($"userId-{userResponse.Id}", userResponse, DateTimeOffset.Now.AddHours(12));
 
             return userResponse;
         }
