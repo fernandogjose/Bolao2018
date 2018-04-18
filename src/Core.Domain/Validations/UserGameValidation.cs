@@ -1,4 +1,5 @@
 using System;
+using Core.Domain.Exceptions;
 using Core.Domain.Helpers;
 using Core.Domain.Interfaces.Repositories;
 using Core.Domain.Models;
@@ -17,7 +18,7 @@ namespace Core.Domain.Validations {
             if (userGameRequest == null ||
                 userGameRequest.OficialGame == null ||
                 DateTime.Now > userGameRequest.OficialGame.Date.AddHours (-4)) {
-                throw new Exception ("Não é permitido alterar o resultado deste jogo");
+                throw new PermissionException ("Não é permitido alterar o resultado deste jogo");
             }
         }
     }

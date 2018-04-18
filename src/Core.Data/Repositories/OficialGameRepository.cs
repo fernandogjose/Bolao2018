@@ -18,6 +18,22 @@ namespace Core.Data.Repositories {
             _oficialGameSql = oficialGameSql;
         }
 
+        public void UpdateScore (OficialGameSaveRequest oficialGameSaveRequest) {
+            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
+                using (var cmd = new SqlCommand ()) {
+                    cmd.Connection = conn;
+                    cmd.CommandText = _oficialGameSql.SqlUpdateScore ();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (oficialGameSaveRequest.OficialGameId));
+                    cmd.Parameters.AddWithValue ("@ScoreTeamA", GetDbValue (oficialGameSaveRequest.ScoreTeamA));
+                    cmd.Parameters.AddWithValue ("@ScoreTeamB", GetDbValue (oficialGameSaveRequest.ScoreTeamB));
+
+                    conn.Open ();
+                    cmd.ExecuteNonQuery ();
+                }
+            }
+        }
+
         public OficialGame Get (int id) {
             OficialGame oficialGameResponse = new OficialGame ();
 

@@ -14,5 +14,7 @@ namespace Core.Domain.Interfaces.Repositories {
         void Update (UserGameSaveRequest userGameSaveRequest);
 
         List<GameByGroup> ListByUserId(int userId);
+
+        List<UserGameScore> ListByOficialGameId (int id);
     }
 }

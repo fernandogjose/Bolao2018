@@ -22,6 +22,11 @@ namespace Core.Domain.Services
             return response;
         }
 
+        public List<UserGameScore> ListByOficialGameId (int id) {
+            var response = _userGameRepository.ListByOficialGameId (id);
+            return response;
+        }
+
         public UserGame GetByUserIdAndOficialGameId (int userId, int oficialGameId) {
             var userGameResponse = _userGameRepository.GetByUserIdAndOficialGameId (userId, oficialGameId);
             return userGameResponse;

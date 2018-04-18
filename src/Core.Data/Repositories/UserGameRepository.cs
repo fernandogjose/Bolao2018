@@ -161,5 +161,34 @@ namespace Core.Data.Repositories {
 
             return gamesByGroupResponse;
         }
+
+        public List<UserGameScore> ListByOficialGameId (int oficialGameId) {
+            List<UserGameScore> userGameScoresResponse = new List<UserGameScore> ();
+
+            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
+                using (var cmd = new SqlCommand ()) {
+                    cmd.Connection = conn;
+                    cmd.CommandText = _userGameSql.SqlListByOficialGameId ();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (oficialGameId));
+
+                    conn.Open ();
+                    using (DbDataReader dr = cmd.ExecuteReader ()) {
+                        while (dr.Read ()) {
+
+                            UserGameScore userGameScore = new UserGameScore ();
+                            userGameScore.UserId = Convert.ToInt32 (dr["UserId"].ToString ());
+                            userGameScore.OficialGameId = oficialGameId;
+                            userGameScore.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
+                            userGameScore.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
+
+                            userGameScoresResponse.Add (userGameScore);
+                        }
+                    }
+                }
+            }
+
+            return userGameScoresResponse;
+        }
     }
 }

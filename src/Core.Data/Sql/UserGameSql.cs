@@ -42,6 +42,14 @@ namespace Core.Data.Sql {
                 "            ,BolaoGroup.[Name]";
         }
 
+        public string SqlListByOficialGameId () {
+            return " SELECT BolaoUser.Id as UserId" +
+                "         , ISNULL((SELECT ScoreTeamA FROM BolaoUserGame WHERE OficialGameId = @OficialGameId), 0) as ScoreTeamA" +
+                "         , ISNULL((SELECT ScoreTeamB FROM BolaoUserGame WHERE OficialGameId = @OficialGameId), 0) as ScoreTeamB" +
+                "    FROM BolaoUser" +
+                "    ORDER BY BolaoUser.Name";
+        }
+
         public string SqlGetByUserIdAndOficialGameId () {
             return " SELECT BolaoGroup.[Name] as GroupName" +
                 "         , BolaoOficialGame.Id as OficialGameId" +

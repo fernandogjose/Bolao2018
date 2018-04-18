@@ -5,17 +5,11 @@ namespace Core.Data.Sql {
             return "SELECT * FROM BolaoOficialGame WHERE Id = @Id";
         }
 
-        public string SqlCreate () {
-            return " INSERT INTO BolaoUserGame (UserId, OficialGameId, ScoreTeamA, ScoreTeamB) " +
-                "                       VALUES (@UserId, @OficialGameId, @ScoreTeamA, @ScoreTeamB) " + 
-                "    SELECT @@IDENTITY";
-        }
-
-        public string SqlUpdatePoints () {
-            return " UPDATE BolaoUserGame SET " +
-                "         , Points = @Points " +
-                "    WHERE UserId = @UserId" +
-                "      AND OficialGameId = @OficialGameId";
+        public string SqlUpdateScore () {
+            return " UPDATE BolaoOficialGame SET " +
+                "           ScoreTeamA = @ScoreTeamA " +
+                "         , ScoreTeamB = @ScoreTeamB " +
+                "    WHERE Id = @OficialGameId";
         }
 
         public string SqlList () {
