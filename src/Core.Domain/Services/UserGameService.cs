@@ -24,10 +24,20 @@ namespace Core.Domain.Services {
             return response;
         }
 
+        public UserGame GetByUserIdAndOficialGameId (int userId, int oficialGameId) {
+            var userGameResponse = _userGameRepository.GetByUserIdAndOficialGameId (userId, oficialGameId);
+            return userGameResponse;
+        }
+
         public void Save (UserGameSaveRequest userGameSaveRequest) {
-            _userGameValidation.CanSave(userGameSaveRequest);
-            _userGameRepository.DeleteByUserIdAndOficialGameId (userGameSaveRequest.UserId, userGameSaveRequest.OficialGameId);
-            _userGameRepository.Create (userGameSaveRequest);
+            var userGameExist = GetByUserIdAndOficialGameId (userGameSaveRequest.UserId, userGameSaveRequest.OficialGameId);
+            _userGameValidation.CanSave (userGameExist);
+
+            if (userGameExist != null && userGameExist.ScoreTeamA >= 0 && userGameExist.ScoreTeamB >= 0) {
+                _userGameRepository.Update (userGameSaveRequest);
+            } else {
+                _userGameRepository.Create (userGameSaveRequest);
+            }
         }
     }
 }

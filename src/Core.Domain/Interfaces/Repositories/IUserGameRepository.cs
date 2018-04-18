@@ -7,7 +7,11 @@ namespace Core.Domain.Interfaces.Repositories {
 
         void DeleteByUserIdAndOficialGameId(int userId, int oficialGameId);
 
+        UserGame GetByUserIdAndOficialGameId(int userId, int oficialGameId);
+
         void Create (UserGameSaveRequest userGameSaveRequest);
+
+        void Update (UserGameSaveRequest userGameSaveRequest);
 
         List<UserGameByGroup> ListByUserId(int userId);
     }

@@ -32,6 +32,33 @@ namespace Core.Data.Repositories {
             }
         }
 
+        public UserGame GetByUserIdAndOficialGameId (int userId, int oficialGameId) {
+            UserGame userGame = new UserGame ();
+
+            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
+                using (var cmd = new SqlCommand ()) {
+                    cmd.Connection = conn;
+                    cmd.CommandText = _userGameSql.SqlGetByUserIdAndOficialGameId ();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue ("@UserId", GetDbValue (userId));
+                    cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (oficialGameId));
+
+                    conn.Open ();
+                    using (DbDataReader dr = cmd.ExecuteReader ()) {
+                        if (dr.Read ()) {
+                            userGame.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
+                            userGame.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
+                            userGame.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
+                            userGame.OficialGame = new OficialGame ();
+                            userGame.OficialGame.Date = Convert.ToDateTime (dr["GameDate"].ToString ());
+                        }
+                    }
+                }
+            }
+
+            return userGame;
+        }
+
         public void Create (UserGameSaveRequest request) {
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
@@ -44,7 +71,24 @@ namespace Core.Data.Repositories {
                     cmd.Parameters.AddWithValue ("@ScoreTeamB", GetDbValue (request.ScoreTeamB));
 
                     conn.Open ();
-                    cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery ();
+                }
+            }
+        }
+
+        public void Update (UserGameSaveRequest request) {
+            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
+                using (var cmd = new SqlCommand ()) {
+                    cmd.Connection = conn;
+                    cmd.CommandText = _userGameSql.SqlUpdate ();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue ("@UserId", GetDbValue (request.UserId));
+                    cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (request.OficialGameId));
+                    cmd.Parameters.AddWithValue ("@ScoreTeamA", GetDbValue (request.ScoreTeamA));
+                    cmd.Parameters.AddWithValue ("@ScoreTeamB", GetDbValue (request.ScoreTeamB));
+
+                    conn.Open ();
+                    cmd.ExecuteNonQuery ();
                 }
             }
         }
@@ -71,7 +115,7 @@ namespace Core.Data.Repositories {
         }
 
         public List<UserGameByGroup> ListByUserId (int userId) {
-            List<Game> games = new List<Game> ();
+            List<UserGameOfGroup> userGames = new List<UserGameOfGroup> ();
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
@@ -84,16 +128,16 @@ namespace Core.Data.Repositories {
                     using (DbDataReader dr = cmd.ExecuteReader ()) {
                         while (dr.Read ()) {
 
-                            Game game = new Game ();
-                            game.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
-                            game.GameDate = Convert.ToDateTime (dr["GameDate"].ToString ()).ToString ("dd/MM/yyyy HH:mm");
-                            game.TeamA = dr["TeamA"].ToString ();
-                            game.TeamB = dr["TeamB"].ToString ();
-                            game.GroupName = dr["GroupName"].ToString ();
-                            game.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
-                            game.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
+                            UserGameOfGroup userGame = new UserGameOfGroup ();
+                            userGame.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
+                            userGame.GameDate = Convert.ToDateTime (dr["GameDate"].ToString ());
+                            userGame.TeamA = dr["TeamA"].ToString ();
+                            userGame.TeamB = dr["TeamB"].ToString ();
+                            userGame.GroupName = dr["GroupName"].ToString ();
+                            userGame.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
+                            userGame.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
 
-                            games.Add (game);
+                            userGames.Add (userGame);
                         }
                     }
                 }
@@ -102,21 +146,14 @@ namespace Core.Data.Repositories {
             //--- monta o objeto de retorno
             var response = new List<UserGameByGroup> ();
 
-            foreach (var group in games.GroupBy (g => g.GroupName)) {
+            foreach (var group in userGames.GroupBy (g => g.GroupName)) {
                 UserGameByGroup userGameByGroup = new UserGameByGroup ();
                 userGameByGroup.GroupName = group.Key;
-                userGameByGroup.Games = new List<Game> ();
+                userGameByGroup.UserGames = new List<UserGameOfGroup> ();
 
-                foreach (var game in games.Where (m => m.GroupName == userGameByGroup.GroupName)) {
-                    userGameByGroup.Games.Add (new Game {
-                        OficialGameId = game.OficialGameId,
-                            GroupName = group.Key,
-                            GameDate = game.GameDate,
-                            TeamA = game.TeamA,
-                            TeamB = game.TeamB,
-                            ScoreTeamA = game.ScoreTeamA,
-                            ScoreTeamB = game.ScoreTeamB,
-                    });
+                foreach (var userGame in userGames.Where (m => m.GroupName == userGameByGroup.GroupName)) {
+                    userGame.CanSave = DateTime.Now < userGame.GameDate.AddHours (-4);
+                    userGameByGroup.UserGames.Add (userGame);
                 }
 
                 response.Add (userGameByGroup);

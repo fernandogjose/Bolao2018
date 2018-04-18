@@ -7,7 +7,5 @@ namespace Core.WebApi.Models {
         public int ScoreTeamA { get; set; }
 
         public int ScoreTeamB { get; set; }
-
-        public string GameDate { get; set; }
     }
 }

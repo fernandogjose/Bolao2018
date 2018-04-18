@@ -16,5 +16,7 @@ namespace Core.Domain.Models
         public int ScoreTeamB { get; set; }
 
         public int Points { get; set; }
+
+        public OficialGame OficialGame { get; set; }
     }
 }

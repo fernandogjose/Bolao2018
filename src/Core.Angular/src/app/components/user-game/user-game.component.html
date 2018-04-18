@@ -11,7 +11,7 @@
         <table class="table table-striped">
           <tbody>
             <tr *ngFor="let game of userGameByGroup.userGames; let indexUserGame = index">
-              <td>{{ game.gameDate }}</td>
+              <td>{{ game.gameDate | date:'dd/MM/yyyy HH:mm' }}</td>
               <td class="text-right">{{ game.teamA }}</td>
               <td>
                 <input type="number" class="form-control" id="scoreTeamA{{game.oficialGameId}}" name="scoreTeamA{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamA" required>
@@ -22,7 +22,7 @@
               </td>
               <td class="text-left">{{ game.teamB }}</td>
               <td>
-                <button type="button" class="btn btn-info" (click)="save(indexGroup, indexUserGame)" [disabled]="isLoading">salvar</button>
+                <button *ngIf="game.canSave" type="button" class="btn btn-info" (click)="save(indexGroup, indexUserGame)" [disabled]="isLoading">salvar</button>
               </td>
           </tbody>
         </table>

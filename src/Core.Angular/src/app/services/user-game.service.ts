@@ -13,21 +13,6 @@ export class UserGameService {
   }
 
   save(userGame: UserGame) {
-    // var userGameSaveRequest = new UserGameSaveRequest(
-    //   userGame.userId,
-    //   userGame.oficialGameId,
-    //   userGame.scoreTeamA,
-    //   userGame.scoreTeamB,
-    //   userGame.gameDate
-    // );
-
-    var teste = {
-      'userId': userGame.userId,
-      'oficialGame': {
-        'date': Date.parse(userGame.gameDate)
-      }
-    };
-
     return this.http.post(`${BASE_URL_API}/usergame`, userGame);
   }
 

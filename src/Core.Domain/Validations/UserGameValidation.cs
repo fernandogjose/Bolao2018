@@ -13,10 +13,10 @@ namespace Core.Domain.Validations {
             _oficialGameRepository = oficialGameRepository;
         }
 
-        public void CanSave (UserGameSaveRequest userGameSaveRequest) {
-            var userOficialGame = _oficialGameRepository.Get(userGameSaveRequest.OficialGameId);
-
-            if (userOficialGame == null || userOficialGame.Date.AddHours (-4) > DateTime.Now) {
+        public void CanSave (UserGame userGameRequest) {
+            if (userGameRequest == null ||
+                userGameRequest.OficialGame == null ||
+                DateTime.Now > userGameRequest.OficialGame.Date.AddHours (-4)) {
                 throw new Exception ("Não é permitido alterar o resultado deste jogo");
             }
         }

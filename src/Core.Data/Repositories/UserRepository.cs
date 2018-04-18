@@ -59,12 +59,12 @@ namespace Core.Data.Repositories {
         public User Login (string email, string password) {
             var response = new User ();
 
-            response.Id = 1;
-            response.Email = "fernandogjose@gmail.com";
-            response.Name = "Fernando José";
-            response.Token = "dskfjhasdjkfhf8s9ad7f897df89sa7f897fds";
+            // response.Id = 1;
+            // response.Email = "fernandogjose@gmail.com";
+            // response.Name = "Fernando José";
+            // response.Token = "dskfjhasdjkfhf8s9ad7f897df89sa7f897fds";
 
-            return response;
+            // return response;
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
