@@ -1,5 +1,4 @@
 using System;
-using Core.Domain.Exceptions;
 using Core.Domain.Interfaces.Repositories;
 using Core.Domain.Models;
 using Core.Domain.Validations;
@@ -26,18 +25,34 @@ namespace Core.Domain.Services {
         }
 
         public User Login (string email, string password) {
+
+            User userResponse = null;
+
+            //--- validação dos parâmetros
             _userValidation.ValidateEmail (email);
             _userValidation.ValidatePassword (password);
 
-            User response = _userRepository.Login (email, password);
+            //--- verifica se o usuário esta em cache
+            var userCache = _memoryCache.Get<User> ($"userEmail-{email}");
+            if (userCache == null) {
 
-            _userValidation.IsLogged (response);
+                //--- faz o login, verifica se logou
+                userResponse = _userRepository.Login (email, password);
+                _userValidation.IsLogged (userResponse);
 
-            response.Token = CreateToken ();
+                //--- grava o usuário em cache por email
+                _memoryCache.Set<User> ($"userEmail-{userResponse.Email}", userResponse);
+            } else {
+                userResponse = userCache;
+            }
 
-            _memoryCache.Set<User> ($"userId-{response.Id}", response);
+            //--- cria o token para esta sessão
+            userResponse.Token = CreateToken ();
 
-            return response;
+            //--- grava o usuário em cache por id para a autenticacao dos usuários nos httprequest
+            _memoryCache.Set<User> ($"userId-{userResponse.Id}", userResponse);            
+
+            return userResponse;
         }
 
         public User GetById (int id) {

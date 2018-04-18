@@ -2,7 +2,7 @@ using System;
 
 namespace Core.Domain.Models
 {
-    public class UserGameOfGroup
+    public class GameOfGroup
     {
         public int OficialGameId { get; set; }
 

@@ -1,13 +1,11 @@
-using System;
 using System.Collections.Generic;
-using Core.Domain.Exceptions;
 using Core.Domain.Interfaces.Repositories;
 using Core.Domain.Models;
 using Core.Domain.Validations;
 using Core.WebApi.Models;
-using Microsoft.Extensions.Caching.Memory;
 
-namespace Core.Domain.Services {
+namespace Core.Domain.Services
+{
     public class UserGameService {
 
         private readonly IUserGameRepository _userGameRepository;
@@ -19,7 +17,7 @@ namespace Core.Domain.Services {
             _userGameValidation = userGameValidation;
         }
 
-        public List<UserGameByGroup> ListByUserId (int id) {
+        public List<GameByGroup> ListByUserId (int id) {
             var response = _userGameRepository.ListByUserId (id);
             return response;
         }

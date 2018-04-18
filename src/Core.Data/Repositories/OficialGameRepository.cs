@@ -11,7 +11,7 @@ using Core.WebApi.Models;
 
 namespace Core.Data.Repositories {
     public class OficialGameRepository : BaseRepository, IOficialGameRepository {
-        
+
         private readonly OficialGameSql _oficialGameSql;
 
         public OficialGameRepository (OficialGameSql oficialGameSql) {
@@ -40,5 +40,53 @@ namespace Core.Data.Repositories {
 
             return oficialGameResponse;
         }
+
+        public List<GameByGroup> List () {
+            List<GameOfGroup> gamesOfGroup = new List<GameOfGroup> ();
+
+            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
+                using (var cmd = new SqlCommand ()) {
+                    cmd.Connection = conn;
+                    cmd.CommandText = _oficialGameSql.SqlList ();
+                    cmd.CommandType = CommandType.Text;
+
+                    conn.Open ();
+                    using (DbDataReader dr = cmd.ExecuteReader ()) {
+                        while (dr.Read ()) {
+
+                            GameOfGroup gameOfGroup = new GameOfGroup ();
+                            gameOfGroup.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
+                            gameOfGroup.GameDate = Convert.ToDateTime (dr["GameDate"].ToString ());
+                            gameOfGroup.TeamA = dr["TeamA"].ToString ();
+                            gameOfGroup.TeamB = dr["TeamB"].ToString ();
+                            gameOfGroup.GroupName = dr["GroupName"].ToString ();
+                            gameOfGroup.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
+                            gameOfGroup.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
+
+                            gamesOfGroup.Add (gameOfGroup);
+                        }
+                    }
+                }
+            }
+
+            //--- monta o objeto de retorno
+            var gamesByGroupResponse = new List<GameByGroup> ();
+
+            foreach (var group in gamesOfGroup.GroupBy (g => g.GroupName)) {
+                GameByGroup userGameByGroup = new GameByGroup ();
+                userGameByGroup.GroupName = group.Key;
+                userGameByGroup.Games = new List<GameOfGroup> ();
+
+                foreach (var game in gamesOfGroup.Where (m => m.GroupName == userGameByGroup.GroupName)) {
+                    game.CanSave = DateTime.Now < game.GameDate.AddHours (-4);
+                    userGameByGroup.Games.Add (game);
+                }
+
+                gamesByGroupResponse.Add (userGameByGroup);
+            }
+
+            return gamesByGroupResponse;
+        }
+
     }
 }

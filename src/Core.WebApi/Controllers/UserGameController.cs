@@ -18,7 +18,7 @@ namespace Core.WebApi.Controllers {
         }
 
         [HttpGet ("listbyuserid/{userId:int}")]
-        public List<UserGameByGroup> ListByUserId (int userId) {
+        public List<GameByGroup> ListByUserId (int userId) {
             var response = _userGameService.ListByUserId (userId);
             return response;
         }

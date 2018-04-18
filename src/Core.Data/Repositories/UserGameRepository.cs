@@ -114,8 +114,8 @@ namespace Core.Data.Repositories {
             return response;
         }
 
-        public List<UserGameByGroup> ListByUserId (int userId) {
-            List<UserGameOfGroup> userGames = new List<UserGameOfGroup> ();
+        public List<GameByGroup> ListByUserId (int userId) {
+            List<GameOfGroup> gamesOfGroup = new List<GameOfGroup> ();
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
@@ -128,38 +128,38 @@ namespace Core.Data.Repositories {
                     using (DbDataReader dr = cmd.ExecuteReader ()) {
                         while (dr.Read ()) {
 
-                            UserGameOfGroup userGame = new UserGameOfGroup ();
-                            userGame.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
-                            userGame.GameDate = Convert.ToDateTime (dr["GameDate"].ToString ());
-                            userGame.TeamA = dr["TeamA"].ToString ();
-                            userGame.TeamB = dr["TeamB"].ToString ();
-                            userGame.GroupName = dr["GroupName"].ToString ();
-                            userGame.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
-                            userGame.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
+                            GameOfGroup gameOfGroup = new GameOfGroup ();
+                            gameOfGroup.OficialGameId = Convert.ToInt32 (dr["OficialGameId"].ToString ());
+                            gameOfGroup.GameDate = Convert.ToDateTime (dr["GameDate"].ToString ());
+                            gameOfGroup.TeamA = dr["TeamA"].ToString ();
+                            gameOfGroup.TeamB = dr["TeamB"].ToString ();
+                            gameOfGroup.GroupName = dr["GroupName"].ToString ();
+                            gameOfGroup.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
+                            gameOfGroup.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
 
-                            userGames.Add (userGame);
+                            gamesOfGroup.Add (gameOfGroup);
                         }
                     }
                 }
             }
 
             //--- monta o objeto de retorno
-            var response = new List<UserGameByGroup> ();
+            var gamesByGroupResponse = new List<GameByGroup> ();
 
-            foreach (var group in userGames.GroupBy (g => g.GroupName)) {
-                UserGameByGroup userGameByGroup = new UserGameByGroup ();
+            foreach (var group in gamesOfGroup.GroupBy (g => g.GroupName)) {
+                GameByGroup userGameByGroup = new GameByGroup ();
                 userGameByGroup.GroupName = group.Key;
-                userGameByGroup.UserGames = new List<UserGameOfGroup> ();
+                userGameByGroup.Games = new List<GameOfGroup> ();
 
-                foreach (var userGame in userGames.Where (m => m.GroupName == userGameByGroup.GroupName)) {
-                    userGame.CanSave = DateTime.Now < userGame.GameDate.AddHours (-4);
-                    userGameByGroup.UserGames.Add (userGame);
+                foreach (var game in gamesOfGroup.Where (m => m.GroupName == userGameByGroup.GroupName)) {
+                    game.CanSave = DateTime.Now < game.GameDate.AddHours (-4);
+                    userGameByGroup.Games.Add (game);
                 }
 
-                response.Add (userGameByGroup);
+                gamesByGroupResponse.Add (userGameByGroup);
             }
 
-            return response;
+            return gamesByGroupResponse;
         }
     }
 }
