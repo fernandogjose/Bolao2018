@@ -3,7 +3,7 @@
     <div class="box">
       <!-- Grupo -->
       <div class="box-header">
-        <h3 class="box-title">Grupo {{ userGameByGroup.groupName }}</h3>
+        <h3 class="box-title">{{ userGameByGroup.groupName }}</h3>
       </div>
 
       <!-- Jogos -->
@@ -11,19 +11,13 @@
         <table class="table table-striped">
           <tbody>
             <tr *ngFor="let game of userGameByGroup.userGames; let indexUserGame = index">
-              <td>{{ game.gameDate | date:'dd/MM/yyyy HH:mm' }}</td>
-              <td class="text-right">{{ game.teamA }}</td>
-              <td>
-                <input type="number" class="form-control" id="scoreTeamA{{game.oficialGameId}}" name="scoreTeamA{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamA" required>
-              </td>
-              <td> x </td>
-              <td>
-                <input type="number" class="form-control" id="scoreTeamB{{game.oficialGameId}}" name="scoreTeamB{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamB" required>
-              </td>
-              <td class="text-left">{{ game.teamB }}</td>
-              <td>
-                <button *ngIf="game.canSave" type="button" class="btn btn-info" (click)="save(indexGroup, indexUserGame)" [disabled]="isLoading">salvar</button>
-              </td>
+              <td class="col-lg-2">{{ game.gameDate | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td class="col-lg-3 text-right">{{ game.teamA }}</td>
+              <td class="col-lg-1"><input type="number" class="form-control" id="scoreTeamA{{game.oficialGameId}}" name="scoreTeamA{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamA" required></td>
+              <td class="col-lg-1 text-center"> x </td>
+              <td class="col-lg-1"><input type="number" class="form-control" id="scoreTeamB{{game.oficialGameId}}" name="scoreTeamB{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamB" required></td>
+              <td class="col-lg-3">{{ game.teamB }}</td>
+              <td class="col-lg-1"><button *ngIf="game.canSave" type="button" class="btn btn-info" (click)="save(indexGroup, indexUserGame)" [disabled]="isLoading">salvar</button></td>
           </tbody>
         </table>
       </div>

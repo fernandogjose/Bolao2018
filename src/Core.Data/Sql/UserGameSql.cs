@@ -38,8 +38,8 @@ namespace Core.Data.Sql {
                 "    INNER JOIN BolaoGroup ON BolaoOficialGame.GroupId = BolaoGroup.Id" +
                 "    INNER JOIN BolaoTeam as BolaoTeamA ON BolaoOficialGame.TeamAId = BolaoTeamA.Id" +
                 "    INNER JOIN BolaoTeam as BolaoTeamB ON BolaoOficialGame.TeamBId = BolaoTeamB.Id" +
-                "    ORDER BY BolaoGroup.[Name]" +
-                "            ,BolaoOficialGame.[Date]";
+                "    ORDER BY BolaoOficialGame.[Date]" +
+                "            ,BolaoGroup.[Name]";
         }
 
         public string SqlGetByUserIdAndOficialGameId () {
