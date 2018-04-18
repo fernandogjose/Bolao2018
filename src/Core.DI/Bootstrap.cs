@@ -26,6 +26,7 @@ namespace Core.DI
             
             services.AddSingleton<UserService>();
             services.AddSingleton<UserGameService>();
+            services.AddSingleton<OficialGameService>();
         }
     }
 }

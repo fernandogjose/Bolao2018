@@ -5,5 +5,7 @@ namespace Core.Domain.Interfaces.Repositories {
     public interface IOficialGameRepository {
 
         OficialGame Get(int id);
+
+         List<GameByGroup> List ();
     }
 }

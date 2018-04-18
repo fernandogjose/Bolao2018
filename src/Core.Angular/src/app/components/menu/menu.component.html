@@ -1,3 +1,5 @@
+<!-- <a [routerLink]="['/meu-jogo', shared.user.id]"> -->
+
 <aside class="main-sidebar" *ngIf="shared.user">
   <section class="sidebar">
     <ul class="sidebar-menu" data-widget="tree">
@@ -7,14 +9,14 @@
       </li>
 
       <li>
-        <a [routerLink]="['/meujogo', shared.user.id]">
+        <a [routerLink]="['/meu-jogo']">
           <i class="fa fa-dashboard"></i>
           <span>Meu Jogo</span>
         </a>
       </li>
 
       <li>
-        <a href="#">
+        <a [routerLink]="['/resultado-oficial']">
           <i class="fa fa-edit"></i>
           <span>Resultado Oficial</span>
         </a>

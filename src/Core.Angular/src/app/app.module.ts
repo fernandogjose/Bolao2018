@@ -16,6 +16,8 @@ import { AuthInterceptor } from './components/security/auth.interceptor';
 import { UserNewComponent } from './components/user-new/user-new.component';
 import { UserGameComponent } from './components/user-game/user-game.component';
 import { UserGameService } from './services/user-game.service';
+import { OficialGameComponent } from './components/oficial-game/oficial-game.component';
+import { OficialGameService } from './services/oficial-game.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { UserGameService } from './services/user-game.service';
     HomeComponent,
     LoginComponent,
     UserNewComponent,
-    UserGameComponent
+    UserGameComponent,
+    OficialGameComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +40,7 @@ import { UserGameService } from './services/user-game.service';
   providers: [
     UserService,
     UserGameService,
+    OficialGameService,
     SharedService,
     AuthGuard,
     {

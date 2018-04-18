@@ -13,6 +13,6 @@ namespace Core.Domain.Interfaces.Repositories {
 
         void Update (UserGameSaveRequest userGameSaveRequest);
 
-        List<UserGameByGroup> ListByUserId(int userId);
+        List<GameByGroup> ListByUserId(int userId);
     }
 }

@@ -1,4 +1,4 @@
-export class UserGame {
+export class Game {
     public userId: number;
     public oficialGameId: number;
     public scoreTeamA: number;
