@@ -39,7 +39,9 @@ namespace Core.Domain.Validations {
         }
 
         public void ValidateDuplicateEmail (string email) {
-            if (_userRepository.GetByEmail (email) != null) {
+
+            var userPorEmail = _userRepository.GetByEmail (email);
+            if (userPorEmail != null && userPorEmail.Id > 0) {
                 throw new DuplicateException ("e-mail já cadastrado");
             }
         }

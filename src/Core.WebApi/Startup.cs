@@ -32,7 +32,7 @@ namespace Core.WebApi {
             }
 
             app.UseCors (
-                options => options.WithOrigins ("http://localhost:4200")
+                options => options.WithOrigins ("http://localhost:4200").WithOrigins("http://bolaocopadomundo.azurewebsites.net/").WithOrigins("https://bolaocopadomundo.azurewebsites.net/")
                 .AllowAnyHeader ()
                 .AllowAnyMethod ()
                 .AllowAnyOrigin ()
