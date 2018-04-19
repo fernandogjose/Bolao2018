@@ -94,7 +94,7 @@ namespace Core.Data.Repositories {
                             gameOfGroup.GroupName = dr["GroupName"].ToString ();
                             gameOfGroup.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
                             gameOfGroup.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
-                            gameOfGroup.IsCreateScore = Convert.ToBoolean (dr["IsCreateScore"].ToString ());
+                            gameOfGroup.IsCreateScore = dr["IsCreateScore"].ToString() == "0";
 
                             gamesOfGroup.Add (gameOfGroup);
                         }

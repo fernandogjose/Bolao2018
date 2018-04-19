@@ -24,7 +24,7 @@ namespace Core.Domain.Services {
         public void Calculate (OficialGameSaveRequest oficialGame) {
             List<UserPoint> userPoints = new List<UserPoint> (0);
 
-            //--- obter a lista de resultados do usuário do jogo passado
+            //--- obter a lista de resultados do usuário do jogo que deseja calcular
             List<UserGameScore> userGameScores = _userGameService.ListByOficialGameId (oficialGame.OficialGameId);
 
             //--- loop para calcular
@@ -95,6 +95,13 @@ namespace Core.Domain.Services {
                     });
                     continue;
                 }
+
+                //--- caso o resultado esteja errado
+                userPoints.Add (new UserPoint {
+                    UserId = userGameScore.UserId,
+                        OficialGameId = userGameScore.OficialGameId,
+                        PointType = PointTypeEnum.ResultadoErrado
+                });
             }
 
             _userPointRepository.Create (userPoints);

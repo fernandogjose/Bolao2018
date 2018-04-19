@@ -19,13 +19,13 @@ namespace Core.Data.Repositories {
 
         public void Create (List<UserPoint> userPointsRequest) {
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
-                using (var cmd = new SqlCommand ()) {
-                    cmd.Connection = conn;
-                    cmd.CommandText = _userPointSql.SqlCreate ();
-                    cmd.CommandType = CommandType.Text;
-                    conn.Open ();
+                conn.Open ();
 
-                    foreach (var userPointRequest in userPointsRequest) {
+                foreach (var userPointRequest in userPointsRequest) {
+                    using (var cmd = new SqlCommand ()) {
+                        cmd.Connection = conn;
+                        cmd.CommandText = _userPointSql.SqlCreate ();
+                        cmd.CommandType = CommandType.Text;
                         cmd.Parameters.AddWithValue ("@UserId", GetDbValue (userPointRequest.UserId));
                         cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (userPointRequest.OficialGameId));
                         cmd.Parameters.AddWithValue ("@PointTypeId", GetDbValue (Convert.ToInt32 (userPointRequest.PointType)));

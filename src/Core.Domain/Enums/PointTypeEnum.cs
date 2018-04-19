@@ -9,6 +9,8 @@ namespace Core.Domain.Enums {
 
                 ResultadoDeEmpateCertoComPlacarCerto = 4,
 
-                ResultadoDeEmpateCertoComPlacarErrado = 5
+                ResultadoDeEmpateCertoComPlacarErrado = 5,
+
+                ResultadoErrado = 6
         }
 }

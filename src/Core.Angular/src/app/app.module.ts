@@ -18,6 +18,7 @@ import { UserGameComponent } from './components/user-game/user-game.component';
 import { UserGameService } from './services/user-game.service';
 import { OficialGameComponent } from './components/oficial-game/oficial-game.component';
 import { OficialGameService } from './services/oficial-game.service';
+import { RuleComponent } from './components/rule/rule.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { OficialGameService } from './services/oficial-game.service';
     LoginComponent,
     UserNewComponent,
     UserGameComponent,
-    OficialGameComponent
+    OficialGameComponent,
+    RuleComponent
   ],
   imports: [
     BrowserModule,

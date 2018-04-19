@@ -44,8 +44,8 @@ namespace Core.Data.Sql {
 
         public string SqlListByOficialGameId () {
             return " SELECT BolaoUser.Id as UserId" +
-                "         , ISNULL((SELECT ScoreTeamA FROM BolaoUserGame WHERE OficialGameId = @OficialGameId), 0) as ScoreTeamA" +
-                "         , ISNULL((SELECT ScoreTeamB FROM BolaoUserGame WHERE OficialGameId = @OficialGameId), 0) as ScoreTeamB" +
+                "         , ISNULL((SELECT ScoreTeamA FROM BolaoUserGame WHERE OficialGameId = @OficialGameId and UserId = BolaoUser.Id), 0) as ScoreTeamA" +
+                "         , ISNULL((SELECT ScoreTeamB FROM BolaoUserGame WHERE OficialGameId = @OficialGameId and UserId = BolaoUser.Id), 0) as ScoreTeamB" +
                 "    FROM BolaoUser" +
                 "    ORDER BY BolaoUser.Name";
         }
