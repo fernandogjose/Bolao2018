@@ -58,10 +58,10 @@ namespace Core.Data.Repositories {
 
         public User Login (string email, string password) {
             var response = new User ();
-            // response.Id = 1;
-            // response.Email = "fernandogjose@gmail.com";
-            // response.Name = "Fernando José";
-            // return response;
+            response.Id = 1;
+            response.Email = "fernandogjose@gmail.com";
+            response.Name = "Fernando José";
+            return response;
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
