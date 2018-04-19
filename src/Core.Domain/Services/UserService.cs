@@ -38,13 +38,15 @@ namespace Core.Domain.Services {
 
                 //--- faz o login, verifica se logou
                 userResponse = _userRepository.Login (email, password);
-                _userValidation.IsLogged (userResponse);
 
                 //--- grava o usuário em cache por email
                 _memoryCache.Set<User> ($"userEmail-{userResponse.Email}", userResponse);
             } else {
                 userResponse = userCache;
             }
+
+            //--- verifica se o usuário esta logado
+            _userValidation.IsLogged (userResponse, password);
 
             //--- cria o token para esta sessão
             userResponse.Token = CreateToken ();

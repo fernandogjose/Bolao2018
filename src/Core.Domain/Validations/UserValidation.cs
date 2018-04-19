@@ -51,8 +51,11 @@ namespace Core.Domain.Validations {
                 throw new ArgumentException ("senha é obrigatório");
         }
 
-        public void IsLogged (User user) {
+        public void IsLogged (User user, string password) {
             if (user == null || user.Id == 0)
+                throw new AuthException ("e-mail ou senha inválido");
+
+            if (user.Password != password)
                 throw new AuthException ("e-mail ou senha inválido");
         }
     }
