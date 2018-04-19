@@ -17,6 +17,10 @@ namespace Core.Domain.Services {
             _userGameService = userGameService;
         }
 
+        public void DeleteByOficialGameId (int oficialGameId) {
+            _userPointRepository.DeleteByOficialGameId (oficialGameId);
+        }
+
         public void Calculate (OficialGameSaveRequest oficialGame) {
             List<UserPoint> userPoints = new List<UserPoint> (0);
 
@@ -29,7 +33,7 @@ namespace Core.Domain.Services {
                 //--- resultado de vitoria certo com placar certo 
                 if ((oficialGame.ScoreTeamA == userGameScore.ScoreTeamA && oficialGame.ScoreTeamB == userGameScore.ScoreTeamB) &&
                     ((oficialGame.ScoreTeamA > oficialGame.ScoreTeamB && userGameScore.ScoreTeamA > userGameScore.ScoreTeamB) ||
-                     (oficialGame.ScoreTeamA < oficialGame.ScoreTeamB && userGameScore.ScoreTeamA < userGameScore.ScoreTeamB))) {
+                        (oficialGame.ScoreTeamA < oficialGame.ScoreTeamB && userGameScore.ScoreTeamA < userGameScore.ScoreTeamB))) {
 
                     userPoints.Add (new UserPoint {
                         UserId = userGameScore.UserId,
@@ -42,12 +46,12 @@ namespace Core.Domain.Services {
                 //--- resultado de vitoria certo com um placar certo 
                 if ((oficialGame.ScoreTeamA == userGameScore.ScoreTeamA || oficialGame.ScoreTeamB == userGameScore.ScoreTeamB) &&
                     ((oficialGame.ScoreTeamA > oficialGame.ScoreTeamB && userGameScore.ScoreTeamA > userGameScore.ScoreTeamB) ||
-                     (oficialGame.ScoreTeamA < oficialGame.ScoreTeamB && userGameScore.ScoreTeamA < userGameScore.ScoreTeamB))) {
+                        (oficialGame.ScoreTeamA < oficialGame.ScoreTeamB && userGameScore.ScoreTeamA < userGameScore.ScoreTeamB))) {
 
                     userPoints.Add (new UserPoint {
                         UserId = userGameScore.UserId,
-                        OficialGameId = userGameScore.OficialGameId,
-                        PointType = PointTypeEnum.ResultadoDeVitoriaCertoComUmPlacarCerto
+                            OficialGameId = userGameScore.OficialGameId,
+                            PointType = PointTypeEnum.ResultadoDeVitoriaCertoComUmPlacarCerto
                     });
                     continue;
                 }
@@ -55,12 +59,12 @@ namespace Core.Domain.Services {
                 //--- resultado de vitoria certo com um placar errado 
                 if ((oficialGame.ScoreTeamA != userGameScore.ScoreTeamA && oficialGame.ScoreTeamB != userGameScore.ScoreTeamB) &&
                     ((oficialGame.ScoreTeamA > oficialGame.ScoreTeamB && userGameScore.ScoreTeamA > userGameScore.ScoreTeamB) ||
-                     (oficialGame.ScoreTeamA < oficialGame.ScoreTeamB && userGameScore.ScoreTeamA < userGameScore.ScoreTeamB))) {
+                        (oficialGame.ScoreTeamA < oficialGame.ScoreTeamB && userGameScore.ScoreTeamA < userGameScore.ScoreTeamB))) {
 
                     userPoints.Add (new UserPoint {
                         UserId = userGameScore.UserId,
-                        OficialGameId = userGameScore.OficialGameId,
-                        PointType = PointTypeEnum.ResultadoDeVitoriaCertoComPlacarErrado
+                            OficialGameId = userGameScore.OficialGameId,
+                            PointType = PointTypeEnum.ResultadoDeVitoriaCertoComPlacarErrado
                     });
                     continue;
                 }
@@ -72,8 +76,8 @@ namespace Core.Domain.Services {
 
                     userPoints.Add (new UserPoint {
                         UserId = userGameScore.UserId,
-                        OficialGameId = userGameScore.OficialGameId,
-                        PointType = PointTypeEnum.ResultadoDeEmpateCertoComPlacarCerto
+                            OficialGameId = userGameScore.OficialGameId,
+                            PointType = PointTypeEnum.ResultadoDeEmpateCertoComPlacarCerto
                     });
                     continue;
                 }
@@ -86,14 +90,14 @@ namespace Core.Domain.Services {
 
                     userPoints.Add (new UserPoint {
                         UserId = userGameScore.UserId,
-                        OficialGameId = userGameScore.OficialGameId,
-                        PointType = PointTypeEnum.ResultadoDeEmpateCertoComPlacarErrado
+                            OficialGameId = userGameScore.OficialGameId,
+                            PointType = PointTypeEnum.ResultadoDeEmpateCertoComPlacarErrado
                     });
                     continue;
                 }
             }
 
-            _userPointRepository.Create(userPoints);
+            _userPointRepository.Create (userPoints);
         }
     }
 }

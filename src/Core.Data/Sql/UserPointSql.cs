@@ -7,10 +7,9 @@ namespace Core.Data.Sql
                    "VALUES (@UserId, @OficialGameId, @PointTypeId)";
         }
 
-        public string SqlDelete(){
+        public string SqlDeleteByOficialGameId(){
             return " DELETE FROM BolaoUserPoint " +
-                   " WHERE UserId = @UserId " +
-                   "   AND OficialGameId = @OficialGameId";
+                   " WHERE OficialGameId = @OficialGameId";
         }
 
         public string SqlList(){

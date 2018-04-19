@@ -47,28 +47,52 @@ export class OficialGameComponent implements OnInit {
     //   });
   }
 
-  save(indexGroup: number, indexGame: number): void {
-
+  updateScore(indexGroup: number, indexGame: number): void {
     this.isLoading = true;
 
-    var userGame = this.gamesByGroup[indexGroup].games[indexGame];
-    if (userGame.scoreTeamA == null || userGame.scoreTeamA < 0 || userGame.scoreTeamB == null || userGame.scoreTeamB < 0) {
+    //--- obter o jogo no array
+    var game = this.gamesByGroup[indexGroup].games[indexGame];
+
+    //--- verifica se os dados estão válidos
+    if (game.scoreTeamA == null || game.scoreTeamA < 0 || game.scoreTeamB == null || game.scoreTeamB < 0) {
       this.isLoading = false;
       return;
     }
 
-    userGame.userId = this.shared.user.id;
-    this.oficialGameService.save(userGame).subscribe(success => {
-      this.isLoading = false;
-    }, error => {
-      if (error.status == 401) {
-        this.shared.showTemplate.emit(false);
-        this.shared.user = null;
-        this.router.navigate(['/login']);
-
+    //--- envia para a api atualizar o placar
+    this.oficialGameService.updateScore(game).subscribe(
+      success => {
         this.isLoading = false;
-      }
-    });
+      },
+      error => {
+        if (error.status == 401) {
+          this.shared.showTemplate.emit(false);
+          this.shared.user = null;
+          this.router.navigate(['/login']);
+          this.isLoading = false;
+        }
+      });
 
+  }
+
+  deleteScore(indexGroup: number, indexGame: number): void {
+    this.isLoading = true;
+
+    //--- obter o jogo no array
+    var game = this.gamesByGroup[indexGroup].games[indexGame];
+
+    //--- envia para a api salvar
+    this.oficialGameService.deleteScore(game.oficialGameId).subscribe(
+      success => {
+        this.isLoading = false;
+      },
+      error => {
+        if (error.status == 401) {
+          this.shared.showTemplate.emit(false);
+          this.shared.user = null;
+          this.router.navigate(['/login']);
+          this.isLoading = false;
+        }
+      });
   }
 }

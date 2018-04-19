@@ -12,28 +12,35 @@ namespace Core.WebApi.Controllers {
     public class OficialGameController : Controller {
         private readonly OficialGameService _oficialGameService;
 
+        private int GetUserId () {
+            StringValues userId;
+            HttpContext.Request.Headers.TryGetValue ("userId", out userId);
+            return Convert.ToInt32 (userId[0]);
+        }
+
         public OficialGameController (OficialGameService oficialGameService) {
             _oficialGameService = oficialGameService;
         }
 
         [HttpGet]
         public List<GameByGroup> List () {
-            var response = _oficialGameService.List ();
-            return response;
+            int userId = GetUserId ();
+            var gamesByGroupResponse = _oficialGameService.List (userId);
+            return gamesByGroupResponse;
         }
 
         [HttpPut]
-        public void UpdateScore (OficialGameSaveRequest oficialGameSaveRequest) {
-
-            StringValues userIdRequest;
-            if (!HttpContext.Request.Headers.TryGetValue ("userId", out userIdRequest)) {
-                HttpContext.Response.StatusCode = 400;
-                HttpContext.Response.WriteAsync ("UserId não encontrado");
-                return;
-            }
-
-            oficialGameSaveRequest.UserId = Convert.ToInt32(userIdRequest[0]);
+        public void UpdateScore ([FromBody] OficialGameSaveRequest oficialGameSaveRequest) {
+            oficialGameSaveRequest.UserId = GetUserId ();
             _oficialGameService.UpdateScore (oficialGameSaveRequest);
+        }
+
+        [HttpDelete ("{oficialGameId}")]
+        public void DeleteScore (int oficialGameId) {
+            OficialGameSaveRequest oficialGameSaveRequest = new OficialGameSaveRequest ();
+            oficialGameSaveRequest.UserId = GetUserId ();
+            oficialGameSaveRequest.OficialGameId = oficialGameId;
+            _oficialGameService.DeleteScore (oficialGameSaveRequest);
         }
     }
 }

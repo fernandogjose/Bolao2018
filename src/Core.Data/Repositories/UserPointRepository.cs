@@ -35,19 +35,16 @@ namespace Core.Data.Repositories {
             }
         }
 
-        public void Delete (List<UserPoint> userPointsRequest) {
+        public void DeleteByOficialGameId (int oficialGameId) {
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
                     cmd.Connection = conn;
-                    cmd.CommandText = _userPointSql.SqlDelete ();
+                    cmd.CommandText = _userPointSql.SqlDeleteByOficialGameId ();
                     cmd.CommandType = CommandType.Text;
-                    conn.Open ();
+                    cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (oficialGameId));
 
-                    foreach (var userPointRequest in userPointsRequest) {
-                        cmd.Parameters.AddWithValue ("@UserId", GetDbValue (userPointRequest.UserId));
-                        cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (userPointRequest.OficialGameId));
-                        cmd.ExecuteNonQuery ();
-                    }
+                    conn.Open ();
+                    cmd.ExecuteNonQuery ();
                 }
             }
         }

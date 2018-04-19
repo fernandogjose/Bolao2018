@@ -12,8 +12,12 @@ export class OficialGameService {
     return this.http.get(`${BASE_URL_API}/oficialgame`);
   }
 
-  save(game: Game) {
-    return this.http.post(`${BASE_URL_API}/oficialgame`, game);
+  updateScore(game: Game) {
+    return this.http.put(`${BASE_URL_API}/oficialgame`, game);
+  }
+
+  deleteScore(oficialGameId: number) {
+    return this.http.delete(BASE_URL_API + '/oficialgame/' + oficialGameId);
   }
 
 }

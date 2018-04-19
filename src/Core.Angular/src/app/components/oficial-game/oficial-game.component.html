@@ -17,7 +17,10 @@
               <td class="col-lg-1 text-center"> x </td>
               <td class="col-lg-1"><input type="number" class="form-control" id="scoreTeamB{{game.oficialGameId}}" name="scoreTeamB{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamB" required></td>
               <td class="col-lg-3">{{ game.teamB }}</td>
-              <td class="col-lg-1"><button *ngIf="game.canSave" type="button" class="btn btn-info" (click)="save(indexGroup, indexGame)" [disabled]="isLoading">salvar</button></td>
+              <td class="col-lg-1">
+                <button *ngIf="game.canSave && game.isCreateScore" type="button" class="btn btn-info" (click)="updateScore(indexGroup, indexGame)" [disabled]="isLoading">atualizar placar</button>
+                <button *ngIf="game.canSave && !game.isCreateScore" type="button" class="btn btn-info" (click)="deleteScore(indexGroup, indexGame)" [disabled]="isLoading">remover placar</button>
+              </td>
           </tbody>
         </table>
       </div>

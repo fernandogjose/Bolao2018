@@ -6,5 +6,6 @@ export class Game {
     public gameDate: Date;
     public teamA: string;
     public teamB: string;  
-    public canSave: boolean;  
+    public canSave: boolean;
+    public isCreateScore: boolean;
 }

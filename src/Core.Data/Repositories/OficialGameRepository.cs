@@ -34,6 +34,22 @@ namespace Core.Data.Repositories {
             }
         }
 
+        public void DeleteScore (int oficialGameId) {
+            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
+                using (var cmd = new SqlCommand ()) {
+                    cmd.Connection = conn;
+                    cmd.CommandText = _oficialGameSql.SqlUpdateScore ();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (oficialGameId));
+                    cmd.Parameters.AddWithValue ("@ScoreTeamA", DBNull.Value);
+                    cmd.Parameters.AddWithValue ("@ScoreTeamB", DBNull.Value);
+
+                    conn.Open ();
+                    cmd.ExecuteNonQuery ();
+                }
+            }
+        }
+
         public OficialGame Get (int id) {
             OficialGame oficialGameResponse = new OficialGame ();
 
@@ -57,7 +73,7 @@ namespace Core.Data.Repositories {
             return oficialGameResponse;
         }
 
-        public List<GameByGroup> List () {
+        public List<GameByGroup> List (int userId) {
             List<GameOfGroup> gamesOfGroup = new List<GameOfGroup> ();
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
@@ -78,6 +94,7 @@ namespace Core.Data.Repositories {
                             gameOfGroup.GroupName = dr["GroupName"].ToString ();
                             gameOfGroup.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
                             gameOfGroup.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
+                            gameOfGroup.IsCreateScore = Convert.ToBoolean (dr["IsCreateScore"].ToString ());
 
                             gamesOfGroup.Add (gameOfGroup);
                         }
@@ -94,7 +111,7 @@ namespace Core.Data.Repositories {
                 userGameByGroup.Games = new List<GameOfGroup> ();
 
                 foreach (var game in gamesOfGroup.Where (m => m.GroupName == userGameByGroup.GroupName)) {
-                    game.CanSave = DateTime.Now < game.GameDate.AddHours (-4);
+                    game.CanSave = userId == 1;
                     userGameByGroup.Games.Add (game);
                 }
 

@@ -20,6 +20,7 @@ namespace Core.Data.Sql {
                 "         , ISNULL(BolaoOficialGame.ScoreTeamB, 0) AS ScoreTeamB" +
                 "         , BolaoTeamA.[Name] as TeamA" +
                 "         , BolaoTeamB.[Name] as TeamB" +
+                "         , ISNULL(SELECT TOP 1 1 FROM UserPoint WHERE OficialPointId = BolaoOficialGame.Id, 0) as IsCreateScore" +
                 "    FROM BolaoOficialGame" +
                 "    INNER JOIN BolaoGroup ON BolaoOficialGame.GroupId = BolaoGroup.Id" +
                 "    INNER JOIN BolaoTeam as BolaoTeamA ON BolaoOficialGame.TeamAId = BolaoTeamA.Id" +

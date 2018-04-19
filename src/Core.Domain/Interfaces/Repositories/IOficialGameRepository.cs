@@ -7,8 +7,10 @@ namespace Core.Domain.Interfaces.Repositories {
 
         OficialGame Get (int id);
 
-        List<GameByGroup> List ();
+        List<GameByGroup> List (int userId);
 
         void UpdateScore(OficialGameSaveRequest oficialGameSaveRequest);
+
+        void DeleteScore(int oficialGameId);
     }
 }

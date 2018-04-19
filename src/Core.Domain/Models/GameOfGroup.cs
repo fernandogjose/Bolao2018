@@ -19,5 +19,7 @@ namespace Core.Domain.Models
         public int ScoreTeamB { get; set; }
 
         public bool CanSave { get; set; }
+
+        public bool IsCreateScore { get; set; }
     }
 }
