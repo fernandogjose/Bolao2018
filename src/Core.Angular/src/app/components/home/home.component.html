@@ -13,22 +13,22 @@
             <tr>
               <th>Posição</th>
               <th>Boleiro</th>
-              <th>VCPC</th>
-              <th>VCUPC</th>
-              <th>VCPE</th>
-              <th>ECPC</th>
-              <th>ECPE</th>
-              <th>RE</th>
+              <th data-toggle="tooltip" data-placement="top" title="Vitoria certa com placar">VCPC</th>
+              <th data-toggle="tooltip" data-placement="top" title="Vitoria certa com um placar certo">VCUPC</th>
+              <th data-toggle="tooltip" data-placement="top" title="Vitoria certa com placar errado">VCPE</th>
+              <th data-toggle="tooltip" data-placement="top" title="Empate certo com placar certo">ECPC</th>
+              <th data-toggle="tooltip" data-placement="top" title="Empate certo com placar errado">ECPE</th>
+              <th data-toggle="tooltip" data-placement="top" title="Resultado errado">RE</th>
               <th>Total de Pontos</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let userPointClassification of userPointClassifications" [ngClass]="{'first': userPointClassification.position == 1, 'second': userPointClassification.position == 2, 'third': userPointClassification.position == 3}">
               <td>
-                  <span class="label label-success" *ngIf="userPointClassification.position == 1">deitando</span>
-                  <span class="label label-warning" *ngIf="userPointClassification.position == 2">na cola</span>
-                  <span class="label label-info"    *ngIf="userPointClassification.position == 3">se vacilar eu chego</span>
-                  <span *ngIf="userPointClassification.position > 3">{{ userPointClassification.position }}</span>
+                <span class="label label-success" *ngIf="userPointClassification.position == 1">deitando</span>
+                <span class="label label-warning" *ngIf="userPointClassification.position == 2">na cola</span>
+                <span class="label label-info" *ngIf="userPointClassification.position == 3">se vacilar eu chego</span>
+                <span *ngIf="userPointClassification.position > 3">{{ userPointClassification.position }}</span>
               </td>
               <td>{{ userPointClassification.userName }}</td>
               <td>{{ userPointClassification.vcpc }}</td>
@@ -39,6 +39,38 @@
               <td>{{ userPointClassification.re }}</td>
               <td class="total">{{ userPointClassification.total }}</td>
           </tbody>
+          <tfoot class="alert alert-secondary">
+            <tr>
+              <td colspan="9">
+                <span class="alert-link">VCPC: </span> Vitoria certa com placar certo
+              </td>
+            </tr>
+            <tr>
+              <td colspan="9">
+                <span class="alert-link">VCUPC: </span> Vitoria certa com um placar certo
+              </td>
+            </tr>
+            <tr>
+              <td colspan="9">
+                <span class="alert-link">VCPE: </span> Vitoria certa com placar errado
+              </td>
+            </tr>
+            <tr>
+              <td colspan="9">
+                <span class="alert-link">ECPC: </span> Empate certo com placar certo
+              </td>
+            </tr>
+            <tr>
+              <td colspan="9">
+                <span class="alert-link">ECPE: </span> Empate certo com placar errado
+              </td>
+            </tr>
+            <tr>
+              <td colspan="9">
+                <span class="alert-link">RE: </span> Resultado errado
+              </td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>
@@ -51,6 +83,30 @@
       <div class="box-header">
         <h3 class="box-title">Resenha</h3>
       </div>
+
+      <!-- enviar mensagem -->
+      <form #form="ngForm" (ngSubmit)="chatCreate()">
+        <div class="input-group">
+          <input type="text" name="message" placeholder="qual a boa parça?" class="form-control">
+          <span class="input-group-btn">
+            <button type="submit" [disabled]="!form.valid || loading" class="btn btn-warning btn-flat">enviar</button>
+          </span>
+        </div>
+      </form>
+
+      <!-- mensagens -->
+      <ul class="products-list product-list-in-box">
+        <li class="item" *ngFor="let chat of chats">
+          <div class="product-info">
+            <span class="product-title">{{ chat.user.name }}
+              <span class="label label-warning pull-right">{ chat.date | date:'dd/MM/yyyy HH:mm' }</span>
+            </span>
+            <span class="product-description">
+              {{ chat.message }}
+            </span>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
