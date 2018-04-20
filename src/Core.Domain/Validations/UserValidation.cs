@@ -25,38 +25,38 @@ namespace Core.Domain.Validations {
 
         public void ValidateToken (string token) {
             if (string.IsNullOrEmpty (token))
-                throw new ArgumentException ("token é obrigatório");
+                throw new ArgumentException ("Assim não rola mano, o token é obrigatório");
         }
 
         public void ValidateName (string name) {
             if (string.IsNullOrEmpty (name))
-                throw new ArgumentException ("name é obrigatório");
+                throw new ArgumentException ("Assim não rola mano, o nome é obrigatório");
         }
 
         public void ValidateEmail (string email) {
             if (string.IsNullOrEmpty (email))
-                throw new ArgumentException ("e-mail é obrigatório");
+                throw new ArgumentException ("Assim não rola mano, o e-mail é obrigatório");
         }
 
         public void ValidateDuplicateEmail (string email) {
 
             var userPorEmail = _userRepository.GetByEmail (email);
             if (userPorEmail != null && userPorEmail.Id > 0) {
-                throw new DuplicateException ("e-mail já cadastrado");
+                throw new DuplicateException ("Assim não rola mano, esse e-mail já esta sendo usado por outro boleiro");
             }
         }
 
         public void ValidatePassword (string password) {
             if (string.IsNullOrEmpty (password))
-                throw new ArgumentException ("senha é obrigatório");
+                throw new ArgumentException ("Assim não rola mano, a senha é obrigatória");
         }
 
         public void IsLogged (User user, string password) {
             if (user == null || user.Id == 0)
-                throw new AuthException ("e-mail ou senha inválido");
+                throw new AuthException ("Xiiiiii parça, esta metendo a mala ai mas não lembra a senha, seu e-mail ou sua senha esta errada");
 
             if (user.Password != password)
-                throw new AuthException ("e-mail ou senha inválido");
+                throw new AuthException ("Xiiiiii parça, esta metendo a mala ai mas não lembra a senha, seu e-mail ou sua senha esta errada");
         }
     }
 }

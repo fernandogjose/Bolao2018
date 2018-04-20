@@ -52,7 +52,7 @@ namespace Core.Domain.Services {
             userResponse.Token = CreateToken ();
 
             //--- grava o usuário em cache por id para a autenticacao dos usuários nos httprequest
-            _memoryCache.Set<User> ($"userId-{userResponse.Id}", userResponse, DateTimeOffset.Now.AddHours(12));
+            _memoryCache.Set<User> ($"userId-{userResponse.Id}", userResponse, DateTimeOffset.Now.AddHours (12));
 
             return userResponse;
         }
@@ -63,13 +63,19 @@ namespace Core.Domain.Services {
         }
 
         public User Create (User request) {
+            //--- validações
             _userValidation.ValidateName (request.Name);
             _userValidation.ValidateEmail (request.Email);
             _userValidation.ValidateDuplicateEmail (request.Email);
             _userValidation.ValidatePassword (request.Password);
 
-            var response = _userRepository.Create (request);
-            return response;
+            //--- cria o usuário
+            var userResponse = _userRepository.Create (request);
+
+            //--- grava o usuário em cache por email
+            _memoryCache.Set<User> ($"userEmail-{userResponse.Email}", userResponse);
+
+            return userResponse;
         }
 
         public User Update (User request) {

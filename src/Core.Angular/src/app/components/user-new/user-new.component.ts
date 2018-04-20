@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { User } from '../../models/user.model';
 import { SharedService } from '../../services/shared.service';
 import { UserService } from '../../services/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ResponseApi } from '../../models/response-api';
 
 @Component({
@@ -23,7 +23,7 @@ export class UserNewComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private route: ActivatedRoute
+    private router: Router
   ) {
     this.shared = SharedService.getInstance();
   }
@@ -50,37 +50,25 @@ export class UserNewComponent implements OnInit {
   }
 
   ngOnInit() {
-    let id: string = this.route.snapshot.params['id'];
-    if (id != undefined) {
-      this.get(id);
-    }
-  }
-
-  get(id: string) {
-    this.userService
-      .get(id)
-      .subscribe((responseApi: ResponseApi) => {
-        this.user = responseApi.data;
-        this.user.password = '';
-      }, err => {
-        this.showMessage({
-          type: 'error',
-          text: err['error']['errors'][0]
-        });
-      });
   }
 
   create() {
     this.message = {};
     this.userService
       .create(this.user)
-      .subscribe((responseApi: ResponseApi) => {
+      .subscribe((userResponse: User) => {
         this.user = this.resetUser();
         this.form.resetForm();
+        this.shared.user = userResponse;
         this.showMessage({
           type: 'success',
-          text: 'usuário cadastrado com sucesso'
+          text: 'Boa parça!!! seu usuário foi criado. Segura ai que vou te lavar para o jogo'
         });
+
+        //--- envia para a home
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 8000);
       }, err => {
         this.showMessage({
           type: 'error',
