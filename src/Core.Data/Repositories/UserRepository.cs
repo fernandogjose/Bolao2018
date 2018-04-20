@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -58,10 +59,10 @@ namespace Core.Data.Repositories {
 
         public User Login (string email, string password) {
             var response = new User ();
-            response.Id = 1;
-            response.Email = "fernandogjose@gmail.com";
-            response.Name = "Fernando José";
-            return response;
+            // response.Id = 1;
+            // response.Email = "fernandogjose@gmail.com";
+            // response.Name = "Fernando José";
+            // return response;
 
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 using (var cmd = new SqlCommand ()) {
@@ -77,6 +78,7 @@ namespace Core.Data.Repositories {
                             response.Id = Convert.ToInt32 (dr["Id"].ToString ());
                             response.Name = dr["Name"].ToString ();
                             response.Email = dr["Email"].ToString ();
+                            response.Password = dr["Password"].ToString ();
                         }
                     }
                 }
@@ -131,6 +133,32 @@ namespace Core.Data.Repositories {
             }
 
             return response;
+        }
+
+        public List<User> List () {
+            var usersResponse = new List<User> ();
+
+            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
+                using (var cmd = new SqlCommand ()) {
+                    cmd.Connection = conn;
+                    cmd.CommandText = _userSql.SqlList ();
+                    cmd.CommandType = CommandType.Text;
+
+                    conn.Open ();
+                    using (DbDataReader dr = cmd.ExecuteReader ()) {
+                        while (dr.Read ()) {
+                            User user = new User ();
+                            user.Id = Convert.ToInt32 (dr["Id"].ToString ());
+                            user.Name = dr["Name"].ToString ();
+                            user.Email = dr["Email"].ToString ();
+
+                            usersResponse.Add(user);
+                        }
+                    }
+                }
+            }
+
+            return usersResponse;
         }
     }
 }

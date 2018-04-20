@@ -21,6 +21,11 @@ namespace Core.Domain.Services {
             _userPointRepository.DeleteByOficialGameId (oficialGameId);
         }
 
+        public List<UserPointClassification> List () {
+            List<UserPointClassification> userPointClassificationsResponse = _userPointRepository.List ();
+            return userPointClassificationsResponse;
+        }
+
         public void Calculate (OficialGameSaveRequest oficialGame) {
             List<UserPoint> userPoints = new List<UserPoint> (0);
 

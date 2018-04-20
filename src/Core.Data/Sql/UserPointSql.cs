@@ -11,22 +11,23 @@ namespace Core.Data.Sql {
         }
 
         public string SqlList () {
-            return " SELECT UserPoint.UserId " +
-                "    	   ,User.Name as UserName  " +
-                "    	   ,ISNULL((SELECT COUNT(PointTypeId) FROM BolaoUserPoint WHERE UserId = UserPoint.UserId and PointTypeId = 1), 0) as VCPC  " +
-                "    	   ,ISNULL((SELECT COUNT(PointTypeId) FROM BolaoUserPoint WHERE UserId = UserPoint.UserId and PointTypeId = 2), 0) as VCUPC " +
-                "    	   ,ISNULL((SELECT COUNT(PointTypeId) FROM BolaoUserPoint WHERE UserId = UserPoint.UserId and PointTypeId = 3), 0) as VCPE  " +
-                "    	   ,ISNULL((SELECT COUNT(PointTypeId) FROM BolaoUserPoint WHERE UserId = UserPoint.UserId and PointTypeId = 4), 0) as ECPC  " +
-                "    	   ,ISNULL((SELECT COUNT(PointTypeId) FROM BolaoUserPoint WHERE UserId = UserPoint.UserId and PointTypeId = 5), 0) as ECPE  " +
-                "    	   ,ISNULL((SELECT COUNT(PointTypeId) FROM BolaoUserPoint WHERE UserId = UserPoint.UserId and PointTypeId = 6), 0) as RE    " +
-                "          ,SUM(PointType.Points) AS Total" +
-                "    FROM BolaoUserPoint as UserPoint " +
-                "    INNER JOIN BolaoUser ON (User ON UserPoint.UserId = User.Id) " +
-                "    INNER JOIN PointType ON (UserPoint.PointTypeId = PointType.Id) " +
-                "    GROUP BY UserPoint.UserId " +
-                "            ,User.Name " +
-                "    ORDER BY SUM(PointType.Points) DESC" + 
-                "            ,UserPoint.UserId ";
+            return " SELECT " +
+                " 	     UserPoint.UserId  " +
+                "       ,BolaoUser.Name as UserName   " +
+                " 	    ,SUM(PointType.Points) AS Total" +
+                " 	    ,ISNULL((SELECT COUNT(BolaoUserPoint.PointTypeId) FROM BolaoUserPoint WHERE BolaoUserPoint.UserId = UserPoint.UserId and BolaoUserPoint.PointTypeId = 1), 0) as VCPC   " +
+                "       ,ISNULL((SELECT COUNT(BolaoUserPoint.PointTypeId) FROM BolaoUserPoint WHERE BolaoUserPoint.UserId = UserPoint.UserId and BolaoUserPoint.PointTypeId = 2), 0) as VCUPC  " +
+                "       ,ISNULL((SELECT COUNT(BolaoUserPoint.PointTypeId) FROM BolaoUserPoint WHERE BolaoUserPoint.UserId = UserPoint.UserId and BolaoUserPoint.PointTypeId = 3), 0) as VCPE   " +
+                "       ,ISNULL((SELECT COUNT(BolaoUserPoint.PointTypeId) FROM BolaoUserPoint WHERE BolaoUserPoint.UserId = UserPoint.UserId and BolaoUserPoint.PointTypeId = 4), 0) as ECPC   " +
+                "       ,ISNULL((SELECT COUNT(BolaoUserPoint.PointTypeId) FROM BolaoUserPoint WHERE BolaoUserPoint.UserId = UserPoint.UserId and BolaoUserPoint.PointTypeId = 5), 0) as ECPE   " +
+                "       ,ISNULL((SELECT COUNT(BolaoUserPoint.PointTypeId) FROM BolaoUserPoint WHERE BolaoUserPoint.UserId = UserPoint.UserId and BolaoUserPoint.PointTypeId = 6), 0) as RE     " +
+                " FROM BolaoUserPoint as UserPoint  " +
+                " INNER JOIN BolaoUser ON (UserPoint.UserId = BolaoUser.Id)  " +
+                " INNER JOIN BolaoPointType as PointType ON (UserPoint.PointTypeId = PointType.Id)  " +
+                " GROUP BY UserPoint.UserId  " +
+                "         ,BolaoUser.Name " +
+                " ORDER BY SUM(PointType.Points) DESC  " +
+                "         ,UserPoint.UserId ";
         }
     }
 }

@@ -19,6 +19,7 @@ import { UserGameService } from './services/user-game.service';
 import { OficialGameComponent } from './components/oficial-game/oficial-game.component';
 import { OficialGameService } from './services/oficial-game.service';
 import { RuleComponent } from './components/rule/rule.component';
+import { HomeService } from './services/home.service';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { RuleComponent } from './components/rule/rule.component';
     UserGameService,
     OficialGameService,
     SharedService,
+    HomeService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

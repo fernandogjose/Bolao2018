@@ -42,5 +42,14 @@ namespace Core.Data.Sql
                    " WHERE Email = @Email" +
                    "   AND Password = @Password";
         }
+
+        public string SqlList(){
+            return " SELECT BolaoUser.Id " +
+                   "      , BolaoUser.Name " +
+                   "      , BolaoUser.Email " +
+                   "      , BolaoUser.Password " +
+                   " FROM BolaoUser " +
+                   " ORDER BY Name";
+        }
     }
 }

@@ -13,13 +13,23 @@
             <tr *ngFor="let game of gameByGroup.games; let indexGame = index">
               <td class="col-lg-2">{{ game.gameDate | date:'dd/MM/yyyy HH:mm' }}</td>
               <td class="col-lg-3 text-right">{{ game.teamA }}</td>
-              <td class="col-lg-1 text-right"><input type="number" id="scoreTeamA{{game.oficialGameId}}" name="scoreTeamA{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamA" required></td>
+              <td class="col-lg-1 text-right">
+                <input *ngIf="shared.user.id == 1" type="number" id="scoreTeamA{{game.oficialGameId}}" name="scoreTeamA{{game.oficialGameId}}"
+                  [(ngModel)]="game.scoreTeamA" required>
+                <span *ngIf="shared.user.id != 1 && !game.isCreateScore">{{ game.scoreTeamA }}</span>
+              </td>
               <td class="col-lg-1 text-center"> x </td>
-              <td class="col-lg-1"><input type="number" id="scoreTeamB{{game.oficialGameId}}" name="scoreTeamB{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamB" required></td>
+              <td class="col-lg-1">
+                <input *ngIf="shared.user.id == 1" type="number" id="scoreTeamB{{game.oficialGameId}}" name="scoreTeamB{{game.oficialGameId}}"
+                  [(ngModel)]="game.scoreTeamB" required>
+                <span *ngIf="shared.user.id != 1 && !game.isCreateScore">{{ game.scoreTeamB }}</span>
+              </td>
               <td class="col-lg-3">{{ game.teamB }}</td>
               <td class="col-lg-1">
-                <button *ngIf="game.canSave && game.isCreateScore" type="button" class="btn btn-info" (click)="updateScore(indexGroup, indexGame)" [disabled]="isLoading">atualizar</button>
-                <button *ngIf="game.canSave && !game.isCreateScore" type="button" class="btn btn-warning" (click)="deleteScore(indexGroup, indexGame)" [disabled]="isLoading">remover</button>
+                <button *ngIf="game.canSave && game.isCreateScore" type="button" class="btn btn-info" (click)="updateScore(indexGroup, indexGame)"
+                  [disabled]="isLoading">atualizar</button>
+                <button *ngIf="game.canSave && !game.isCreateScore" type="button" class="btn btn-warning" (click)="deleteScore(indexGroup, indexGame)"
+                  [disabled]="isLoading">remover</button>
               </td>
           </tbody>
         </table>

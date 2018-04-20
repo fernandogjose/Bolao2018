@@ -8,5 +8,7 @@ namespace Core.Domain.Interfaces.Repositories {
         void Create (List<UserPoint> userPointsRequest);
 
         void DeleteByOficialGameId (int oficialGameId);
+
+        List<UserPointClassification> List();
     }
 }

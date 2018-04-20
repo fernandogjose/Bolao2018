@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Core.Domain.Models;
 
 namespace Core.Domain.Interfaces.Repositories {
@@ -11,5 +12,7 @@ namespace Core.Domain.Interfaces.Repositories {
         User GetById (int id);
 
         User GetByEmail (string email);
+
+        List<User> List();
     }
 }
