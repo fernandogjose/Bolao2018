@@ -87,7 +87,7 @@
       <!-- enviar mensagem -->
       <form #form="ngForm" (ngSubmit)="chatCreate()">
         <div class="input-group">
-          <input type="text" name="message" placeholder="qual a boa parça?" class="form-control">
+          <input type="text" name="message" id="message" placeholder="qual a boa parça?" class="form-control" [(ngModel)]="chat.message" #message="ngModel" required>
           <span class="input-group-btn">
             <button type="submit" [disabled]="!form.valid || loading" class="btn btn-warning btn-flat">enviar</button>
           </span>
