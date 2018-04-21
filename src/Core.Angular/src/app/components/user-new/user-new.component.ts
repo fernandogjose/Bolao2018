@@ -20,6 +20,7 @@ export class UserNewComponent implements OnInit {
   shared: SharedService;
   message: {};
   classCss: {};
+  loading: boolean;
 
   constructor(
     private userService: UserService,
@@ -53,27 +54,32 @@ export class UserNewComponent implements OnInit {
   }
 
   create() {
+    this.loading = true;
     this.message = {};
     this.userService
       .create(this.user)
       .subscribe((userResponse: User) => {
         this.user = this.resetUser();
         this.form.resetForm();
-        this.shared.user = userResponse;
         this.showMessage({
           type: 'success',
-          text: 'Boa parça!!! seu usuário foi criado. Segura ai que vou te lavar para o jogo'
+          text: 'Boa parça!!! seu usuário foi criado. Segura ai que vou te levar para o jogo'
         });
 
         //--- envia para a home
         setTimeout(() => {
+          this.loading = false;
+          this.shared.showTemplate.emit(true)
           this.router.navigate(['/']);
+          this.shared.user = userResponse;
         }, 8000);
       }, err => {
         this.showMessage({
           type: 'error',
           text: err.error.error
         });
+
+        this.loading = false;
       });
   }
 

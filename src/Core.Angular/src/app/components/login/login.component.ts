@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   shared: SharedService;
   message: {};
   classCss: {};
+  loading: boolean;
 
   constructor(
     private userService: UserService,
@@ -45,12 +46,14 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.loading = true;
     this.message = '';
     this.userService
       .login(this.user)
       .subscribe((userAuthentication: User) => {
         this.shared.user = userAuthentication;
         this.shared.showTemplate.emit(true)
+        this.loading = false;
         this.router.navigate(['/']);
       }, err => {
         this.shared.user = null;
@@ -59,6 +62,7 @@ export class LoginComponent implements OnInit {
           text: err.error.error
         });
         this.shared.showTemplate.emit(false);
+        this.loading = false;
       });
   }
 

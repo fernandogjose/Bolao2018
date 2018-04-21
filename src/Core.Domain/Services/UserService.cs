@@ -13,15 +13,18 @@ namespace Core.Domain.Services {
 
         private readonly IMemoryCache _memoryCache;
 
+        private readonly UserPointService _userPointService;
+
         private string CreateToken () {
             var response = Guid.NewGuid () + DateTime.Now.ToString ("yyyyMMddHHmmssFFF");
             return response;
         }
 
-        public UserService (UserValidation userValidation, IUserRepository userRepository, IMemoryCache memoryCache) {
+        public UserService (UserValidation userValidation, IUserRepository userRepository, IMemoryCache memoryCache, UserPointService userPointService) {
             _userValidation = userValidation;
             _userRepository = userRepository;
             _memoryCache = memoryCache;
+            _userPointService = userPointService;
         }
 
         public User Login (string email, string password) {
@@ -74,6 +77,15 @@ namespace Core.Domain.Services {
 
             //--- grava o usuário em cache por email
             _memoryCache.Set<User> ($"userEmail-{userResponse.Email}", userResponse);
+
+            //--- cria o token para esta sessão
+            userResponse.Token = CreateToken ();
+
+            //--- grava o usuário em cache por id para a autenticacao dos usuários nos httprequest
+            _memoryCache.Set<User> ($"userId-{userResponse.Id}", userResponse, DateTimeOffset.Now.AddHours (12));
+
+            //--- carrega a lista de classificação para incluir o novo jogador nela
+            _userPointService.List (true);
 
             return userResponse;
         }

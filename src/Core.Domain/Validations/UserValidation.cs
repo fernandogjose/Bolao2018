@@ -25,30 +25,30 @@ namespace Core.Domain.Validations {
 
         public void ValidateToken (string token) {
             if (string.IsNullOrEmpty (token))
-                throw new ArgumentException ("Assim não rola mano, o token é obrigatório");
+                throw new ArgumentException ("Assim não rola parça, o token é obrigatório");
         }
 
         public void ValidateName (string name) {
             if (string.IsNullOrEmpty (name))
-                throw new ArgumentException ("Assim não rola mano, o nome é obrigatório");
+                throw new ArgumentException ("Assim não rola parça, o nome é obrigatório");
         }
 
         public void ValidateEmail (string email) {
             if (string.IsNullOrEmpty (email))
-                throw new ArgumentException ("Assim não rola mano, o e-mail é obrigatório");
+                throw new ArgumentException ("Assim não rola parça, o e-mail é obrigatório");
         }
 
         public void ValidateDuplicateEmail (string email) {
 
             var userPorEmail = _userRepository.GetByEmail (email);
             if (userPorEmail != null && userPorEmail.Id > 0) {
-                throw new DuplicateException ("Assim não rola mano, esse e-mail já esta sendo usado por outro boleiro");
+                throw new DuplicateException ("Assim não rola parça, esse e-mail já esta sendo usado por outro jogador");
             }
         }
 
         public void ValidatePassword (string password) {
             if (string.IsNullOrEmpty (password))
-                throw new ArgumentException ("Assim não rola mano, a senha é obrigatória");
+                throw new ArgumentException ("Assim não rola parça, a senha é obrigatória");
         }
 
         public void IsLogged (User user, string password) {

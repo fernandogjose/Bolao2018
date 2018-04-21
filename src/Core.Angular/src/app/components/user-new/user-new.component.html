@@ -1,7 +1,7 @@
 <div class="col-md-8">
   <div class="box box-info">
     <div class="box-header with-border">
-      <h3 class="box-title">Novo usuário</h3>
+      <h3 class="box-title">Novo jogador</h3>
     </div>
 
     <form class="form-horizontal" #form="ngForm" (ngSubmit)="create()">
@@ -36,8 +36,11 @@
         </div>
 
         <div class="box-footer">
-          <button type="submit" [disabled]="!form.valid" class="btn btn-info pull-right">salvar</button>
-          <a [routerLink]="['/login']">Login</a>
+          <button type="submit" [disabled]="!form.valid || loading" class="btn btn-info pull-right">
+            <span *ngIf="!loading">salvar</span>
+            <span *ngIf="loading">segura ai que estou criando seu jogador</span>
+          </button>
+          <a [routerLink]="['/login']">Login dos jogadores</a>
         </div>
 
         <div [ngClass]="classCss" class="col-sm-12 text-right" role="alert" *ngIf="message">
@@ -45,9 +48,9 @@
         </div>
 
         <div class="col-sm-12 alert alert-danger text-right" role="alert" *ngIf="(name.invalid && name.dirty) || (email.invalid && email.dirty) || (password.invalid && password.dirty)">
-          <p *ngIf="name.invalid && name.dirty">nome inválido</p>
-          <p *ngIf="email.invalid && email.dirty">e-mail inválido</p>
-          <p *ngIf="password.invalid && password.dirty">senha inválida</p>
+          <p *ngIf="name.invalid && name.dirty">parça esta esquecendo de colocar seu nome</p>
+          <p *ngIf="email.invalid && email.dirty">parça tem alguma coisa errada com este e-mail ai</p>
+          <p *ngIf="password.invalid && password.dirty">parça esta esquecendo de colocar sua senha</p>
         </div>
 
       </div>
