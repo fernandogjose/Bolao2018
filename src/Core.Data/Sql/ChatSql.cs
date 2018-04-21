@@ -6,10 +6,11 @@ namespace Core.Data.Sql {
         }
 
         public string SqlList () {
-            return " SELECT " +
-                " 	     BolaoUser.UserId  " +
+            return " SELECT top 10" +
+                " 	     BolaoUser.Id as UserId " +
                 "       ,BolaoUser.Name as UserName " +
                 "       ,BolaoChat.Message " +
+                "       ,BolaoChat.Date " +
                 " FROM BolaoChat " +
                 " INNER JOIN BolaoUser ON (BolaoChat.UserId = BolaoUser.Id)  " +
                 " ORDER BY Date DESC";

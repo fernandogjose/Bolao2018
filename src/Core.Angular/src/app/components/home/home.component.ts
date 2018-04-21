@@ -6,6 +6,7 @@ import { HomeService } from '../../services/home.service';
 import { ChatService } from '../../services/chat.service';
 import { Chat } from '../../models/chat.model';
 import { NgForm } from '@angular/forms';
+import { ChatCreateRequest } from '../../models/chat-create-request.model';
 
 @Component({
   selector: 'app-home',
@@ -16,15 +17,19 @@ export class HomeComponent implements OnInit {
 
   @ViewChild("form")
   form: NgForm
-  
+
+  loading: boolean;
   shared: SharedService;
   userPointClassifications: UserPointClassification[];
   chats: Chat[];
-  chat: Chat;
-  loading: boolean;
+  chatCreateRequest = this.resetChatCreateRequest();
 
   constructor(private chatService: ChatService, private homeService: HomeService, private router: Router) {
     this.shared = SharedService.getInstance();
+  }
+
+  private resetChatCreateRequest(): ChatCreateRequest {
+    return new ChatCreateRequest(0, '');
   }
 
   ngOnInit() {
@@ -37,6 +42,7 @@ export class HomeComponent implements OnInit {
       .list()
       .subscribe((userPointClassifications: UserPointClassification[]) => {
         this.userPointClassifications = userPointClassifications;
+        this.getMyPosition();
       }, error => {
         if (error.status == 401) {
           this.shared.showTemplate.emit(false);
@@ -62,12 +68,15 @@ export class HomeComponent implements OnInit {
 
   chatCreate() {
     this.loading = true;
+    this.chatCreateRequest.userId = this.shared.user.id;
 
     this.chatService
-      .create(this.chat)
+      .create(this.chatCreateRequest)
       .subscribe(() => {
         this.loading = false;
         this.form.resetForm();
+        this.chatCreateRequest = this.resetChatCreateRequest();
+        this.chatList();
       }, error => {
         if (error.status == 401) {
           this.shared.showTemplate.emit(false);
@@ -76,5 +85,14 @@ export class HomeComponent implements OnInit {
           this.loading = false;
         }
       });
+  }
+
+  private getMyPosition(): void {
+    for (let index = 0; index < this.userPointClassifications.length; index++) {
+      if (this.userPointClassifications[index].userId == this.shared.user.id) {
+        this.shared.user.position = this.userPointClassifications[index].position;
+        return;
+      }
+    }
   }
 }

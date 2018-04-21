@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using Core.Domain.Enums;
 using Core.Domain.Interfaces.Repositories;
 using Core.Domain.Models;
 using Core.Domain.Validations;
 using Core.WebApi.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Core.Domain.Services {
     public class UserPointService {
@@ -12,17 +14,35 @@ namespace Core.Domain.Services {
 
         private readonly UserGameService _userGameService;
 
-        public UserPointService (IUserPointRepository userPointRepository, UserGameService userGameService) {
+        private readonly IMemoryCache _memoryCache;
+
+        public UserPointService (IUserPointRepository userPointRepository, UserGameService userGameService, IMemoryCache memoryCache) {
             _userPointRepository = userPointRepository;
             _userGameService = userGameService;
+            _memoryCache = memoryCache;
         }
 
         public void DeleteByOficialGameId (int oficialGameId) {
             _userPointRepository.DeleteByOficialGameId (oficialGameId);
+            List (ignoreCache: true);
         }
 
-        public List<UserPointClassification> List () {
+        public List<UserPointClassification> List (bool ignoreCache) {
+
+            //--- obtem do cache
+            var userPointClassificationsResponseCache = _memoryCache.Get<List<UserPointClassification>> ("userPointClassification");
+
+            //--- se encontrou no cache 
+            if (userPointClassificationsResponseCache != null && userPointClassificationsResponseCache.Any () && !ignoreCache)
+                return userPointClassificationsResponseCache;
+
+            //--- busca no banco caso não tem no cache
             List<UserPointClassification> userPointClassificationsResponse = _userPointRepository.List ();
+
+            //--- guarda no cache
+            _memoryCache.Set<List<UserPointClassification>> ("userPointClassification", userPointClassificationsResponse);
+
+            //--- retorna
             return userPointClassificationsResponse;
         }
 
@@ -110,6 +130,8 @@ namespace Core.Domain.Services {
             }
 
             _userPointRepository.Create (userPoints);
+
+            List (ignoreCache: true);
         }
     }
 }

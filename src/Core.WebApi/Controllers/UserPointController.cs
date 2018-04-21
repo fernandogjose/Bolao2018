@@ -19,7 +19,7 @@ namespace Core.WebApi.Controllers {
 
         [HttpGet]
         public List<UserPointClassification> List () {
-            var response = _userPointService.List ();
+            var response = _userPointService.List (false);
             return response;
         }
     }

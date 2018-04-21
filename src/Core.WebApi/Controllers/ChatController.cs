@@ -19,13 +19,13 @@ namespace Core.WebApi.Controllers {
 
         [HttpGet]
         public List<Chat> List () {
-            List<Chat> chatsResponse = _chatService.List ();
+            List<Chat> chatsResponse = _chatService.List (false);
             return chatsResponse;
         }
 
         [HttpPost]
-        public void Create (Chat chat) {
-            _chatService.Create (chat);
+        public void Create ([FromBody] ChatCreateRequest chatCreateRequest) {
+            _chatService.Create (chatCreateRequest);
         }
     }
 }

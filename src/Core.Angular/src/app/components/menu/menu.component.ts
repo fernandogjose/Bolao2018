@@ -13,7 +13,7 @@ export class MenuComponent implements OnInit {
 
   constructor() { 
     this.shared = SharedService.getInstance();
-    this.shared.user = new User(0, '','','','');
+    this.shared.user = new User(0, '','','','', 0);
   }
 
   ngOnInit() {

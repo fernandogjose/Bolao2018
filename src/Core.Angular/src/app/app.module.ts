@@ -20,6 +20,8 @@ import { OficialGameComponent } from './components/oficial-game/oficial-game.com
 import { OficialGameService } from './services/oficial-game.service';
 import { RuleComponent } from './components/rule/rule.component';
 import { HomeService } from './services/home.service';
+import { ChatService } from './services/chat.service';
+import { TruncatePipe } from './filters/truncate-pipe.filter';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { HomeService } from './services/home.service';
     UserNewComponent,
     UserGameComponent,
     OficialGameComponent,
-    RuleComponent
+    RuleComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ import { HomeService } from './services/home.service';
     OficialGameService,
     SharedService,
     HomeService,
+    ChatService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

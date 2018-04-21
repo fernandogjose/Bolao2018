@@ -11,10 +11,47 @@ td {
     text-align: center;
 }
 
-.total{
+tfoot td {
+    text-align: left;
+}
+
+.total {
     font-weight: bold;
 }
 
-/* .first{
-    background-color: blue;
-} */
+form {
+    margin-top: 20px;
+}
+
+.input-group textarea, .input-group button {
+    height: 100px;
+}
+
+.chat-title{
+    font-weight: bold;
+}
+
+.chat {
+    padding: 20px 20px 15px 10px;
+}
+
+.chat.impar{
+    background-color: #222d3221;
+}
+
+.legend{
+    margin-top: 15px;
+    font-size: 12px;
+}
+
+.legend-title{
+    background-color: #222d32;
+    color: #efefef;
+    padding: 15px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.legend span{
+    font-weight: bold;
+}

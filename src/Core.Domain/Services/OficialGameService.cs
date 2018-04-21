@@ -4,7 +4,8 @@ using Core.Domain.Models;
 using Core.Domain.Validations;
 using Core.WebApi.Models;
 
-namespace Core.Domain.Services {
+namespace Core.Domain.Services
+{
     public class OficialGameService {
 
         private readonly IOficialGameRepository _oficialGameRepository;
@@ -20,7 +21,21 @@ namespace Core.Domain.Services {
         }
 
         public List<GameByGroup> List (int userId) {
+
+            //--- obtem do cache
+            // var gamesByGroupCache = _memoryCache.Get<List<GameByGroup>> ("oficialgames");
+
+            //--- se encontrou no cache 
+            // if (gamesByGroupCache != null && gamesByGroupCache.Any () && !ignoreCache)
+            //     return gamesByGroupCache;
+
+            //--- busca no banco caso não tem no cache
             var gamesByGroupResponse = _oficialGameRepository.List (userId);
+
+            //--- guarda no cache
+            // _memoryCache.Set<List<GameByGroup>> ("oficialgames", gamesByGroupResponse);
+
+            //--- retorna
             return gamesByGroupResponse;
         }
 

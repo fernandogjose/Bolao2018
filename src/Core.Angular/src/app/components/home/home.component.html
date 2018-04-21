@@ -39,43 +39,39 @@
               <td>{{ userPointClassification.re }}</td>
               <td class="total">{{ userPointClassification.total }}</td>
           </tbody>
-          <tfoot class="alert alert-secondary">
-            <tr>
-              <td colspan="9">
-                <span class="alert-link">VCPC: </span> Vitoria certa com placar certo
-              </td>
-            </tr>
-            <tr>
-              <td colspan="9">
-                <span class="alert-link">VCUPC: </span> Vitoria certa com um placar certo
-              </td>
-            </tr>
-            <tr>
-              <td colspan="9">
-                <span class="alert-link">VCPE: </span> Vitoria certa com placar errado
-              </td>
-            </tr>
-            <tr>
-              <td colspan="9">
-                <span class="alert-link">ECPC: </span> Empate certo com placar certo
-              </td>
-            </tr>
-            <tr>
-              <td colspan="9">
-                <span class="alert-link">ECPE: </span> Empate certo com placar errado
-              </td>
-            </tr>
-            <tr>
-              <td colspan="9">
-                <span class="alert-link">RE: </span> Resultado errado
-              </td>
-            </tr>
-          </tfoot>
         </table>
+      </div>
+    </div>
+
+    <div class="box box-warning direct-chat direct-chat-warning">
+      <div class="box-header with-border">
+        <h3 class="box-title">Legenda</h3>
+
+        <div class="row legend">
+          <div class="col-xs-12 col-md-4">
+            <span>VCPC: </span> Vitoria certa com placar certo
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <span>VCUPC: </span> Vitoria certa com um placar certo
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <span>VCPE: </span> Vitoria certa com placar errado
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <span>ECPC: </span> Empate certo com placar certo
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <span>ECPE: </span> Empate certo com placar errado
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <span>RE: </span> Resultado errado
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- lado direito -->
   <div class="col-xs-12 col-lg-3">
     <div class="box box-danger">
 
@@ -87,7 +83,8 @@
       <!-- enviar mensagem -->
       <form #form="ngForm" (ngSubmit)="chatCreate()">
         <div class="input-group">
-          <input type="text" name="message" id="message" placeholder="qual a boa parça?" class="form-control" [(ngModel)]="chat.message" #message="ngModel" required>
+          <textarea name="message" id="message" placeholder="qual a boa parça?" class="form-control" [(ngModel)]="chatCreateRequest.message"
+            #message="ngModel" required></textarea>
           <span class="input-group-btn">
             <button type="submit" [disabled]="!form.valid || loading" class="btn btn-warning btn-flat">enviar</button>
           </span>
@@ -95,18 +92,15 @@
       </form>
 
       <!-- mensagens -->
-      <ul class="products-list product-list-in-box">
-        <li class="item" *ngFor="let chat of chats">
-          <div class="product-info">
-            <span class="product-title">{{ chat.user.name }}
-              <span class="label label-warning pull-right">{ chat.date | date:'dd/MM/yyyy HH:mm' }</span>
-            </span>
-            <span class="product-description">
-              {{ chat.message }}
-            </span>
-          </div>
-        </li>
-      </ul>
+      <div class="chat" *ngFor="let chat of chats; let indexChat = index" [ngClass]="{'par': indexChat % 2 == 0, 'impar': indexChat % 2 != 0}">
+        <p class="chat-title">{{ chat.user.name | limitTo : 15 }}
+          <span class="chat-date pull-right label label-success">{{ chat.date | date:'dd/MM/yyyy HH:mm' }}</span>
+        </p>
+
+        <p class="chat-message">
+          {{ chat.message }}
+        </p>
+      </div>
     </div>
   </div>
 </div>

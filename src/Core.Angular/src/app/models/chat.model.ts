@@ -1,6 +1,8 @@
 export class Chat {
     public userId: number;
     public message: string;
-    public user: {};
+    public user: {
+        name: string;
+    };
     public date: Date;
 }

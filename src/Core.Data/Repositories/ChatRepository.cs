@@ -15,14 +15,16 @@ namespace Core.Data.Repositories {
             _chatSql = chatSql;
         }
 
-        public void Create (Chat chatRequest) {
+        public void Create (ChatCreateRequest chatCreateRequest) {
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
+                conn.Open ();
+
                 using (var cmd = new SqlCommand ()) {
                     cmd.Connection = conn;
                     cmd.CommandText = _chatSql.SqlCreate ();
                     cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue ("@UserId", GetDbValue (chatRequest.UserId));
-                    cmd.Parameters.AddWithValue ("@Message", GetDbValue (chatRequest.Message));
+                    cmd.Parameters.AddWithValue ("@UserId", GetDbValue (chatCreateRequest.UserId));
+                    cmd.Parameters.AddWithValue ("@Message", GetDbValue (chatCreateRequest.Message));
                     cmd.ExecuteNonQuery ();
                 }
             }
@@ -42,6 +44,7 @@ namespace Core.Data.Repositories {
                         while (dr.Read ()) {
                             Chat chat = new Chat ();
                             chat.Message = dr["Message"].ToString ();
+                            chat.Date = Convert.ToDateTime (dr["Date"].ToString ());
                             chat.User = new User ();
                             chat.User.Name = dr["UserName"].ToString ();
                             chatsResponse.Add (chat);

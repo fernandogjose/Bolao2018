@@ -12,7 +12,7 @@ import { UserService } from '../../services/user.service';
 
 export class LoginComponent implements OnInit {
 
-  user = new User(0, '', '', '', '');
+  user = new User(0, '', '', '', '', 0);
   shared: SharedService;
   message: {};
   classCss: {};
