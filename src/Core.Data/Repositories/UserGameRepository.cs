@@ -153,6 +153,7 @@ namespace Core.Data.Repositories {
 
                 foreach (var game in gamesOfGroup.Where (m => m.GroupName == userGameByGroup.GroupName)) {
                     game.CanSave = DateTime.Now < game.GameDate.AddHours (-4);
+                    game.UserId = userId;
                     userGameByGroup.Games.Add (game);
                 }
 

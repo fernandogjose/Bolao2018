@@ -19,7 +19,8 @@
               <th data-toggle="tooltip" data-placement="top" title="Empate certo com placar certo = 5 pontos">ECPC</th>
               <th data-toggle="tooltip" data-placement="top" title="Empate certo com placar errado = 2 pontos">ECPE</th>
               <th data-toggle="tooltip" data-placement="top" title="Resultado errado = 0 ponto">RE</th>
-              <th>Total de Pontos</th>
+              <th>Pontos</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -38,6 +39,7 @@
               <td>{{ userPointClassification.ecpe }}</td>
               <td>{{ userPointClassification.re }}</td>
               <td class="total">{{ userPointClassification.total }}</td>
+              <td><button class="btn btn-warning" [routerLink]="['/espiar-jogo', userPointClassification.userId]">espiar</button></td>
           </tbody>
         </table>
       </div>

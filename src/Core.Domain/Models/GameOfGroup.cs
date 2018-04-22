@@ -1,9 +1,9 @@
 using System;
 
-namespace Core.Domain.Models
-{
-    public class GameOfGroup
-    {
+namespace Core.Domain.Models {
+    public class GameOfGroup {
+        public int UserId { get; set; }
+
         public int OficialGameId { get; set; }
 
         public DateTime GameDate { get; set; }
