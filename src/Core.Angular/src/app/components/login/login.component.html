@@ -27,9 +27,11 @@
         </div>
 
         <div class="box-footer">
+          <a href="https://api.whatsapp.com/send?phone=55011996747551" class="btn btn-danger" target="_blank">teste whatsapp</a>
+
           <button type="submit" [disabled]="!form.valid || loading" class="btn btn-info pull-right">
-              <span *ngIf="!loading">jogar</span>
-              <span *ngIf="loading">segura ai que seu jogador esta no aquecimento</span>
+            <span *ngIf="!loading">jogar</span>
+            <span *ngIf="loading">segura ai que seu jogador esta no aquecimento</span>
           </button>
           <a [routerLink]="['/novo-usuario']">Novo Jogador</a>
         </div>
