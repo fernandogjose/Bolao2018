@@ -1,59 +1,61 @@
-<div class="col-md-8">
+<div class="login-box">
   <div class="box box-info">
-    <div class="box-header with-border">
-      <h3 class="box-title">Novo jogador</h3>
-    </div>
-
-    <form class="form-horizontal" #form="ngForm" (ngSubmit)="create()">
-
-      <div class="box-body">
-
-        <!-- name -->
-        <div [ngClass]="getFromGroupClass(name.invalid, name.dirty)">
-          <label for="name" class="col-sm-2 control-label">Nome</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="name" name="name" placeholder="nome" [(ngModel)]="user.name" #name="ngModel"
-              required>
-          </div>
-        </div>
-
-        <!-- email -->
-        <div [ngClass]="getFromGroupClass(email.invalid, email.dirty)">
-          <label for="email" class="col-sm-2 control-label">Email</label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control" id="email" name="email" placeholder="e-mail" [(ngModel)]="user.email" #email="ngModel"
-              email>
-          </div>
-        </div>
-
-        <!-- password -->
-        <div [ngClass]="getFromGroupClass(password.invalid, password.dirty)">
-          <label for="password" class="col-sm-2 control-label">Password</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" id="password" name="password" placeholder="senha" [(ngModel)]="user.password"
-              #password="ngModel" required>
-          </div>
-        </div>
-
-        <div class="box-footer">
-          <button type="submit" [disabled]="!form.valid || loading" class="btn btn-info pull-right">
-            <span *ngIf="!loading">salvar</span>
-            <span *ngIf="loading">segura ai que estou criando seu jogador</span>
-          </button>
-          <a [routerLink]="['/login']">Login dos jogadores</a>
-        </div>
-
-        <div [ngClass]="classCss" class="col-sm-12 text-right" role="alert" *ngIf="message">
-          <p>{{ message.text }}</p>
-        </div>
-
-        <div class="col-sm-12 alert alert-danger text-right" role="alert" *ngIf="(name.invalid && name.dirty) || (email.invalid && email.dirty) || (password.invalid && password.dirty)">
-          <p *ngIf="name.invalid && name.dirty">parça esta esquecendo de colocar seu nome</p>
-          <p *ngIf="email.invalid && email.dirty">parça tem alguma coisa errada com este e-mail ai</p>
-          <p *ngIf="password.invalid && password.dirty">parça esta esquecendo de colocar sua senha</p>
-        </div>
-
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Novo jogador</h3>
       </div>
-    </form>
+
+      <form class="form-horizontal" #form="ngForm" (ngSubmit)="create()">
+
+        <div class="box-body">
+
+          <!-- name -->
+          <div [ngClass]="getFromGroupClass(name.invalid, name.dirty)" class="has-feedback">
+            <div class="col-sm-12">
+              <input type="text" class="form-control" id="name" name="name" placeholder="nome" [(ngModel)]="user.name" #name="ngModel"
+                required>
+              <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+          </div>
+
+          <!-- email -->
+          <div [ngClass]="getFromGroupClass(email.invalid, email.dirty)" class="has-feedback">
+            <div class="col-sm-12">
+              <input type="email" class="form-control" id="email" name="email" placeholder="e-mail" [(ngModel)]="user.email" #email="ngModel"
+                email>
+              <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+          </div>
+
+          <!-- password -->
+          <div [ngClass]="getFromGroupClass(password.invalid, password.dirty)" class="has-feedback">
+            <div class="col-sm-12">
+              <input type="password" class="form-control" id="password" name="password" placeholder="senha" [(ngModel)]="user.password"
+                #password="ngModel" required>
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+          </div>
+
+          <div class="box-footer">
+            <button type="submit" [disabled]="!form.valid || loading" class="btn btn-info pull-right">
+              <span *ngIf="!loading">salvar</span>
+              <span *ngIf="loading">segura ai que estou criando seu jogador</span>
+            </button>
+            <a [routerLink]="['/login']">Login dos jogadores</a>
+          </div>
+
+          <div [ngClass]="classCss" class="col-sm-12" role="alert" *ngIf="message">
+            <p>{{ message.text }}</p>
+          </div>
+
+          <div class="col-sm-12 alert alert-danger" role="alert" *ngIf="(name.invalid && name.dirty) || (email.invalid && email.dirty) || (password.invalid && password.dirty)">
+            <p *ngIf="name.invalid && name.dirty">parça esta esquecendo de colocar seu nome</p>
+            <p *ngIf="email.invalid && email.dirty">parça tem alguma coisa errada com este e-mail ai</p>
+            <p *ngIf="password.invalid && password.dirty">parça esta esquecendo de colocar sua senha</p>
+          </div>
+
+        </div>
+      </form>
+    </div>
   </div>
 </div>

@@ -1,0 +1,15 @@
+.legend{
+    margin-top: 15px;
+}
+
+.legend-title{
+    background-color: #222d32;
+    color: #efefef;
+    padding: 15px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.legend span{
+    font-weight: bold;
+}

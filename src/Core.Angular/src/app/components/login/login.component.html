@@ -1,4 +1,4 @@
-<div class="col-md-8">
+<div class="login-box">
   <div class="box box-info">
     <div class="box-header with-border">
       <h3 class="box-title">Login dos Jogadores</h3>
@@ -9,25 +9,25 @@
       <div class="box-body">
 
         <!-- login -->
-        <div [ngClass]="getFromGroupClass(email.invalid, email.dirty)">
-          <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-          <div class="col-sm-10">
+        <div [ngClass]="getFromGroupClass(email.invalid, email.dirty)" class="has-feedback">
+          <div class="col-sm-12">
             <input type="email" class="form-control" id="email" name="email" placeholder="e-mail" [(ngModel)]="user.email" #email="ngModel"
               email>
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
         </div>
 
         <!-- password -->
-        <div [ngClass]="getFromGroupClass(password.invalid, password.dirty)">
-          <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-          <div class="col-sm-10">
+        <div [ngClass]="getFromGroupClass(password.invalid, password.dirty)" class="has-feedback">
+          <div class="col-sm-12">
             <input type="password" class="form-control" id="password" name="password" placeholder="senha" [(ngModel)]="user.password"
               #password="ngModel" required>
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
         </div>
 
-        <div class="box-footer">
-          <a href="https://api.whatsapp.com/send?phone=55011996747551" class="btn btn-danger" target="_blank">teste whatsapp</a>
+        <div class="col-sm-12">
+          <!-- <a href="https://api.whatsapp.com/send?phone=55011996747551" class="btn btn-danger" target="_blank">teste whatsapp</a> -->
 
           <button type="submit" [disabled]="!form.valid || loading" class="btn btn-info pull-right">
             <span *ngIf="!loading">jogar</span>
@@ -36,11 +36,11 @@
           <a [routerLink]="['/novo-usuario']">Novo Jogador</a>
         </div>
 
-        <div [ngClass]="classCss" class="col-sm-12 text-right" role="alert" *ngIf="message">
+        <div [ngClass]="classCss" class="col-sm-12" role="alert" *ngIf="message">
           <p>{{ message.text }}</p>
         </div>
 
-        <div class="col-sm-12 alert alert-danger text-right" role="alert" *ngIf="(email.invalid && email.dirty) || (password.invalid && password.dirty)">
+        <div class="col-sm-12 alert alert-danger" role="alert" *ngIf="(email.invalid && email.dirty) || (password.invalid && password.dirty)">
           <p *ngIf="email.invalid && email.dirty">parça tem alguma coisa errada com este e-mail ai</p>
           <p *ngIf="password.invalid && password.dirty">parça esta esquecendo de colocar sua senha</p>
         </div>
