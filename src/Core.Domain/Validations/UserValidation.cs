@@ -42,7 +42,7 @@ namespace Core.Domain.Validations {
 
             var userPorEmail = _userRepository.GetByEmail (email);
             if (userPorEmail != null && userPorEmail.Id > 0) {
-                throw new DuplicateException ("Assim não rola parça, esse e-mail já esta sendo usado por outro jogador");
+                throw new DuplicateException ("Assim não rola parça, esse e-mail já está sendo usado por outro jogador");
             }
         }
 
@@ -53,10 +53,10 @@ namespace Core.Domain.Validations {
 
         public void IsLogged (User user, string password) {
             if (user == null || user.Id == 0)
-                throw new AuthException ("Xiiiiii parça, esta metendo a mala ai mas não lembra a senha, seu e-mail ou sua senha esta errada");
+                throw new AuthException ("Xiiiiii parça, está metendo a mala ai mas não lembra a senha, seu e-mail ou sua senha está errada");
 
             if (user.Password != password)
-                throw new AuthException ("Xiiiiii parça, esta metendo a mala ai mas não lembra a senha, seu e-mail ou sua senha esta errada");
+                throw new AuthException ("Xiiiiii parça, está metendo a mala ai mas não lembra a senha, seu e-mail ou sua senha está errada");
         }
     }
 }

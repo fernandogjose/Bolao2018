@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   }
 
   signOut() : void {
+    localStorage.removeItem("userLoggedLocalStorage");
     this.shared.user = null;
     window.location.href = '/';
   }

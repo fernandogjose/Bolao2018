@@ -31,7 +31,7 @@
 
           <button type="submit" [disabled]="!form.valid || loading" class="btn btn-info pull-right">
             <span *ngIf="!loading">jogar</span>
-            <span *ngIf="loading">segura ai que seu jogador esta no aquecimento</span>
+            <span *ngIf="loading">segura ai que seu jogador está no aquecimento</span>
           </button>
           <a [routerLink]="['/novo-usuario']">Novo Jogador</a>
         </div>
@@ -42,7 +42,7 @@
 
         <div class="col-sm-12 alert alert-danger" role="alert" *ngIf="(email.invalid && email.dirty) || (password.invalid && password.dirty)">
           <p *ngIf="email.invalid && email.dirty">parça tem alguma coisa errada com este e-mail ai</p>
-          <p *ngIf="password.invalid && password.dirty">parça esta esquecendo de colocar sua senha</p>
+          <p *ngIf="password.invalid && password.dirty">parça está esquecendo de colocar sua senha</p>
         </div>
 
       </div>

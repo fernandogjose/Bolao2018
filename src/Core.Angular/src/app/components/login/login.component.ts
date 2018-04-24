@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
       .subscribe((userAuthentication: User) => {
         this.shared.user = userAuthentication;
         this.shared.showTemplate.emit(true)
+        localStorage.setItem("userLoggedLocalStorage", JSON.stringify(userAuthentication));
         this.loading = false;
         this.router.navigate(['/']);
       }, err => {

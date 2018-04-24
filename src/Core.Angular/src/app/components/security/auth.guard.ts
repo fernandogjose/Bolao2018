@@ -20,6 +20,13 @@ export class AuthGuard implements CanActivate {
             return true;
         }
 
+        var userLoggedLocalStorage = JSON.parse(localStorage.getItem("userLoggedLocalStorage"));
+        if (userLoggedLocalStorage != null) {
+            this.shared.user = userLoggedLocalStorage;
+            this.shared.showTemplate.emit(true)
+            return true;
+        }
+
         this.router.navigate(['/login']);
         return false;
     }
