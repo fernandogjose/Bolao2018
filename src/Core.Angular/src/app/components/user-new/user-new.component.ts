@@ -5,6 +5,7 @@ import { SharedService } from '../../services/shared.service';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResponseApi } from '../../models/response-api';
+import { UserLocalstorage } from '../../localstorage/user.localstorage';
 
 @Component({
   selector: 'app-user-new',
@@ -24,7 +25,8 @@ export class UserNewComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private userLocalstorage: UserLocalstorage
   ) {
     this.shared = SharedService.getInstance();
   }
@@ -70,8 +72,9 @@ export class UserNewComponent implements OnInit {
         setTimeout(() => {
           this.loading = false;
           this.shared.showTemplate.emit(true)
-          this.router.navigate(['/']);
           this.shared.user = userResponse;
+          this.userLocalstorage.setUserLogged(userResponse);
+          this.router.navigate(['/']);
         }, 8000);
       }, err => {
         this.showMessage({

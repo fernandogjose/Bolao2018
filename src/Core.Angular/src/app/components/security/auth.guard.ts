@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { Observable } from 'rxjs/Observable';
 import { SharedService } from '../../services/shared.service';
+import { UserLocalstorage } from '../../localstorage/user.localstorage';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
     public shared: SharedService;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private userLocalstorage: UserLocalstorage) {
         this.shared = SharedService.getInstance();
     }
 
@@ -20,7 +21,7 @@ export class AuthGuard implements CanActivate {
             return true;
         }
 
-        var userLoggedLocalStorage = JSON.parse(localStorage.getItem("userLoggedLocalStorage"));
+        var userLoggedLocalStorage = this.userLocalstorage.getUserLogged();
         if (userLoggedLocalStorage != null) {
             this.shared.user = userLoggedLocalStorage;
             this.shared.showTemplate.emit(true)

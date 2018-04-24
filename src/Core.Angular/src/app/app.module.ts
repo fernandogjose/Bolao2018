@@ -22,6 +22,7 @@ import { RuleComponent } from './components/rule/rule.component';
 import { HomeService } from './services/home.service';
 import { ChatService } from './services/chat.service';
 import { TruncatePipe } from './filters/truncate-pipe.filter';
+import { UserLocalstorage } from './localstorage/user.localstorage';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { TruncatePipe } from './filters/truncate-pipe.filter';
     SharedService,
     HomeService,
     ChatService,
+    UserLocalstorage,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

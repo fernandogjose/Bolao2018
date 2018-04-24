@@ -7,6 +7,7 @@ import { ChatService } from '../../services/chat.service';
 import { Chat } from '../../models/chat.model';
 import { NgForm } from '@angular/forms';
 import { ChatCreateRequest } from '../../models/chat-create-request.model';
+import { UserLocalstorage } from '../../localstorage/user.localstorage';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit {
   chats: Chat[];
   chatCreateRequest = this.resetChatCreateRequest();
 
-  constructor(private chatService: ChatService, private homeService: HomeService, private router: Router) {
+  constructor(private chatService: ChatService, private homeService: HomeService, private router: Router, private userLocalstorage: UserLocalstorage) {
     this.shared = SharedService.getInstance();
   }
 
@@ -91,7 +92,7 @@ export class HomeComponent implements OnInit {
     for (let index = 0; index < this.userPointClassifications.length; index++) {
       if (this.userPointClassifications[index].userId == this.shared.user.id) {
         this.shared.user.position = this.userPointClassifications[index].position;
-        localStorage.setItem("userLoggedLocalStorage", JSON.stringify(this.shared.user));
+        this.userLocalstorage.setUserLogged(this.shared.user);
         return;
       }
     }

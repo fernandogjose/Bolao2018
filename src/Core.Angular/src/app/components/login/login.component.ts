@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { SharedService } from '../../services/shared.service';
 import { UserService } from '../../services/user.service';
+import { UserLocalstorage } from '../../localstorage/user.localstorage';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private userLocalstorage: UserLocalstorage
   ) {
     this.shared = SharedService.getInstance();
   }
@@ -53,7 +55,7 @@ export class LoginComponent implements OnInit {
       .subscribe((userAuthentication: User) => {
         this.shared.user = userAuthentication;
         this.shared.showTemplate.emit(true)
-        localStorage.setItem("userLoggedLocalStorage", JSON.stringify(userAuthentication));
+        this.userLocalstorage.setUserLogged(userAuthentication);
         this.loading = false;
         this.router.navigate(['/']);
       }, err => {
