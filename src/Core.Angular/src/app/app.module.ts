@@ -1,4 +1,4 @@
-import { AuthGuard } from './components/security/auth.guard';
+import { AuthGuard } from './security/auth.guard';
 import { UserService } from './services/user.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -12,7 +12,7 @@ import { routes } from './app.routes';
 import { SharedService } from './services/shared.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { AuthInterceptor } from './components/security/auth.interceptor';
+import { AuthInterceptor } from './security/auth.interceptor';
 import { UserNewComponent } from './components/user-new/user-new.component';
 import { UserGameComponent } from './components/user-game/user-game.component';
 import { UserGameService } from './services/user-game.service';
