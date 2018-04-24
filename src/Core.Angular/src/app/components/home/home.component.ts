@@ -91,6 +91,7 @@ export class HomeComponent implements OnInit {
     for (let index = 0; index < this.userPointClassifications.length; index++) {
       if (this.userPointClassifications[index].userId == this.shared.user.id) {
         this.shared.user.position = this.userPointClassifications[index].position;
+        localStorage.setItem("userLoggedLocalStorage", JSON.stringify(this.shared.user));
         return;
       }
     }

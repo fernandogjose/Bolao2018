@@ -12,7 +12,7 @@ export const ROUTES: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'novo-usuario', component: UserNewComponent },
-    { path: 'regulamento', component: RuleComponent },
+    { path: 'regulamento', component: RuleComponent, canActivate: [AuthGuard] },
     { path: 'meu-jogo', component: UserGameComponent, canActivate: [AuthGuard] },
     { path: 'espiar-jogo/:userId', component: UserGameComponent, canActivate: [AuthGuard] },
     { path: 'resultado-oficial', component: OficialGameComponent, canActivate: [AuthGuard] },
