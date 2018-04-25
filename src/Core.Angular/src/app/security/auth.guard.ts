@@ -17,14 +17,15 @@ export class AuthGuard implements CanActivate {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): boolean | Observable<boolean> {
 
-        if (this.shared.isLoggedIn()) {
+        var userLoggedLocalStorage = this.userLocalstorage.getUserLogged();
+        if (userLoggedLocalStorage != null) {
+            console.log(userLoggedLocalStorage);
+            this.shared.user = userLoggedLocalStorage;
+            this.shared.showTemplate.emit(true)
             return true;
         }
 
-        var userLoggedLocalStorage = this.userLocalstorage.getUserLogged();
-        if (userLoggedLocalStorage != null) {
-            this.shared.user = userLoggedLocalStorage;
-            this.shared.showTemplate.emit(true)
+        if (this.shared.isLoggedIn()) {
             return true;
         }
 
