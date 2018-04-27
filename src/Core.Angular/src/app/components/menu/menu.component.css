@@ -12,12 +12,16 @@ form {
     color: #b8c7ce;
 }
 
+form:hover {
+    color: #fff;
+}
+
 form button {
     color: #b8c7ce;
     padding-left: 8px;
 }
 
 form button:hover {
-    color: #b8c7ce;
+    color: #fff;
     text-decoration: none;
 }
