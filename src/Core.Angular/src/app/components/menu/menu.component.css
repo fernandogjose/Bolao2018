@@ -7,3 +7,17 @@
     margin-top: 2px;
     padding-top: 3px;
 }
+
+form {
+    color: #b8c7ce;
+}
+
+form button {
+    color: #b8c7ce;
+    padding-left: 8px;
+}
+
+form button:hover {
+    color: #b8c7ce;
+    text-decoration: none;
+}

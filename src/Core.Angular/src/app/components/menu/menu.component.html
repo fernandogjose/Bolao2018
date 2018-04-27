@@ -35,6 +35,39 @@
           <span>Regulamento</span>
         </a>
       </li>
+
+      <li class="header menu-header">
+        Pagamentos
+      </li>
+
+      <li>
+        <a mp-mode="dftl" href="https://www.mercadopago.com/mlb/checkout/start?pref_id=220213125-a764d240-7d32-4479-a345-9b07824109ae"
+          name="MP-payButton" class='blue-ar-m-sq-none' target="_blank">
+          <i class="fa fa-money"></i>
+          <span>MercadoPago</span>
+        </a>
+        <script type="text/javascript">
+          (function () { function $MPC_load() { window.$MPC_loaded !== true && (function () { var s = document.createElement("script"); s.type = "text/javascript"; s.async = true; s.src = document.location.protocol + "//secure.mlstatic.com/mptools/render.js"; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); window.$MPC_loaded = true; })(); } window.$MPC_loaded !== true ? (window.attachEvent ? window.attachEvent('onload', $MPC_load) : window.addEventListener('load', $MPC_load, false)) : null; })();
+        </script>
+      </li>
+      <li>
+        <a>
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+            <input type="hidden" name="cmd" value="_xclick">
+            <input type="hidden" name="business" value="BQQND5G8BTZNN">
+            <input type="hidden" name="lc" value="BR">
+            <input type="hidden" name="item_name" value="Bolão Copa do Mundo">
+            <input type="hidden" name="item_number" value="1">
+            <input type="hidden" name="amount" value="50.00">
+            <input type="hidden" name="currency_code" value="BRL">
+            <input type="hidden" name="button_subtype" value="services">
+            <input type="hidden" name="bn" value="PP-BuyNowBF:btn_paynow_LG.gif:NonHosted">
+
+            <i class="fa fa-paypal"></i>
+            <button type="submit" class="btn btn-link">PayPal</button>
+          </form>
+        </a>
+      </li>
     </ul>
   </section>
 </aside>
