@@ -10,11 +10,11 @@ import { ChatCreateRequest } from '../../models/chat-create-request.model';
 import { UserLocalstorage } from '../../localstorage/user.localstorage';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-classification',
+  templateUrl: './classification.component.html',
+  styleUrls: ['./classification.component.css']
 })
-export class HomeComponent implements OnInit {
+export class ClassificationComponent implements OnInit {
 
   @ViewChild("form")
   form: NgForm

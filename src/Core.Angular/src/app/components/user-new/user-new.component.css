@@ -5,3 +5,7 @@
 a {
     margin-left: -10px;
 }
+
+.login-box, .register-box{
+    width: 50%;
+}

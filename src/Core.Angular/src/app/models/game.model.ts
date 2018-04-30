@@ -1,5 +1,6 @@
 export class Game {
     public userId: number;
+    public userName: string;
     public oficialGameId: number;
     public scoreTeamA: number;
     public scoreTeamB: number;

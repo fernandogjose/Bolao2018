@@ -1,4 +1,4 @@
-.btn{
+.btn {
     margin-right: -15px;
 }
 
@@ -6,6 +6,10 @@ a {
     margin-left: -15px;
 }
 
-.alert{
+.alert {
     margin-top: 10px;
+}
+
+.login-box, .register-box{
+    width: 50%;
 }

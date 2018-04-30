@@ -34,6 +34,7 @@ namespace Core.Data.Sql {
                 "         , BolaoTeamB.[Name] as TeamB" +
                 "         , ISNULL((SELECT ScoreTeamA FROM BolaoUserGame WHERE OficialGameId = BolaoOficialGame.Id AND UserId = @UserId), 0) as ScoreTeamA" +
                 "         , ISNULL((SELECT ScoreTeamB FROM BolaoUserGame WHERE OficialGameId = BolaoOficialGame.Id AND UserId = @UserId), 0) as ScoreTeamB" +
+                "         , (SELECT Name FROM BolaoUser WHERE UserId = @UserId) as UserName" +
                 "    FROM BolaoOficialGame" +
                 "    INNER JOIN BolaoGroup ON BolaoOficialGame.GroupId = BolaoGroup.Id" +
                 "    INNER JOIN BolaoTeam as BolaoTeamA ON BolaoOficialGame.TeamAId = BolaoTeamA.Id" +

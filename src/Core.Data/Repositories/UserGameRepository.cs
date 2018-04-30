@@ -136,6 +136,7 @@ namespace Core.Data.Repositories {
                             gameOfGroup.GroupName = dr["GroupName"].ToString ();
                             gameOfGroup.ScoreTeamA = Convert.ToInt32 (dr["ScoreTeamA"].ToString ());
                             gameOfGroup.ScoreTeamB = Convert.ToInt32 (dr["ScoreTeamB"].ToString ());
+                            gameOfGroup.UserName = dr["UserName"].ToString ();
 
                             gamesOfGroup.Add (gameOfGroup);
                         }

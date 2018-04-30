@@ -1,3 +1,13 @@
+<section class="content-header">
+  <h1>Palpites do {{ userName }}</h1>
+  <ol class="breadcrumb">
+    <li><a [routerLink]="['/classificacao']"><i class="fa fa-table"></i> Classificação</a></li>
+    <li class="active">Palpites do {{ userName }}</li>
+  </ol>
+</section>
+
+<section class="content">
+
 <div class="row" *ngFor="let gameByGroup of gamesByGroup; let indexGroup = index">
   <div class="col-xs-12">
     <div class="box">
@@ -35,3 +45,5 @@
     </div>
   </div>
 </div>
+
+</section>

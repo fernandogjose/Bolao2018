@@ -4,6 +4,8 @@ namespace Core.Domain.Models {
     public class GameOfGroup {
         public int UserId { get; set; }
 
+        public string UserName { get; set; }
+
         public int OficialGameId { get; set; }
 
         public DateTime GameDate { get; set; }

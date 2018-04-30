@@ -74,7 +74,7 @@ export class UserNewComponent implements OnInit {
           this.shared.showTemplate.emit(true)
           this.shared.user = userResponse;
           this.userLocalstorage.setUserLogged(userResponse);
-          this.router.navigate(['/']);
+          this.router.navigate(['/classificacao']);
         }, 8000);
       }, err => {
         this.showMessage({

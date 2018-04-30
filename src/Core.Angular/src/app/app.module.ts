@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { routes } from './app.routes';
 import { SharedService } from './services/shared.service';
@@ -23,6 +22,7 @@ import { HomeService } from './services/home.service';
 import { ChatService } from './services/chat.service';
 import { TruncatePipe } from './filters/truncate-pipe.filter';
 import { UserLocalstorage } from './localstorage/user.localstorage';
+import { ClassificationComponent } from './components/classification/classification.component';
 
 @NgModule({
   declarations: [
@@ -30,13 +30,13 @@ import { UserLocalstorage } from './localstorage/user.localstorage';
     HeaderComponent,
     MenuComponent,
     FooterComponent,
-    HomeComponent,
     LoginComponent,
     UserNewComponent,
     UserGameComponent,
     OficialGameComponent,
     RuleComponent,
-    TruncatePipe
+    TruncatePipe,
+    ClassificationComponent
   ],
   imports: [
     BrowserModule,
