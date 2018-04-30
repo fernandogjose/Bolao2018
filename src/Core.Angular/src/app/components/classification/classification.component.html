@@ -1,142 +1,157 @@
-<div class="row">
-  <div class="col-xs-12 col-lg-9">
-    <div class="box box-success">
-      <!-- titulo -->
-      <div class="box-header">
-        <h3 class="box-title">Classificação</h3>
+<section class="content-header">
+  <h1>Bolão da copa do mundo na Rússia 2018</h1>
+  <ol class="breadcrumb">
+    <li class="active">
+      <i class="fa fa-table"></i> Classificação</li>
+  </ol>
+</section>
+
+<section class="content">
+
+
+  <div class="row">
+    <div class="col-xs-12 col-lg-9">
+      <div class="box box-success">
+        <!-- titulo -->
+        <div class="box-header">
+          <h3 class="box-title">Classificação</h3>
+        </div>
+
+        <!-- lista de classificação -->
+        <div class="box-body table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Posição</th>
+                <th>Jogador</th>
+                <th data-toggle="tooltip" data-placement="top" title="Vitoria certa com placar = 5 pontos">VCPC</th>
+                <th data-toggle="tooltip" data-placement="top" title="Vitoria certa com um placar certo = 3 pontos">VCUPC</th>
+                <th data-toggle="tooltip" data-placement="top" title="Vitoria certa com placar errado = 1 ponto">VCPE</th>
+                <th data-toggle="tooltip" data-placement="top" title="Empate certo com placar certo = 5 pontos">ECPC</th>
+                <th data-toggle="tooltip" data-placement="top" title="Empate certo com placar errado = 2 pontos">ECPE</th>
+                <th data-toggle="tooltip" data-placement="top" title="Resultado errado = 0 ponto">RE</th>
+                <th>Pontos</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let userPointClassification of userPointClassifications" [ngClass]="{'first': userPointClassification.position == 1, 'second': userPointClassification.position == 2, 'third': userPointClassification.position == 3}">
+                <td>
+                  <span class="label label-success" *ngIf="userPointClassification.position == 1">deitando</span>
+                  <span class="label label-warning" *ngIf="userPointClassification.position == 2">na cola</span>
+                  <span class="label label-info" *ngIf="userPointClassification.position == 3">se vacilar eu chego</span>
+                  <span *ngIf="userPointClassification.position > 3">{{ userPointClassification.position }}</span>
+                </td>
+                <td>{{ userPointClassification.userName }}</td>
+                <td>{{ userPointClassification.vcpc }}</td>
+                <td>{{ userPointClassification.vcupc }}</td>
+                <td>{{ userPointClassification.vcpe }}</td>
+                <td>{{ userPointClassification.ecpc }}</td>
+                <td>{{ userPointClassification.ecpe }}</td>
+                <td>{{ userPointClassification.re }}</td>
+                <td class="total">{{ userPointClassification.total }}</td>
+                <td>
+                  <button class="btn btn-warning" [routerLink]="['/espiar-jogo', userPointClassification.userId]">espiar</button>
+                </td>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <!-- lista de classificação -->
-      <div class="box-body table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Posição</th>
-              <th>Jogador</th>
-              <th data-toggle="tooltip" data-placement="top" title="Vitoria certa com placar = 5 pontos">VCPC</th>
-              <th data-toggle="tooltip" data-placement="top" title="Vitoria certa com um placar certo = 3 pontos">VCUPC</th>
-              <th data-toggle="tooltip" data-placement="top" title="Vitoria certa com placar errado = 1 ponto">VCPE</th>
-              <th data-toggle="tooltip" data-placement="top" title="Empate certo com placar certo = 5 pontos">ECPC</th>
-              <th data-toggle="tooltip" data-placement="top" title="Empate certo com placar errado = 2 pontos">ECPE</th>
-              <th data-toggle="tooltip" data-placement="top" title="Resultado errado = 0 ponto">RE</th>
-              <th>Pontos</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let userPointClassification of userPointClassifications" [ngClass]="{'first': userPointClassification.position == 1, 'second': userPointClassification.position == 2, 'third': userPointClassification.position == 3}">
-              <td>
-                <span class="label label-success" *ngIf="userPointClassification.position == 1">deitando</span>
-                <span class="label label-warning" *ngIf="userPointClassification.position == 2">na cola</span>
-                <span class="label label-info" *ngIf="userPointClassification.position == 3">se vacilar eu chego</span>
-                <span *ngIf="userPointClassification.position > 3">{{ userPointClassification.position }}</span>
-              </td>
-              <td>{{ userPointClassification.userName }}</td>
-              <td>{{ userPointClassification.vcpc }}</td>
-              <td>{{ userPointClassification.vcupc }}</td>
-              <td>{{ userPointClassification.vcpe }}</td>
-              <td>{{ userPointClassification.ecpc }}</td>
-              <td>{{ userPointClassification.ecpe }}</td>
-              <td>{{ userPointClassification.re }}</td>
-              <td class="total">{{ userPointClassification.total }}</td>
-              <td><button class="btn btn-warning" [routerLink]="['/espiar-jogo', userPointClassification.userId]">espiar</button></td>
-          </tbody>
-        </table>
+      <div class="box box-warning direct-chat direct-chat-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">Legenda</h3>
+
+          <div class="row legend">
+            <div class="col-xs-12 col-md-6">
+              <span>VCPC: </span> Vitoria certa com placar certo = 5 pontos
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <span>VCUPC: </span> Vitoria certa com um placar certo = 3 pontos
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <span>VCPE: </span> Vitoria certa com placar errado = 1 ponto
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <span>ECPC: </span> Empate certo com placar certo = 5 pontos
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <span>ECPE: </span> Empate certo com placar errado = 2 pontos
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <span>RE: </span> Resultado errado = 0 ponto
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="box box-warning direct-chat direct-chat-warning">
-      <div class="box-header with-border">
-        <h3 class="box-title">Legenda</h3>
+      <div class="box box-info direct-chat direct-chat-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">Premiação</h3>
 
-        <div class="row legend">
-          <div class="col-xs-12 col-md-6">
-            <span>VCPC: </span> Vitoria certa com placar certo = 5 pontos
-          </div>
-          <div class="col-xs-12 col-md-6">
-            <span>VCUPC: </span> Vitoria certa com um placar certo = 3 pontos
-          </div>
-          <div class="col-xs-12 col-md-6">
-            <span>VCPE: </span> Vitoria certa com placar errado = 1 ponto
-          </div>
-          <div class="col-xs-12 col-md-6">
-            <span>ECPC: </span> Empate certo com placar certo = 5 pontos
-          </div>
-          <div class="col-xs-12 col-md-6">
-            <span>ECPE: </span> Empate certo com placar errado = 2 pontos
-          </div>
-          <div class="col-xs-12 col-md-6">
-            <span>RE: </span> Resultado errado = 0 ponto
+          <div class="row legend">
+            <div class="col-xs-12">
+              <span>Até 70 jogadores</span>
+              <ul>
+                <li>1° lugar: Celular Moto Z2 Play</li>
+                <li>2° lugar: Camiseta do seu clube favorito (seleção ou clube)</li>
+                <li>Ultimo lugar: Bola murcha</li>
+              </ul>
+            </div>
+            <div class="col-xs-12">
+              <span>De 71 até 150 jogadores</span>
+              <ul>
+                <li>1° lugar: Iphone 8 ou Galaxy S8</li>
+                <li>2° lugar: Camiseta do seu clube favorito (seleção ou clube)</li>
+                <li>Ultimo lugar: Bola murcha</li>
+              </ul>
+            </div>
+            <div class="col-xs-12">
+              <span>Mais de 121 jogadores</span>
+              <ul>
+                <li>1° lugar: Iphone 8 ou Galaxy S8</li>
+                <li>2° lugar: Celular Moto Z2 Play</li>
+                <li>3° lugar: Camiseta do seu clube favorito (seleção ou clube)</li>
+                <li>Ultimo lugar: Bola murcha</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="box box-info direct-chat direct-chat-warning">
-      <div class="box-header with-border">
-        <h3 class="box-title">Premiação</h3>
+    <!-- lado direito -->
+    <div class="col-xs-12 col-lg-3">
+      <div class="box box-danger">
 
-        <div class="row legend">
-          <div class="col-xs-12">
-            <span>Até 70 jogadores</span> 
-            <ul>
-              <li>1° lugar: Celular Moto Z2 Play</li>
-              <li>2° lugar: Camiseta do seu clube favorito (seleção ou clube)</li>
-              <li>Ultimo lugar: Bola murcha</li>
-            </ul>            
+        <!-- titulo -->
+        <div class="box-header">
+          <h3 class="box-title">Resenha</h3>
+        </div>
+
+        <!-- enviar mensagem -->
+        <form #form="ngForm" (ngSubmit)="chatCreate()">
+          <div class="input-group">
+            <textarea name="message" id="message" placeholder="qual a boa parça?" class="form-control" [(ngModel)]="chatCreateRequest.message"
+              #message="ngModel" required></textarea>
+            <span class="input-group-btn">
+              <button type="submit" [disabled]="!form.valid || loading" class="btn btn-warning btn-flat">enviar</button>
+            </span>
           </div>
-          <div class="col-xs-12">
-            <span>De 71 até 150 jogadores</span> 
-            <ul>
-              <li>1° lugar: Iphone 8 ou Galaxy S8</li>
-              <li>2° lugar: Camiseta do seu clube favorito (seleção ou clube)</li>
-              <li>Ultimo lugar: Bola murcha</li>
-            </ul>            
-          </div>
-          <div class="col-xs-12">
-            <span>Mais de 121 jogadores</span> 
-            <ul>
-              <li>1° lugar: Iphone 8 ou Galaxy S8</li>
-              <li>2° lugar: Celular Moto Z2 Play</li>
-              <li>3° lugar: Camiseta do seu clube favorito (seleção ou clube)</li>
-              <li>Ultimo lugar: Bola murcha</li>
-            </ul>            
-          </div>
+        </form>
+
+        <!-- mensagens -->
+        <div class="chat" *ngFor="let chat of chats; let indexChat = index" [ngClass]="{'par': indexChat % 2 == 0, 'impar': indexChat % 2 != 0}">
+          <p class="chat-title">{{ chat.user.name | limitTo : 15 }}
+            <span class="chat-date pull-right label label-success">{{ chat.date | date:'dd/MM/yyyy HH:mm' }}</span>
+          </p>
+
+          <p class="chat-message">
+            {{ chat.message }}
+          </p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- lado direito -->
-  <div class="col-xs-12 col-lg-3">
-    <div class="box box-danger">
-
-      <!-- titulo -->
-      <div class="box-header">
-        <h3 class="box-title">Resenha</h3>
-      </div>
-
-      <!-- enviar mensagem -->
-      <form #form="ngForm" (ngSubmit)="chatCreate()">
-        <div class="input-group">
-          <textarea name="message" id="message" placeholder="qual a boa parça?" class="form-control" [(ngModel)]="chatCreateRequest.message"
-            #message="ngModel" required></textarea>
-          <span class="input-group-btn">
-            <button type="submit" [disabled]="!form.valid || loading" class="btn btn-warning btn-flat">enviar</button>
-          </span>
-        </div>
-      </form>
-
-      <!-- mensagens -->
-      <div class="chat" *ngFor="let chat of chats; let indexChat = index" [ngClass]="{'par': indexChat % 2 == 0, 'impar': indexChat % 2 != 0}">
-        <p class="chat-title">{{ chat.user.name | limitTo : 15 }}
-          <span class="chat-date pull-right label label-success">{{ chat.date | date:'dd/MM/yyyy HH:mm' }}</span>
-        </p>
-
-        <p class="chat-message">
-          {{ chat.message }}
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
+</section>
