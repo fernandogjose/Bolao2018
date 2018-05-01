@@ -130,12 +130,11 @@
         </div>
 
         <!-- enviar mensagem -->
-        <form #form="ngForm" (ngSubmit)="chatCreate()">
+        <form (ngSubmit)="chatCreate()">
           <div class="input-group">
-            <textarea name="message" id="message" placeholder="qual a boa parça?" class="form-control" [(ngModel)]="chatCreateRequest.message"
-              #message="ngModel" required></textarea>
+            <textarea placeholder="qual a boa parça?" class="form-control" id="message"></textarea>
             <span class="input-group-btn">
-              <button type="submit" [disabled]="!form.valid || loading" class="btn btn-warning btn-flat">enviar</button>
+              <button type="submit" [disabled]="loading" class="btn btn-warning btn-flat">enviar</button>
             </span>
           </div>
         </form>

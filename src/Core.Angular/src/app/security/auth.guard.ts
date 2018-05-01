@@ -24,10 +24,6 @@ export class AuthGuard implements CanActivate {
 
         var userLoggedLocalStorage = this.userLocalstorage.getUserLogged();
         if (userLoggedLocalStorage != null) {
-            console.log(userLoggedLocalStorage);
-            this.shared.user = userLoggedLocalStorage;
-            this.shared.showTemplate.emit(true)
-            this.router.navigateByUrl(this.location.path());
             return true;
         }
 

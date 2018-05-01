@@ -16,26 +16,20 @@ import { UserLocalstorage } from '../../localstorage/user.localstorage';
 })
 export class ClassificationComponent implements OnInit {
 
-  @ViewChild("form")
-  form: NgForm
-
+  message: string;
   loading: boolean;
   shared: SharedService;
   userPointClassifications: UserPointClassification[];
   chats: Chat[];
-  chatCreateRequest = this.resetChatCreateRequest();
 
   constructor(private chatService: ChatService, private homeService: HomeService, private router: Router, private userLocalstorage: UserLocalstorage) {
     this.shared = SharedService.getInstance();
   }
 
-  private resetChatCreateRequest(): ChatCreateRequest {
-    return new ChatCreateRequest(0, '');
-  }
-
   ngOnInit() {
     this.classificationList();
     this.chatList();
+    this.loading = true;
   }
 
   classificationList() {
@@ -44,10 +38,12 @@ export class ClassificationComponent implements OnInit {
       .subscribe((userPointClassifications: UserPointClassification[]) => {
         this.userPointClassifications = userPointClassifications;
         this.getMyPosition();
+        this.loading = false;
       }, error => {
         if (error.status == 401) {
           this.shared.showTemplate.emit(false);
           this.shared.user = null;
+          this.loading = false;
           this.router.navigate(['/login']);
         }
       });
@@ -58,10 +54,12 @@ export class ClassificationComponent implements OnInit {
       .list()
       .subscribe((chats: Chat[]) => {
         this.chats = chats;
+        this.loading = false;
       }, error => {
         if (error.status == 401) {
           this.shared.showTemplate.emit(false);
           this.shared.user = null;
+          this.loading = false;
           this.router.navigate(['/login']);
         }
       });
@@ -69,20 +67,27 @@ export class ClassificationComponent implements OnInit {
 
   chatCreate() {
     this.loading = true;
-    this.chatCreateRequest.userId = this.shared.user.id;
+    this.message = (document.getElementById("message") as HTMLTextAreaElement).value;
+
+    if (this.message == '') {
+      this.loading = false;
+      return;
+    }
+
+    var chatCreateRequest = new ChatCreateRequest(this.shared.user.id, this.message);
 
     this.chatService
-      .create(this.chatCreateRequest)
+      .create(chatCreateRequest)
       .subscribe(() => {
-        this.loading = false;
-        this.form.resetForm();
-        this.chatCreateRequest = this.resetChatCreateRequest();
         this.chatList();
+        (document.getElementById("message") as HTMLTextAreaElement).value = '';
+        this.loading = false;
       }, error => {
         if (error.status == 401) {
           this.shared.showTemplate.emit(false);
           this.shared.user = null;
           this.router.navigate(['/login']);
+          (document.getElementById("message") as HTMLTextAreaElement).value = '';
           this.loading = false;
         }
       });
