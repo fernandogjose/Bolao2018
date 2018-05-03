@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserGameService } from '../../services/user-game.service';
+import { SharedService } from '../../services/shared.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ResponseApi } from '../../models/response-api';
 import { GameByGroup } from '../../models/game-by-group.model';
 import { UserLocalstorage } from '../../localstorage/user.localstorage';
-import { ErrorHandling } from '../../security/error.handling';
-import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-user-game',
@@ -14,25 +13,24 @@ import { User } from '../../models/user.model';
 })
 export class UserGameComponent implements OnInit {
 
+  shared: SharedService;
   message: {};
   classCss: {};
   gamesByGroup: GameByGroup[];
   isLoading: boolean;
   userName: string;
-  userLogged: User = null;
 
   constructor(private userGameService: UserGameService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private userLocalstorage: UserLocalstorage,
-    private errorHandling: ErrorHandling) { }
+    private userLocalstorage: UserLocalstorage) {
+    this.shared = SharedService.getInstance();
+  }
 
   ngOnInit() {
-    this.userLogged = this.userLocalstorage.getUserLogged();
-    
-    var userId: number = this.activatedRoute.snapshot.params['userId'];
+    let userId: number = this.activatedRoute.snapshot.params['userId'];
     if (userId == undefined) {
-      userId = this.userLogged.id;
+      userId = this.userLocalstorage.getUserLogged().id;
     }
 
     this.getByUserId(userId);
@@ -46,7 +44,11 @@ export class UserGameComponent implements OnInit {
         this.gamesByGroup = gamesByGroup;
         this.userName = gamesByGroup[0].games[0].userName;
       }, error => {
-        this.errorHandling.handle(error.status);
+        if (error.status == 401) {
+          this.shared.showTemplate.emit(false);
+          this.shared.user = null;
+          this.router.navigate(['/login']);
+        }
       });
   }
 
@@ -60,14 +62,18 @@ export class UserGameComponent implements OnInit {
       return;
     }
 
-    var userLogged = this.userLocalstorage.getUserLogged();
-    userGame.userId = userLogged.id;
+    userGame.userId = this.shared.user.id;
     this.userGameService.save(userGame).subscribe(
       success => {
         this.isLoading = false;
       },
       error => {
-        this.errorHandling.handle(error.status);
+        if (error.status == 401) {
+          this.shared.showTemplate.emit(false);
+          this.shared.user = null;
+          this.router.navigate(['/login']);
+          this.isLoading = false;
+        }
       });
 
   }

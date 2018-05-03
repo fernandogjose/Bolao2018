@@ -6,7 +6,9 @@ import { User } from '../models/user.model';
 export class SharedService {
 
   public static instance: SharedService = null;
-  userLogged = new EventEmitter<User>();
+  user: User;
+  token: string;
+  showTemplate = new EventEmitter<boolean>();
 
   constructor() {
     return SharedService.instance = SharedService.instance || this;
@@ -18,4 +20,9 @@ export class SharedService {
     }
     return this.instance;
   }
+
+  isLoggedIn(): boolean {
+    return this.user != null && this.user.email != '';
+  }
+
 }

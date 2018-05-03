@@ -1,9 +1,11 @@
-<aside class="main-sidebar" *ngIf="userLogged">
+<!-- <a [routerLink]="['/meu-jogo', shared.user.id]"> -->
+
+<aside class="main-sidebar" *ngIf="shared.user">
   <section class="sidebar">
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header menu-header">
-        {{ userLogged.name | limitTo : 15 }}
-        <small class="label pull-right bg-blue">{{ userLogged.position }}° lugar</small>
+        {{ shared.user.name | limitTo : 15 }}
+        <small class="label pull-right bg-blue">{{ shared.user.position }}° lugar</small>
       </li>
 
       <li>

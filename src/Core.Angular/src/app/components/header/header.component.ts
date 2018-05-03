@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../../services/shared.service';
 import { User } from '../../models/user.model';
-import { UserLocalstorage } from '../../localstorage/user.localstorage';
 
 @Component({
   selector: 'app-header',
@@ -9,14 +9,19 @@ import { UserLocalstorage } from '../../localstorage/user.localstorage';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private userLocalstorage: UserLocalstorage) { }
+  shared: SharedService;
+
+  constructor() {
+    this.shared = SharedService.getInstance();
+  }
 
   ngOnInit() {
 
   }
 
-  signOut(): void {
-    this.userLocalstorage.removeUserLogged();
-    window.location.href = '/login';
+  signOut() : void {
+    localStorage.removeItem("userLoggedLocalStorage");
+    this.shared.user = null;
+    window.location.href = '/';
   }
 }

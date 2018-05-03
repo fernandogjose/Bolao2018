@@ -1,5 +1,5 @@
-<app-header [hidden]="!userLogged"></app-header>
-<app-menu [hidden]="!userLogged"></app-menu>
+<app-header [hidden]="!showTemplate"></app-header>
+<app-menu [hidden]="!showTemplate"></app-menu>
 
 <div [ngClass]="showContentWrapper()">
   <section class="content-header"></section>
@@ -9,4 +9,4 @@
   </section>
 </div>
 
-<app-footer [hidden]="!userLogged"></app-footer> 
+<app-footer [hidden]="!showTemplate"></app-footer> 
