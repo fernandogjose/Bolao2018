@@ -8,7 +8,6 @@ import { MenuComponent } from './components/menu/menu.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { routes } from './app.routes';
-import { SharedService } from './services/shared.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './security/auth.interceptor';
@@ -23,6 +22,7 @@ import { ChatService } from './services/chat.service';
 import { TruncatePipe } from './filters/truncate-pipe.filter';
 import { UserLocalstorage } from './localstorage/user.localstorage';
 import { ClassificationComponent } from './components/classification/classification.component';
+import { ErrorHandling } from './security/error.handling';
 
 @NgModule({
   declarations: [
@@ -48,10 +48,10 @@ import { ClassificationComponent } from './components/classification/classificat
     UserService,
     UserGameService,
     OficialGameService,
-    SharedService,
     HomeService,
     ChatService,
     UserLocalstorage,
+    ErrorHandling,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

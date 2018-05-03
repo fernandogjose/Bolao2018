@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UserGameService } from '../../services/user-game.service';
-import { SharedService } from '../../services/shared.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ResponseApi } from '../../models/response-api';
 import { GameByGroup } from '../../models/game-by-group.model';
 import { UserLocalstorage } from '../../localstorage/user.localstorage';
+import { ErrorHandling } from '../../security/error.handling';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-user-game',
@@ -13,24 +14,25 @@ import { UserLocalstorage } from '../../localstorage/user.localstorage';
 })
 export class UserGameComponent implements OnInit {
 
-  shared: SharedService;
   message: {};
   classCss: {};
   gamesByGroup: GameByGroup[];
   isLoading: boolean;
   userName: string;
+  userLogged: User = null;
 
   constructor(private userGameService: UserGameService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private userLocalstorage: UserLocalstorage) {
-    this.shared = SharedService.getInstance();
-  }
+    private userLocalstorage: UserLocalstorage,
+    private errorHandling: ErrorHandling) { }
 
   ngOnInit() {
-    let userId: number = this.activatedRoute.snapshot.params['userId'];
+    this.userLogged = this.userLocalstorage.getUserLogged();
+    
+    var userId: number = this.activatedRoute.snapshot.params['userId'];
     if (userId == undefined) {
-      userId = this.userLocalstorage.getUserLogged().id;
+      userId = this.userLogged.id;
     }
 
     this.getByUserId(userId);
@@ -44,11 +46,7 @@ export class UserGameComponent implements OnInit {
         this.gamesByGroup = gamesByGroup;
         this.userName = gamesByGroup[0].games[0].userName;
       }, error => {
-        if (error.status == 401) {
-          this.shared.showTemplate.emit(false);
-          this.shared.user = null;
-          this.router.navigate(['/login']);
-        }
+        this.errorHandling.handle(error.status);
       });
   }
 
@@ -62,18 +60,14 @@ export class UserGameComponent implements OnInit {
       return;
     }
 
-    userGame.userId = this.shared.user.id;
+    var userLogged = this.userLocalstorage.getUserLogged();
+    userGame.userId = userLogged.id;
     this.userGameService.save(userGame).subscribe(
       success => {
         this.isLoading = false;
       },
       error => {
-        if (error.status == 401) {
-          this.shared.showTemplate.emit(false);
-          this.shared.user = null;
-          this.router.navigate(['/login']);
-          this.isLoading = false;
-        }
+        this.errorHandling.handle(error.status);
       });
 
   }

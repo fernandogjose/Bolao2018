@@ -23,15 +23,15 @@
                 <td class="col-lg-2">{{ game.gameDate | date:'dd/MM/yyyy HH:mm' }}</td>
                 <td class="col-lg-3 text-right">{{ game.teamA }}</td>
                 <td class="col-lg-1 text-right">
-                  <input *ngIf="shared.user.id == 1" type="number" id="scoreTeamA{{game.oficialGameId}}" name="scoreTeamA{{game.oficialGameId}}"
+                  <input *ngIf="userLogged.id == 1" type="number" id="scoreTeamA{{game.oficialGameId}}" name="scoreTeamA{{game.oficialGameId}}"
                     [(ngModel)]="game.scoreTeamA" required>
-                  <span *ngIf="shared.user.id != 1 && !game.isCreateScore">{{ game.scoreTeamA }}</span>
+                  <span *ngIf="userLogged.id != 1 && !game.isCreateScore">{{ game.scoreTeamA }}</span>
                 </td>
                 <td class="col-lg-1 text-center"> x </td>
                 <td class="col-lg-1">
-                  <input *ngIf="shared.user.id == 1" type="number" id="scoreTeamB{{game.oficialGameId}}" name="scoreTeamB{{game.oficialGameId}}"
+                  <input *ngIf="userLogged.id == 1" type="number" id="scoreTeamB{{game.oficialGameId}}" name="scoreTeamB{{game.oficialGameId}}"
                     [(ngModel)]="game.scoreTeamB" required>
-                  <span *ngIf="shared.user.id != 1 && !game.isCreateScore">{{ game.scoreTeamB }}</span>
+                  <span *ngIf="userLogged.id != 1 && !game.isCreateScore">{{ game.scoreTeamB }}</span>
                 </td>
                 <td class="col-lg-3">{{ game.teamB }}</td>
                 <td class="col-lg-1">

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { SharedService } from '../../services/shared.service';
 import { UserPointClassification } from '../../models/user-point-classification.model';
 import { HomeService } from '../../services/home.service';
 import { ChatService } from '../../services/chat.service';
@@ -8,6 +7,7 @@ import { Chat } from '../../models/chat.model';
 import { NgForm } from '@angular/forms';
 import { ChatCreateRequest } from '../../models/chat-create-request.model';
 import { UserLocalstorage } from '../../localstorage/user.localstorage';
+import { ErrorHandling } from '../../security/error.handling';
 
 @Component({
   selector: 'app-classification',
@@ -18,13 +18,15 @@ export class ClassificationComponent implements OnInit {
 
   message: string;
   loading: boolean;
-  shared: SharedService;
+  showTemplate: boolean;
   userPointClassifications: UserPointClassification[];
   chats: Chat[];
 
-  constructor(private chatService: ChatService, private homeService: HomeService, private router: Router, private userLocalstorage: UserLocalstorage) {
-    this.shared = SharedService.getInstance();
-  }
+  constructor(private chatService: ChatService, 
+              private homeService: HomeService, 
+              private router: Router, 
+              private userLocalstorage: UserLocalstorage,
+              private errorHandling: ErrorHandling) { }
 
   ngOnInit() {
     this.classificationList();
@@ -38,15 +40,10 @@ export class ClassificationComponent implements OnInit {
       .subscribe((userPointClassifications: UserPointClassification[]) => {
         this.userPointClassifications = userPointClassifications;
         this.getMyPosition();
-        this.shared.showTemplate.emit(true)
+        this.showTemplate = true;
         this.loading = false;
       }, error => {
-        if (error.status == 401) {
-          this.shared.showTemplate.emit(false);
-          this.shared.user = null;
-          this.loading = false;
-          this.router.navigate(['/login']);
-        }
+        this.errorHandling.handle(error.status);
       });
   }
 
@@ -55,14 +52,10 @@ export class ClassificationComponent implements OnInit {
       .list()
       .subscribe((chats: Chat[]) => {
         this.chats = chats;
+        this.showTemplate = true;
         this.loading = false;
       }, error => {
-        if (error.status == 401) {
-          this.shared.showTemplate.emit(false);
-          this.shared.user = null;
-          this.loading = false;
-          this.router.navigate(['/login']);
-        }
+        this.errorHandling.handle(error.status);
       });
   }
 
@@ -75,30 +68,26 @@ export class ClassificationComponent implements OnInit {
       return;
     }
 
-    var chatCreateRequest = new ChatCreateRequest(this.shared.user.id, this.message);
+    var userLogged = this.userLocalstorage.getUserLogged();
+    var chatCreateRequest = new ChatCreateRequest(userLogged.id, this.message);
 
     this.chatService
       .create(chatCreateRequest)
       .subscribe(() => {
         this.chatList();
         (document.getElementById("message") as HTMLTextAreaElement).value = '';
-        this.loading = false;
       }, error => {
-        if (error.status == 401) {
-          this.shared.showTemplate.emit(false);
-          this.shared.user = null;
-          this.router.navigate(['/login']);
-          (document.getElementById("message") as HTMLTextAreaElement).value = '';
-          this.loading = false;
-        }
+        this.errorHandling.handle(error.status);
       });
   }
 
   private getMyPosition(): void {
     for (let index = 0; index < this.userPointClassifications.length; index++) {
-      if (this.userPointClassifications[index].userId == this.shared.user.id) {
-        this.shared.user.position = this.userPointClassifications[index].position;
-        this.userLocalstorage.setUserLogged(this.shared.user);
+
+      var userLogged = this.userLocalstorage.getUserLogged();
+      if (this.userPointClassifications[index].userId == userLogged.id) {
+        userLogged.position = this.userPointClassifications[index].position;
+        this.userLocalstorage.setUserLogged(userLogged);
         return;
       }
     }

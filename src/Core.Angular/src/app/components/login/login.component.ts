@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
-import { SharedService } from '../../services/shared.service';
 import { UserService } from '../../services/user.service';
 import { UserLocalstorage } from '../../localstorage/user.localstorage';
 
@@ -14,17 +13,17 @@ import { UserLocalstorage } from '../../localstorage/user.localstorage';
 export class LoginComponent implements OnInit {
 
   user = new User(0, '', '', '', '', 0);
-  shared: SharedService;
   message: {};
   classCss: {};
   loading: boolean;
+  showTemplate: boolean;
 
   constructor(
     private userService: UserService,
     private router: Router,
     private userLocalstorage: UserLocalstorage
-  ) {
-    this.shared = SharedService.getInstance();
+  ) { 
+    this.showTemplate = false;
   }
 
   ngOnInit() {
@@ -53,17 +52,14 @@ export class LoginComponent implements OnInit {
     this.userService
       .login(this.user)
       .subscribe((userAuthentication: User) => {
-        this.shared.user = userAuthentication;
         this.userLocalstorage.setUserLogged(userAuthentication);
         this.loading = false;
         this.router.navigate(['/classificacao']);
       }, err => {
-        this.shared.user = null;
         this.showMessage({
           type: 'error',
           text: err.error.error
         });
-        this.shared.showTemplate.emit(false);
         this.loading = false;
       });
   }

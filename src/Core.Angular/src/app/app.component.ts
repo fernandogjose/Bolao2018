@@ -1,5 +1,5 @@
-import { SharedService } from './services/shared.service';
 import { Component } from '@angular/core';
+import { UserLocalstorage } from './localstorage/user.localstorage';
 
 @Component({
   selector: 'app-root',
@@ -8,21 +8,21 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   showTemplate: boolean = false;
-  public shared: SharedService;
+  isLoggedIn: boolean = false;
 
-  constructor() {
-    this.shared = SharedService.getInstance();
-  }
+  constructor(private userLocalstorage: UserLocalstorage) { }
 
   ngOnInit() {
-    this.shared.showTemplate.subscribe(
-      show => this.showTemplate = show
-    );
+    var userLogged = this.userLocalstorage.getUserLogged();
+    if (userLogged !== undefined) {
+      this.showTemplate = true;
+      this.isLoggedIn = true;
+    }
   }
 
   showContentWrapper() {
     return {
-      "content-wrapper": this.shared.isLoggedIn()
+      "content-wrapper": this.isLoggedIn
     }
   }
 }

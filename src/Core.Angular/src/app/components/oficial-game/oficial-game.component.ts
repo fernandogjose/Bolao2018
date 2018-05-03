@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from '../../services/shared.service';
 import { GameByGroup } from '../../models/game-by-group.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OficialGameService } from '../../services/oficial-game.service';
+import { ErrorHandling } from '../../security/error.handling';
+import { User } from '../../models/user.model';
+import { UserLocalstorage } from '../../localstorage/user.localstorage';
 
 @Component({
   selector: 'app-oficial-game',
@@ -11,20 +13,20 @@ import { OficialGameService } from '../../services/oficial-game.service';
 })
 export class OficialGameComponent implements OnInit {
 
-  shared: SharedService;
   message: {};
   classCss: {};
   gamesByGroup: GameByGroup[];
   isLoading: boolean;
   indexGroup: number;
   indexGame: number;
+  userLogged: User = null;
 
-  constructor(private oficialGameService: OficialGameService, private router: Router) {
-    this.shared = SharedService.getInstance();
+  constructor(private oficialGameService: OficialGameService, private router: Router, private errorHandling: ErrorHandling, private userLocalstorage: UserLocalstorage) {
   }
 
   ngOnInit() {
     this.list();
+    this.userLogged = this.userLocalstorage.getUserLogged();
   }
 
   list() {
@@ -33,11 +35,7 @@ export class OficialGameComponent implements OnInit {
       .subscribe((gamesByGroup: GameByGroup[]) => {
         this.gamesByGroup = gamesByGroup;
       }, error => {
-        if (error.status == 401) {
-          this.shared.showTemplate.emit(false);
-          this.shared.user = null;
-          this.router.navigate(['/login']);
-        }
+        this.errorHandling.handle(error.status);
       });
   }
 
@@ -64,12 +62,7 @@ export class OficialGameComponent implements OnInit {
         this.gamesByGroup[this.indexGroup].games[this.indexGame].isCreateScore = false;
       },
       error => {
-        if (error.status == 401) {
-          this.shared.showTemplate.emit(false);
-          this.shared.user = null;
-          this.router.navigate(['/login']);
-          this.isLoading = false;
-        }
+        this.errorHandling.handle(error.status);
       });
 
   }
@@ -93,12 +86,7 @@ export class OficialGameComponent implements OnInit {
         this.gamesByGroup[this.indexGroup].games[this.indexGame].scoreTeamB = 0;
       },
       error => {
-        if (error.status == 401) {
-          this.shared.showTemplate.emit(false);
-          this.shared.user = null;
-          this.router.navigate(['/login']);
-          this.isLoading = false;
-        }
+        this.errorHandling.handle(error.status);
       });
   }
 }

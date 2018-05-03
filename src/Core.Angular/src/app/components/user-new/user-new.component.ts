@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from '../../models/user.model';
-import { SharedService } from '../../services/shared.service';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResponseApi } from '../../models/response-api';
@@ -18,7 +17,6 @@ export class UserNewComponent implements OnInit {
   form: NgForm
 
   user = this.resetUser();
-  shared: SharedService;
   message: {};
   classCss: {};
   loading: boolean;
@@ -27,9 +25,7 @@ export class UserNewComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private userLocalstorage: UserLocalstorage
-  ) {
-    this.shared = SharedService.getInstance();
-  }
+  ) { }
 
   private resetUser(): User {
     return new User(0, '', '', '', '', 0);
@@ -68,11 +64,9 @@ export class UserNewComponent implements OnInit {
           text: 'Boa parça!!! seu usuário foi criado. Segura ai que vou te levar para o jogo'
         });
 
-        //--- envia para a home
+        //--- envia para a tela de classificação
         setTimeout(() => {
           this.loading = false;
-          this.shared.showTemplate.emit(true)
-          this.shared.user = userResponse;
           this.userLocalstorage.setUserLogged(userResponse);
           this.router.navigate(['/classificacao']);
         }, 8000);
