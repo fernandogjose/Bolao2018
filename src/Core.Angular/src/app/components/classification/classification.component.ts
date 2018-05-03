@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
 import { ChatCreateRequest } from '../../models/chat-create-request.model';
 import { UserLocalstorage } from '../../localstorage/user.localstorage';
 import { ErrorHandling } from '../../security/error.handling';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-classification',
@@ -21,12 +22,15 @@ export class ClassificationComponent implements OnInit {
   showTemplate: boolean;
   userPointClassifications: UserPointClassification[];
   chats: Chat[];
+  sharedService: SharedService;
 
-  constructor(private chatService: ChatService, 
-              private homeService: HomeService, 
-              private router: Router, 
-              private userLocalstorage: UserLocalstorage,
-              private errorHandling: ErrorHandling) { }
+  constructor(private chatService: ChatService,
+    private homeService: HomeService,
+    private router: Router,
+    private userLocalstorage: UserLocalstorage,
+    private errorHandling: ErrorHandling) {
+      this.sharedService = SharedService.getInstance();
+  }
 
   ngOnInit() {
     this.classificationList();
@@ -88,6 +92,7 @@ export class ClassificationComponent implements OnInit {
       if (this.userPointClassifications[index].userId == userLogged.id) {
         userLogged.position = this.userPointClassifications[index].position;
         this.userLocalstorage.setUserLogged(userLogged);
+        this.sharedService.userLogged.emit(userLogged);
         return;
       }
     }

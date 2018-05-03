@@ -53,8 +53,7 @@ export class LoginComponent implements OnInit {
       .login(this.user)
       .subscribe((userAuthentication: User) => {
         this.userLocalstorage.setUserLogged(userAuthentication);
-        this.loading = false;
-        this.router.navigate(['/classificacao']);
+        window.location.href = '/classificacao';
       }, err => {
         this.showMessage({
           type: 'error',

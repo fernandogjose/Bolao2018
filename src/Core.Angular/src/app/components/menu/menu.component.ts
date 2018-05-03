@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
+import { SharedService } from '../../services/shared.service';
 import { UserLocalstorage } from '../../localstorage/user.localstorage';
 
 @Component({
@@ -9,11 +10,20 @@ import { UserLocalstorage } from '../../localstorage/user.localstorage';
 })
 export class MenuComponent implements OnInit {
 
+  sharedService: SharedService;
   userLogged: User = null;
 
-  constructor(private userLocalstorage: UserLocalstorage) { }
+  constructor(private userLocalstorage: UserLocalstorage) {
+    this.sharedService = SharedService.getInstance();
+  }
 
   ngOnInit() {
-    this.userLogged = this.userLocalstorage.getUserLogged();
+    this.sharedService.userLogged.subscribe(
+      userLogged => this.userLogged = userLogged
+    );
+
+    if (this.userLogged == null || this.userLogged == undefined) {
+      this.userLogged = this.userLocalstorage.getUserLogged();
+    }
   }
 }

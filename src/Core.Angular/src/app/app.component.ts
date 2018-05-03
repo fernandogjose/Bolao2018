@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserLocalstorage } from './localstorage/user.localstorage';
+import { User } from './models/user.model';
 
 @Component({
   selector: 'app-root',
@@ -7,22 +8,17 @@ import { UserLocalstorage } from './localstorage/user.localstorage';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  showTemplate: boolean = false;
-  isLoggedIn: boolean = false;
+  userLogged: User = null;
 
   constructor(private userLocalstorage: UserLocalstorage) { }
 
   ngOnInit() {
-    var userLogged = this.userLocalstorage.getUserLogged();
-    if (userLogged !== undefined) {
-      this.showTemplate = true;
-      this.isLoggedIn = true;
-    }
+    this.userLogged = this.userLocalstorage.getUserLogged();
   }
 
   showContentWrapper() {
     return {
-      "content-wrapper": this.isLoggedIn
+      "content-wrapper": this.userLogged != null && this.userLogged != undefined
     }
   }
 }
