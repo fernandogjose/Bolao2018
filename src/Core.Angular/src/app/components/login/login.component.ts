@@ -54,7 +54,6 @@ export class LoginComponent implements OnInit {
       .login(this.user)
       .subscribe((userAuthentication: User) => {
         this.shared.user = userAuthentication;
-        this.shared.showTemplate.emit(true)
         this.userLocalstorage.setUserLogged(userAuthentication);
         this.loading = false;
         this.router.navigate(['/classificacao']);

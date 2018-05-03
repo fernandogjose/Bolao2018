@@ -4,6 +4,7 @@ import { SharedService } from '../../services/shared.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ResponseApi } from '../../models/response-api';
 import { GameByGroup } from '../../models/game-by-group.model';
+import { UserLocalstorage } from '../../localstorage/user.localstorage';
 
 @Component({
   selector: 'app-user-game',
@@ -21,14 +22,15 @@ export class UserGameComponent implements OnInit {
 
   constructor(private userGameService: UserGameService,
     private activatedRoute: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private userLocalstorage: UserLocalstorage) {
     this.shared = SharedService.getInstance();
   }
 
   ngOnInit() {
     let userId: number = this.activatedRoute.snapshot.params['userId'];
     if (userId == undefined) {
-      userId = this.shared.user.id;
+      userId = this.userLocalstorage.getUserLogged().id;
     }
 
     this.getByUserId(userId);

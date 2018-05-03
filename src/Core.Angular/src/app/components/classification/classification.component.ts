@@ -38,6 +38,7 @@ export class ClassificationComponent implements OnInit {
       .subscribe((userPointClassifications: UserPointClassification[]) => {
         this.userPointClassifications = userPointClassifications;
         this.getMyPosition();
+        this.shared.showTemplate.emit(true)
         this.loading = false;
       }, error => {
         if (error.status == 401) {
