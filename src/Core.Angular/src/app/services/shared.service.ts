@@ -9,7 +9,6 @@ export class SharedService {
   userLogged = new EventEmitter<User>();
 
   constructor() {
-    this.userLogged.emit(new User(0, 'teste', 'teste', 'teste', 'teste', 10));
     return SharedService.instance = SharedService.instance || this;
   }
 
