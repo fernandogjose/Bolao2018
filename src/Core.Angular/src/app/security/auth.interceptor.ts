@@ -14,6 +14,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+        if (request.url.indexOf('login') != -1)
+            return next.handle(request);
+
         var userLoggedLocalStorage = this.userLocalstorage.getUserLogged();
         if (userLoggedLocalStorage != null) {
             this.shared.user = userLoggedLocalStorage;
