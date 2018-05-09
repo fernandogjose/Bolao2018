@@ -40,6 +40,12 @@
           <p>{{ message.text }}</p>
         </div>
 
+        <div class="col-sm-12">
+          <p><strong>Acessar com o usuário espião para ver como o jogo funciona:</strong></p>
+          <p>:: email: usuario@espiao.com</p>
+          <p>:: senha: 123456</p>
+        </div>
+
         <div class="col-sm-12 alert alert-danger" role="alert" *ngIf="(email.invalid && email.dirty) || (password.invalid && password.dirty)">
           <p *ngIf="email.invalid && email.dirty">parça tem alguma coisa errada com este e-mail ai</p>
           <p *ngIf="password.invalid && password.dirty">parça está esquecendo de colocar sua senha</p>
