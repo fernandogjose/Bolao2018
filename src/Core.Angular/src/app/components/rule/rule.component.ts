@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../../services/shared.service';
 import { UserLocalstorage } from '../../localstorage/user.localstorage';
+import { UserPointClassification } from '../../models/user-point-classification.model';
+import { HomeService } from '../../services/home.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rule',
@@ -9,19 +12,22 @@ import { UserLocalstorage } from '../../localstorage/user.localstorage';
 })
 export class RuleComponent implements OnInit {
 
-  public shared: SharedService;
+  shared: SharedService;
 
-  constructor(private userLocalstorage: UserLocalstorage) {
+  constructor(private homeService: HomeService, private router: Router) {
+    this.shared = SharedService.getInstance();
   }
 
   ngOnInit() {
-    this.shared = SharedService.getInstance();
-    this.shared.showTemplate.emit(false);
+    this.classificationList();
+  }
 
-    var userLoggedLocalStorage = this.userLocalstorage.getUserLogged();
-    if (userLoggedLocalStorage != null) {
-      this.shared.user = userLoggedLocalStorage;
-      this.shared.showTemplate.emit(true);
-    }
+  classificationList() {
+    // this.shared.showTemplate.emit(false);
+    this.homeService
+      .list()
+      .subscribe((userPointClassifications: UserPointClassification[]) => {
+        this.shared.showTemplate.emit(true)
+      });
   }
 }
