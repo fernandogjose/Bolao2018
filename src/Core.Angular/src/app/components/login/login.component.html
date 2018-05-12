@@ -26,24 +26,29 @@
           </div>
         </div>
 
-        <div class="col-sm-12">
-          <!-- <a href="https://api.whatsapp.com/send?phone=55011996747551" class="btn btn-danger" target="_blank">teste whatsapp</a> -->
+        <div class="row row-button">
+          <div class="col-sm-12">
+            <button type="submit" [disabled]="!form.valid || loading" class="btn btn-info">
+              <span *ngIf="!loading">jogar</span>
+              <span *ngIf="loading">segura ai que seu jogador está no aquecimento</span>
+            </button>
+          </div>
+        </div>
 
-          <button type="submit" [disabled]="!form.valid || loading" class="btn btn-info pull-right">
-            <span *ngIf="!loading">jogar</span>
-            <span *ngIf="loading">segura ai que seu jogador está no aquecimento</span>
-          </button>
-          <a [routerLink]="['/novo-usuario']">Novo Jogador</a>
+        <div class="row row-links">
+          <div class="col-sm-12">
+            <a [routerLink]="['/novo-usuario']">Novo Jogador - Esta esperando o que parça?</a>
+          </div>
+        </div>
+
+        <div class="row row-links">
+          <div class="col-sm-12">
+            <a [routerLink]="['/regulamento']">Regulamento - Aprende como funciona com o pai aqui meu parceiro</a>
+          </div>
         </div>
 
         <div [ngClass]="classCss" class="col-sm-12" role="alert" *ngIf="message">
           <p>{{ message.text }}</p>
-        </div>
-
-        <div class="col-sm-12">
-          <p><strong>Acessar com o usuário espião para ver como o jogo funciona:</strong></p>
-          <p>:: email: usuario@espiao.com</p>
-          <p>:: senha: 123456</p>
         </div>
 
         <div class="col-sm-12 alert alert-danger" role="alert" *ngIf="(email.invalid && email.dirty) || (password.invalid && password.dirty)">

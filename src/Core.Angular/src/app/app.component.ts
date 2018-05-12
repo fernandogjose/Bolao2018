@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  showTemplate: boolean = false;
+  showTemplate: boolean;
   public shared: SharedService;
 
   constructor() {
@@ -18,11 +18,5 @@ export class AppComponent {
     this.shared.showTemplate.subscribe(
       show => this.showTemplate = show
     );
-  }
-
-  showContentWrapper() {
-    return {
-      "content-wrapper": this.shared.isLoggedIn()
-    }
   }
 }

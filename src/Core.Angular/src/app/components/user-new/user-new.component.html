@@ -36,12 +36,19 @@
             </div>
           </div>
 
-          <div class="box-footer">
-            <button type="submit" [disabled]="!form.valid || loading" class="btn btn-info pull-right">
-              <span *ngIf="!loading">salvar</span>
-              <span *ngIf="loading">segura ai que estou criando seu jogador</span>
-            </button>
-            <a [routerLink]="['/login']">Login dos jogadores</a>
+          <div class="row row-button">
+            <div class="col-sm-12">
+              <button type="submit" [disabled]="!form.valid || loading" class="btn btn-info pull-right">
+                <span *ngIf="!loading">salvar</span>
+                <span *ngIf="loading">segura ai que estou criando seu jogador</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="row row-links">
+            <div class="col-sm-12">
+                <a [routerLink]="['/login']">Login dos jogadores</a>
+            </div>
           </div>
 
           <div [ngClass]="classCss" class="col-sm-12" role="alert" *ngIf="message">

@@ -11,9 +11,9 @@ import { ClassificationComponent } from './components/classification/classificat
 export const ROUTES: Routes = [
     { path: '', component: LoginComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'regulamento', component: RuleComponent },
     { path: 'novo-usuario', component: UserNewComponent },
     { path: 'classificacao', component: ClassificationComponent, canActivate: [AuthGuard] },
-    { path: 'regulamento', component: RuleComponent, canActivate: [AuthGuard] },
     { path: 'meu-jogo', component: UserGameComponent, canActivate: [AuthGuard] },
     { path: 'espiar-jogo/:userId', component: UserGameComponent, canActivate: [AuthGuard] },
     { path: 'resultado-oficial', component: OficialGameComponent, canActivate: [AuthGuard] },

@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.shared.showTemplate.emit(false);
   }
 
   private showMessage(message: { type: string, text: string }): void {

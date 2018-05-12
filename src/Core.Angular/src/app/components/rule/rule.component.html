@@ -1,118 +1,150 @@
-<section class="content-header">
+<section class="content-header" *ngIf="shared.user.id > 0">
   <h1>Regulamento</h1>
   <ol class="breadcrumb">
-    <li><a [routerLink]="['/classificacao']"><i class="fa fa-table"></i> Classificação</a></li>
+    <li>
+      <a [routerLink]="['/classificacao']">
+        <i class="fa fa-table"></i> Classificação</a>
+    </li>
     <li class="active">Regulamento</li>
   </ol>
 </section>
 
 <section class="content">
 
-<div class="row">
-  <div class="col-xs-12">
-    <div class="box box-info direct-chat direct-chat-warning">
-      <div class="box-header with-border">
-        <h3 class="box-title">Premiação</h3>
+  <div class="row">
 
-        <div class="row legend">
-          <div class="col-xs-12">
-            <span>Até 70 jogadores</span>
-            <ul>
-              <li>1° lugar: Celular Moto Z2 Play ou iPhone 6 ou Moto X4</li>
-              <li>2° lugar: Camiseta do seu clube favorito (seleção ou clube)</li>
-              <li>Ultimo lugar: Bola murcha</li>
-            </ul>
-          </div>
-          <div class="col-xs-12">
-            <span>De 71 até 120 jogadores</span>
-            <ul>
-              <li>1° lugar: Celular Iphone 8 ou Galaxy S8 ou Moto Z2 Force</li>
-              <li>2° lugar: Camiseta do seu clube favorito (seleção ou clube)</li>
-              <li>Ultimo lugar: Bola murcha</li>
-            </ul>
-          </div>
-          <div class="col-xs-12">
-            <span>Mais de 121 jogadores</span>
-            <ul>
-              <li>1° lugar: Celular Iphone 8 ou Galaxy S8 ou Moto Z2 Force</li>
-              <li>2° lugar: Celular Moto Z2 Play ou iPhone 6 ou Moto X4</li>
-              <li>3° lugar: Camiseta do seu clube favorito (seleção ou clube)</li>
-              <li>Ultimo lugar: Bola murcha</li>
-            </ul>
+    <div class="col-xs-12">
+
+      <div class="box box-warning direct-chat direct-chat-warning" *ngIf="shared.user.id == 0">
+        <div class="box-header with-border">
+          <h1 class="box-title">Regulamento</h1>
+          <div class="row legend">
+            <div class="col-xs-12">
+              Eae parça já entendeu tudo? vai ganhar ou vai meter a mala? Se já tem usuário bora para o
+              <a [routerLink]="['/classificacao']">
+                login dos jogadores.
+              </a>
+              Agora se ainda não tem, está pagando de mané, não perde mais tempo e vamos criar um
+              <a [routerLink]="['/novo-usuario']">
+                jogador novo
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="box box-danger">
+      <div class="box box-default direct-chat direct-chat-warning">
         <div class="box-header with-border">
-          <h3 class="box-title">Regras do jogo</h3>
-  
+          <h3 class="box-title">Pagamento e Preço</h3>
+
           <div class="row legend">
             <div class="col-xs-12">
+              <span>Preço por jogador é de R$ 50,00 e pode ser pago por:</span>
               <ul>
-                <li>O palpite de todos os jogos devem estar preenchidos até o dia 13 de junho de 2018</li>
-                <li>Jogos sem palpite valerá o 0 x 0</li>
-                <li>O resultado oficial será atualizado assim que o jogo terminar e automáticamente os pontos serão calculados</li>
-                <li>Os jogos das oitavas, quartas, semifinais e finais contará enquanto a bola estiver rolando, em outras palavras, Tempo normal + Prorrogação. Não será contado os gols em pênaltis. Por exemplo: Brasil 1 x 1 Chile (tempo normal + Prorrogação) - Brasil 4 x 3 Chile (Pênaltis), o que vale neste caso é o 1 x 1 (empate) </li>
+                <li>MercadoPago</li>
+                <li>Déposito em conta: Banco Itaú - Ag. 3751 - C/C. 05978-7 - Priscila Alves Antunes</li>
+                <li>Pagamento em dinheiro</li>
               </ul>
             </div>
           </div>
         </div>
       </div>
 
-    <div class="box box-warning direct-chat direct-chat-warning">
-      <div class="box-header with-border">
-        <h3 class="box-title">Regras de desempate</h3>
+      <div class="box box-info direct-chat direct-chat-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">Premiação</h3>
 
-        <div class="row legend">
-          <div class="col-xs-12">
-            <span>Críterio de desempate:</span>
-            <ul>
-              <li>1° Empate certo com placar certo</li>
-              <li>2° Vitoria certa com placar certo</li>
-              <li>3° Vitoria certa com um placar certo</li>
-              <li>4° Empate certo com placar errado</li>
-              <li>5° Vitoria certa com placar errado</li>
-            </ul>
+          <div class="row legend">
+            <div class="col-xs-12">
+              <span>Mais de 121 jogadores</span>
+              <ul>
+                <li>1° lugar: Celular Iphone 8</li>
+                <li>2° lugar: Celular Moto Z2 Play</li>
+                <li>3° lugar: Camiseta do seu clube favorito (seleção ou clube)</li>
+                <li>Ultimo lugar: Bola murcha</li>
+              </ul>
+            </div>
+
+            <div class="col-xs-12">
+              <span>De 71 até 120 jogadores</span>
+              <ul>
+                <li>1° lugar: Celular Iphone 8</li>
+                <li>2° lugar: Camiseta do seu clube favorito (seleção ou clube)</li>
+                <li>Ultimo lugar: Bola murcha</li>
+              </ul>
+            </div>
+
+            <div class="col-xs-12">
+              <span>Até 70 jogadores</span>
+              <ul>
+                <li>1° lugar: Celular Moto Z2 Play</li>
+                <li>2° lugar: Camiseta do seu clube favorito (seleção ou clube)</li>
+                <li>Ultimo lugar: Bola murcha</li>
+              </ul>
+            </div>
+
+            <div class="col-xs-12">
+              <span>O celular pode ser mudado por outro similar caso o vencedor desejar</span>
+            </div>
+
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="box box-default direct-chat direct-chat-warning">
-      <div class="box-header with-border">
-        <h3 class="box-title">Pagamento e Preço</h3>
+      <div class="box box-danger">
+        <div class="box-header with-border">
+          <h3 class="box-title">Regras do jogo</h3>
 
-        <div class="row legend">
-          <div class="col-xs-12">
-            <span>Preço por jogador é de R$ 50,00 e pode ser pago por:</span>
-            <ul>
-              <li>MercadoPago</li>
-              <li>Déposito em conta: Banco Itaú - Ag. 3751 - C/C. 05978-7 - Priscila Alves Antunes</li>
-              <li>Pagamento em dinheiro</li>
-            </ul>
+          <div class="row legend">
+            <div class="col-xs-12">
+              <ul>
+                <li>O palpite de todos os jogos devem estar preenchidos até o dia 13 de junho de 2018</li>
+                <li>Jogos sem palpite valerá o 0 x 0</li>
+                <li>O resultado oficial será atualizado assim que o jogo terminar e automáticamente os pontos serão calculados</li>
+                <li>Os jogos das oitavas, quartas, semifinais e finais contará enquanto a bola estiver rolando, em outras palavras,
+                  Tempo normal + Prorrogação. Não será contado os gols em pênaltis. Por exemplo: Brasil 1 x 1 Chile (tempo
+                  normal + Prorrogação) - Brasil 4 x 3 Chile (Pênaltis), o que vale neste caso é o 1 x 1 (empate) </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="box box-success direct-chat direct-chat-warning">
-      <div class="box-header with-border">
-        <h3 class="box-title">Dúvidas ou sugestões</h3>
+      <div class="box box-warning direct-chat direct-chat-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">Regras de desempate</h3>
 
-        <div class="row legend">
-          <div class="col-xs-12">
-            <span>Qualquer dúvida ou sugestão, favor, enviar um e-mail para:</span>
-            <ul>
-              <li>fernandogjose@gmail.com</li>
-            </ul>
+          <div class="row legend">
+            <div class="col-xs-12">
+              <span>Críterio de desempate:</span>
+              <ul>
+                <li>1° Empate certo com placar certo</li>
+                <li>2° Vitoria certa com placar certo</li>
+                <li>3° Vitoria certa com um placar certo</li>
+                <li>4° Empate certo com placar errado</li>
+                <li>5° Vitoria certa com placar errado</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
+      <div class="box box-success direct-chat direct-chat-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">Dúvidas ou sugestões</h3>
+
+          <div class="row legend">
+            <div class="col-xs-12">
+              <span>Qualquer dúvida ou sugestão, favor, enviar um e-mail para:</span>
+              <ul>
+                <li>fernandogjose@gmail.com</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-</div>
 
 </section>

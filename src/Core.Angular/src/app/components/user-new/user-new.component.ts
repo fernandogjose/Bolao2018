@@ -53,6 +53,7 @@ export class UserNewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.shared.showTemplate.emit(false);
   }
 
   create() {

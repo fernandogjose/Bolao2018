@@ -7,5 +7,19 @@ a {
 }
 
 .login-box, .register-box{
-    width: 50%;
+    width: 80%;
+}
+
+.row-button {
+    margin-left: -25px;
+    margin-right: -5px;
+}
+
+.row-button button {
+    width: 100%;
+}
+
+.row-links {
+    margin-left: 0;
+    margin-top: 15px;
 }
