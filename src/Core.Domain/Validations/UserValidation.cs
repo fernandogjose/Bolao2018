@@ -52,11 +52,8 @@ namespace Core.Domain.Validations {
         }
 
         public void IsLogged (User user, string password) {
-            if (user == null || user.Id == 0)
-                throw new AuthException ("Xiiiiii parça, está metendo a mala ai mas não lembra a senha, seu e-mail ou sua senha está errada");
-
-            if (user.Password != password)
-                throw new AuthException ("Xiiiiii parça, está metendo a mala ai mas não lembra a senha, seu e-mail ou sua senha está errada");
+            if (user == null || user.Id == 0 || user.Password != password)
+                throw new AuthException ("Xiiiiii parça, está metendo a mala ai mas não lembra a senha? Já vou te falar que seu e-mail ou sua senha está errado");
         }
     }
 }
