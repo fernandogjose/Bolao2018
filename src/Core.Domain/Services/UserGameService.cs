@@ -4,8 +4,7 @@ using Core.Domain.Models;
 using Core.Domain.Validations;
 using Core.WebApi.Models;
 
-namespace Core.Domain.Services
-{
+namespace Core.Domain.Services {
     public class UserGameService {
 
         private readonly IUserGameRepository _userGameRepository;
@@ -32,15 +31,9 @@ namespace Core.Domain.Services
             return userGameResponse;
         }
 
-        public void Save (UserGameSaveRequest userGameSaveRequest) {
-            var userGameExist = GetByUserIdAndOficialGameId (userGameSaveRequest.UserId, userGameSaveRequest.OficialGameId);
-            _userGameValidation.CanSave (userGameExist);
-
-            if (userGameExist != null && userGameExist.ScoreTeamA >= 0 && userGameExist.ScoreTeamB >= 0) {
-                _userGameRepository.Update (userGameSaveRequest);
-            } else {
-                _userGameRepository.Create (userGameSaveRequest);
-            }
+        public void Save (List<GameByGroup> gamesByGroupRequest) {
+            _userGameValidation.CanSave ();
+            _userGameRepository.Save(gamesByGroupRequest);
         }
     }
 }

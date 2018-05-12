@@ -59,36 +59,23 @@ namespace Core.Data.Repositories {
             return userGame;
         }
 
-        public void Create (UserGameSaveRequest request) {
+        public void Save (List<GameByGroup> gamesByGroupRequest) {
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
-                using (var cmd = new SqlCommand ()) {
-                    cmd.Connection = conn;
-                    cmd.CommandText = _userGameSql.SqlCreate ();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue ("@UserId", GetDbValue (request.UserId));
-                    cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (request.OficialGameId));
-                    cmd.Parameters.AddWithValue ("@ScoreTeamA", GetDbValue (request.ScoreTeamA));
-                    cmd.Parameters.AddWithValue ("@ScoreTeamB", GetDbValue (request.ScoreTeamB));
+                conn.Open ();
 
-                    conn.Open ();
-                    cmd.ExecuteNonQuery ();
-                }
-            }
-        }
-
-        public void Update (UserGameSaveRequest request) {
-            using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
-                using (var cmd = new SqlCommand ()) {
-                    cmd.Connection = conn;
-                    cmd.CommandText = _userGameSql.SqlUpdate ();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue ("@UserId", GetDbValue (request.UserId));
-                    cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (request.OficialGameId));
-                    cmd.Parameters.AddWithValue ("@ScoreTeamA", GetDbValue (request.ScoreTeamA));
-                    cmd.Parameters.AddWithValue ("@ScoreTeamB", GetDbValue (request.ScoreTeamB));
-
-                    conn.Open ();
-                    cmd.ExecuteNonQuery ();
+                foreach (var gameByGroupRequest in gamesByGroupRequest) {
+                    foreach (var gameOfGroupRequest in gameByGroupRequest.Games) {
+                        using (var cmd = new SqlCommand ()) {
+                            cmd.Connection = conn;
+                            cmd.CommandText = _userGameSql.SqlSave ();
+                            cmd.CommandType = CommandType.Text;
+                            cmd.Parameters.AddWithValue ("@UserId", GetDbValue (gameOfGroupRequest.UserId));
+                            cmd.Parameters.AddWithValue ("@OficialGameId", GetDbValue (gameOfGroupRequest.OficialGameId));
+                            cmd.Parameters.AddWithValue ("@ScoreTeamA", GetDbValue (gameOfGroupRequest.ScoreTeamA));
+                            cmd.Parameters.AddWithValue ("@ScoreTeamB", GetDbValue (gameOfGroupRequest.ScoreTeamB));
+                            cmd.ExecuteNonQuery ();
+                        }
+                    }
                 }
             }
         }
@@ -153,7 +140,6 @@ namespace Core.Data.Repositories {
                 userGameByGroup.Games = new List<GameOfGroup> ();
 
                 foreach (var game in gamesOfGroup.Where (m => m.GroupName == userGameByGroup.GroupName)) {
-                    game.CanSave = DateTime.Now < game.GameDate.AddHours (-4);
                     game.UserId = userId;
                     userGameByGroup.Games.Add (game);
                 }

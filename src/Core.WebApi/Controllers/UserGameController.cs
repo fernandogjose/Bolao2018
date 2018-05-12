@@ -24,8 +24,8 @@ namespace Core.WebApi.Controllers {
         }
 
         [HttpPost]
-        public void Save ([FromBody] UserGameSaveRequest userGameSaveRequest) {
-            _userGameService.Save (userGameSaveRequest);
+        public void Save ([FromBody] List<GameByGroup> gamesByGroupRequest) {
+            _userGameService.Save (gamesByGroupRequest);
         }
     }
 }

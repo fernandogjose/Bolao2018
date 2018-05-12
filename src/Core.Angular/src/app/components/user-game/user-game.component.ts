@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { UserGameService } from '../../services/user-game.service';
 import { SharedService } from '../../services/shared.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ResponseApi } from '../../models/response-api';
 import { GameByGroup } from '../../models/game-by-group.model';
 import { UserLocalstorage } from '../../localstorage/user.localstorage';
+import { ErrorInterceptor } from '../../security/error.interceptor';
 
 @Component({
   selector: 'app-user-game',
@@ -19,11 +20,13 @@ export class UserGameComponent implements OnInit {
   gamesByGroup: GameByGroup[];
   isLoading: boolean;
   userName: string;
+  userId: number;
 
   constructor(private userGameService: UserGameService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private userLocalstorage: UserLocalstorage) {
+    private userLocalstorage: UserLocalstorage,
+    private errorInteceptor: ErrorInterceptor) {
     this.shared = SharedService.getInstance();
   }
 
@@ -43,37 +46,23 @@ export class UserGameComponent implements OnInit {
       .subscribe((gamesByGroup: GameByGroup[]) => {
         this.gamesByGroup = gamesByGroup;
         this.userName = gamesByGroup[0].games[0].userName;
+        this.userId =  gamesByGroup[0].games[0].userId;
       }, error => {
-        if (error.status == 401) {
-          this.shared.showTemplate.emit(false);
-          this.shared.user = null;
-          this.router.navigate(['/login']);
-        }
+        this.errorInteceptor.get(error.status);
       });
   }
 
-  save(indexGroup: number, indexGame: number): void {
+  save(): void {
 
     this.isLoading = true;
 
-    var userGame = this.gamesByGroup[indexGroup].games[indexGame];
-    if (userGame.scoreTeamA == null || userGame.scoreTeamA < 0 || userGame.scoreTeamB == null || userGame.scoreTeamB < 0) {
-      this.isLoading = false;
-      return;
-    }
-
-    userGame.userId = this.shared.user.id;
-    this.userGameService.save(userGame).subscribe(
+    this.userGameService.save(this.gamesByGroup).subscribe(
       success => {
         this.isLoading = false;
       },
       error => {
-        if (error.status == 401) {
-          this.shared.showTemplate.emit(false);
-          this.shared.user = null;
-          this.router.navigate(['/login']);
-          this.isLoading = false;
-        }
+        this.errorInteceptor.get(error.status);
+        this.isLoading = false;
       });
 
   }

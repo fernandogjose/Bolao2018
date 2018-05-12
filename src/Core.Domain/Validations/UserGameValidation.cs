@@ -14,10 +14,8 @@ namespace Core.Domain.Validations {
             _oficialGameRepository = oficialGameRepository;
         }
 
-        public void CanSave (UserGame userGameRequest) {
-            if (userGameRequest == null ||
-                userGameRequest.OficialGame == null ||
-                DateTime.Now > userGameRequest.OficialGame.Date.AddHours (-4)) {
+        public void CanSave () {
+            if (DateTime.Now > new DateTime (2018, 6, 13)) {
                 throw new PermissionException ("Não é permitido alterar o resultado deste jogo");
             }
         }

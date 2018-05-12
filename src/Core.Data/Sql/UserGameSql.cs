@@ -7,16 +7,26 @@ namespace Core.Data.Sql {
 
         public string SqlCreate () {
             return " INSERT INTO BolaoUserGame (UserId, OficialGameId, ScoreTeamA, ScoreTeamB) " +
-                "                       VALUES (@UserId, @OficialGameId, @ScoreTeamA, @ScoreTeamB) " + 
+                "                       VALUES (@UserId, @OficialGameId, @ScoreTeamA, @ScoreTeamB) " +
                 "    SELECT @@IDENTITY";
         }
 
-        public string SqlUpdate () {
-            return " UPDATE BolaoUserGame SET " +
-                "           ScoreTeamA = @ScoreTeamA " +
-                "         , ScoreTeamB = @ScoreTeamB " +
-                "    WHERE UserId = @UserId" +
-                "      AND OficialGameId = @OficialGameId";
+        public string SqlSave () {
+            return
+            " IF EXISTS(SELECT OficialGameId FROM BOLAOUSERGAME WHERE OficialGameId = @OficialGameId AND UserId = @UserId) " +
+            " BEGIN " +
+            "   UPDATE BolaoUserGame SET " +
+            "       ScoreTeamA = @ScoreTeamA " +
+            "     , ScoreTeamB = @ScoreTeamB " +
+            "   WHERE UserId = @UserId" +
+            "     AND OficialGameId = @OficialGameId" +
+            " END " +
+            " ELSE  " +
+            " BEGIN " +
+            "   INSERT INTO BolaoUserGame (UserId, OficialGameId, ScoreTeamA, ScoreTeamB) " +
+            "                      VALUES (@UserId, @OficialGameId, @ScoreTeamA, @ScoreTeamB) " +
+            "   SELECT @@IDENTITY" +
+            " END ";
         }
 
         public string SqlUpdatePoints () {

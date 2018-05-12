@@ -23,6 +23,7 @@ import { ChatService } from './services/chat.service';
 import { TruncatePipe } from './filters/truncate-pipe.filter';
 import { UserLocalstorage } from './localstorage/user.localstorage';
 import { ClassificationComponent } from './components/classification/classification.component';
+import { ErrorInterceptor } from './security/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ClassificationComponent } from './components/classification/classificat
     HomeService,
     ChatService,
     UserLocalstorage,
+    ErrorInterceptor,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

@@ -9,9 +9,7 @@ namespace Core.Domain.Interfaces.Repositories {
 
         UserGame GetByUserIdAndOficialGameId(int userId, int oficialGameId);
 
-        void Create (UserGameSaveRequest userGameSaveRequest);
-
-        void Update (UserGameSaveRequest userGameSaveRequest);
+        void Save (List<GameByGroup> gamesByGroupRequest);
 
         List<GameByGroup> ListByUserId(int userId);
 
