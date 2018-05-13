@@ -21,6 +21,8 @@ export class UserGameComponent implements OnInit {
   isLoading: boolean;
   userName: string;
   userId: number;
+  showSuccess: boolean = false;
+  showError: boolean = false;
 
   constructor(private userGameService: UserGameService,
     private activatedRoute: ActivatedRoute,
@@ -46,7 +48,7 @@ export class UserGameComponent implements OnInit {
       .subscribe((gamesByGroup: GameByGroup[]) => {
         this.gamesByGroup = gamesByGroup;
         this.userName = gamesByGroup[0].games[0].userName;
-        this.userId =  gamesByGroup[0].games[0].userId;
+        this.userId = gamesByGroup[0].games[0].userId;
       }, error => {
         this.errorInteceptor.get(error.status);
       });
@@ -55,14 +57,18 @@ export class UserGameComponent implements OnInit {
   save(): void {
 
     this.isLoading = true;
+    this.showSuccess = false;
+    this.showError = false;
 
     this.userGameService.save(this.gamesByGroup).subscribe(
       success => {
         this.isLoading = false;
+        this.showSuccess = true;
       },
       error => {
         this.errorInteceptor.get(error.status);
         this.isLoading = false;
+        this.showError = true;
       });
 
   }
