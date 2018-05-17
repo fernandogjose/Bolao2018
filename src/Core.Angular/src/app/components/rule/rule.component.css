@@ -1,8 +1,8 @@
-.legend{
+.legend {
     margin-top: 15px;
 }
 
-.legend-title{
+.legend-title {
     background-color: #222d32;
     color: #efefef;
     padding: 15px;
@@ -10,6 +10,11 @@
     margin-bottom: 15px;
 }
 
-.legend span{
+.legend span {
     font-weight: bold;
+}
+
+.row-whatsapp a {
+    font-size: 20px;
+    color: #222d32;
 }
