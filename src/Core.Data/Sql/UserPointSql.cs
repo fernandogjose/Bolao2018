@@ -27,7 +27,11 @@ namespace Core.Data.Sql {
                 " GROUP BY UserPoint.UserId  " +
                 "         ,BolaoUser.Name " +
                 " ORDER BY SUM(PointType.Points) DESC  " +
-                "         ,UserPoint.UserId ";
+                " 	   ,ISNULL((SELECT COUNT(BolaoUserPoint.PointTypeId) FROM BolaoUserPoint WHERE BolaoUserPoint.UserId = UserPoint.UserId and BolaoUserPoint.PointTypeId = 1), 0) DESC " +
+                "      ,ISNULL((SELECT COUNT(BolaoUserPoint.PointTypeId) FROM BolaoUserPoint WHERE BolaoUserPoint.UserId = UserPoint.UserId and BolaoUserPoint.PointTypeId = 2), 0) DESC " +
+                "      ,ISNULL((SELECT COUNT(BolaoUserPoint.PointTypeId) FROM BolaoUserPoint WHERE BolaoUserPoint.UserId = UserPoint.UserId and BolaoUserPoint.PointTypeId = 3), 0) DESC " +
+                "      ,ISNULL((SELECT COUNT(BolaoUserPoint.PointTypeId) FROM BolaoUserPoint WHERE BolaoUserPoint.UserId = UserPoint.UserId and BolaoUserPoint.PointTypeId = 4), 0) DESC " +
+                "      ,ISNULL((SELECT COUNT(BolaoUserPoint.PointTypeId) FROM BolaoUserPoint WHERE BolaoUserPoint.UserId = UserPoint.UserId and BolaoUserPoint.PointTypeId = 5), 0) DESC ";
         }
     }
 }
