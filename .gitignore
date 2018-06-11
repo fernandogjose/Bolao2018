@@ -10,3 +10,4 @@
 docs/bolaocopadomundo.PublishSettings
 docs/bolao-api.PublishSettings
 src/Core.Data/Repositories/BaseRepository.cs
+docs/Sql/Usuarios sem palpite para os jogos.sql

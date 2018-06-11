@@ -32,7 +32,6 @@ namespace Core.Domain.Services {
         }
 
         public void Save (List<GameByGroup> gamesByGroupRequest) {
-            _userGameValidation.CanSave ();
             _userGameRepository.Save(gamesByGroupRequest);
         }
     }

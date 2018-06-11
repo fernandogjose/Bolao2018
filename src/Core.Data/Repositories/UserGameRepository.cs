@@ -65,6 +65,40 @@ namespace Core.Data.Repositories {
 
                 foreach (var gameByGroupRequest in gamesByGroupRequest) {
                     foreach (var gameOfGroupRequest in gameByGroupRequest.Games) {
+
+                        if ((gameByGroupRequest.GroupName == "Grupo A" ||
+                                gameByGroupRequest.GroupName == "Grupo B" ||
+                                gameByGroupRequest.GroupName == "Grupo C" ||
+                                gameByGroupRequest.GroupName == "Grupo D" ||
+                                gameByGroupRequest.GroupName == "Grupo E" ||
+                                gameByGroupRequest.GroupName == "Grupo F" ||
+                                gameByGroupRequest.GroupName == "Grupo G" ||
+                                gameByGroupRequest.GroupName == "Grupo H") &&
+                            DateTime.Now > new DateTime (2018, 6, 13)
+                        ) {
+                            continue;
+                        }
+
+                        if (gameByGroupRequest.GroupName == "Oitavas de final" && DateTime.Now > new DateTime (2018, 6, 29)) {
+                            continue;
+                        }
+
+                        if (gameByGroupRequest.GroupName == "Quartas de final" && DateTime.Now > new DateTime (2018, 7, 5)) {
+                            continue;
+                        }
+
+                        if (gameByGroupRequest.GroupName == "Semifinal" && DateTime.Now > new DateTime (2018, 7, 9)) {
+                            continue;
+                        }
+
+                         if (gameByGroupRequest.GroupName == "3º lugar" && DateTime.Now > new DateTime (2018, 7, 13)) {
+                            continue;
+                        }
+
+                        if (gameByGroupRequest.GroupName == "Final" && DateTime.Now > new DateTime (2018, 7, 14)) {
+                            continue;
+                        }
+
                         using (var cmd = new SqlCommand ()) {
                             cmd.Connection = conn;
                             cmd.CommandText = _userGameSql.SqlSave ();
