@@ -22,6 +22,8 @@ namespace Core.Domain.Models {
 
         public bool CanSave { get; set; }
 
+        public bool CanChangeMyHunch { get; set; }
+
         public bool IsCreateScore { get; set; }
     }
 }

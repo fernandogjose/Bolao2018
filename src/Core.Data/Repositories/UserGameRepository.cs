@@ -59,6 +59,43 @@ namespace Core.Data.Repositories {
             return userGame;
         }
 
+        private bool CanChangeMyHunch (string groupName) {
+            if ((groupName == "Grupo A" ||
+                    groupName == "Grupo B" ||
+                    groupName == "Grupo C" ||
+                    groupName == "Grupo D" ||
+                    groupName == "Grupo E" ||
+                    groupName == "Grupo F" ||
+                    groupName == "Grupo G" ||
+                    groupName == "Grupo H") &&
+                DateTime.Now > new DateTime (2018, 6, 13)
+            ) {
+                return false;
+            }
+
+            if (groupName == "Oitavas de final" && DateTime.Now > new DateTime (2018, 6, 29)) {
+                return false;
+            }
+
+            if (groupName == "Quartas de final" && DateTime.Now > new DateTime (2018, 7, 5)) {
+                return false;
+            }
+
+            if (groupName == "Semifinal" && DateTime.Now > new DateTime (2018, 7, 9)) {
+                return false;
+            }
+
+            if (groupName == "3º lugar" && DateTime.Now > new DateTime (2018, 7, 13)) {
+                return false;
+            }
+
+            if (groupName == "Final" && DateTime.Now > new DateTime (2018, 7, 14)) {
+                return false;
+            }
+
+            return true;
+        }
+
         public void Save (List<GameByGroup> gamesByGroupRequest) {
             using (SqlConnection conn = new SqlConnection (ConnectionString ())) {
                 conn.Open ();
@@ -66,38 +103,8 @@ namespace Core.Data.Repositories {
                 foreach (var gameByGroupRequest in gamesByGroupRequest) {
                     foreach (var gameOfGroupRequest in gameByGroupRequest.Games) {
 
-                        if ((gameByGroupRequest.GroupName == "Grupo A" ||
-                                gameByGroupRequest.GroupName == "Grupo B" ||
-                                gameByGroupRequest.GroupName == "Grupo C" ||
-                                gameByGroupRequest.GroupName == "Grupo D" ||
-                                gameByGroupRequest.GroupName == "Grupo E" ||
-                                gameByGroupRequest.GroupName == "Grupo F" ||
-                                gameByGroupRequest.GroupName == "Grupo G" ||
-                                gameByGroupRequest.GroupName == "Grupo H") &&
-                            DateTime.Now > new DateTime (2018, 6, 13)
-                        ) {
+                        if (!CanChangeMyHunch (gameByGroupRequest.GroupName))
                             continue;
-                        }
-
-                        if (gameByGroupRequest.GroupName == "Oitavas de final" && DateTime.Now > new DateTime (2018, 6, 29)) {
-                            continue;
-                        }
-
-                        if (gameByGroupRequest.GroupName == "Quartas de final" && DateTime.Now > new DateTime (2018, 7, 5)) {
-                            continue;
-                        }
-
-                        if (gameByGroupRequest.GroupName == "Semifinal" && DateTime.Now > new DateTime (2018, 7, 9)) {
-                            continue;
-                        }
-
-                         if (gameByGroupRequest.GroupName == "3º lugar" && DateTime.Now > new DateTime (2018, 7, 13)) {
-                            continue;
-                        }
-
-                        if (gameByGroupRequest.GroupName == "Final" && DateTime.Now > new DateTime (2018, 7, 14)) {
-                            continue;
-                        }
 
                         using (var cmd = new SqlCommand ()) {
                             cmd.Connection = conn;
@@ -174,6 +181,7 @@ namespace Core.Data.Repositories {
                 userGameByGroup.Games = new List<GameOfGroup> ();
 
                 foreach (var game in gamesOfGroup.Where (m => m.GroupName == userGameByGroup.GroupName)) {
+                    game.CanChangeMyHunch = CanChangeMyHunch (userGameByGroup.GroupName);
                     game.UserId = userId;
                     userGameByGroup.Games.Add (game);
                 }
