@@ -60,38 +60,36 @@ namespace Core.Data.Repositories {
         }
 
         private bool CanChangeMyHunch (string groupName) {
-            if ((groupName == "Grupo A" ||
-                    groupName == "Grupo B" ||
-                    groupName == "Grupo C" ||
-                    groupName == "Grupo D" ||
-                    groupName == "Grupo E" ||
-                    groupName == "Grupo F" ||
-                    groupName == "Grupo G" ||
-                    groupName == "Grupo H") &&
-                DateTime.Now > new DateTime (2018, 6, 13)
-            ) {
+            if (groupName == "Grupo A" ||
+                groupName == "Grupo B" ||
+                groupName == "Grupo C" ||
+                groupName == "Grupo D" ||
+                groupName == "Grupo E" ||
+                groupName == "Grupo F" ||
+                groupName == "Grupo G" ||
+                groupName == "Grupo H") {
                 return false;
             }
 
-            if (groupName == "Oitavas de final" && DateTime.Now > new DateTime (2018, 6, 29)) {
-                return false;
-            }
+            // if (groupName == "Oitavas de final" && DateTime.Now > new DateTime (2018, 6, 29)) {
+            //     return false;
+            // }
 
-            if (groupName == "Quartas de final" && DateTime.Now > new DateTime (2018, 7, 5)) {
-                return false;
-            }
+            // if (groupName == "Quartas de final" && DateTime.Now > new DateTime (2018, 7, 5)) {
+            //     return false;
+            // }
 
-            if (groupName == "Semifinal" && DateTime.Now > new DateTime (2018, 7, 9)) {
-                return false;
-            }
+            // if (groupName == "Semifinal" && DateTime.Now > new DateTime (2018, 7, 9)) {
+            //     return false;
+            // }
 
-            if (groupName == "3º lugar" && DateTime.Now > new DateTime (2018, 7, 13)) {
-                return false;
-            }
+            // if (groupName == "3º lugar" && DateTime.Now > new DateTime (2018, 7, 13)) {
+            //     return false;
+            // }
 
-            if (groupName == "Final" && DateTime.Now > new DateTime (2018, 7, 14)) {
-                return false;
-            }
+            // if (groupName == "Final" && DateTime.Now > new DateTime (2018, 7, 14)) {
+            //     return false;
+            // }
 
             return true;
         }
