@@ -44,13 +44,13 @@
                 <td class="col-lg-2">{{ game.gameDate | date:'dd/MM/yyyy HH:mm' }}</td>
                 <td class="col-lg-4 text-right">{{ game.teamA }}</td>
                 <td class="col-lg-1 text-right">
-                  <input *ngIf="shared.user.id == game.userId && game.CanChangeMyHunch" type="number" id="scoreTeamA{{game.oficialGameId}}" name="scoreTeamA{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamA" required>
-                  <span *ngIf="shared.user.id != game.userId || !game.CanChangeMyHunch">{{ game.scoreTeamA }}</span>
+                  <input *ngIf="shared.user.id == game.userId && game.canChangeMyHunch" type="number" id="scoreTeamA{{game.oficialGameId}}" name="scoreTeamA{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamA" required>
+                  <span *ngIf="shared.user.id != game.userId || !game.canChangeMyHunch">{{ game.scoreTeamA }}</span>
                 </td>
                 <td class="col-lg-1 text-center"> x </td>
                 <td class="col-lg-1">
-                  <input *ngIf="shared.user.id == game.userId && game.CanChangeMyHunch" type="number" id="scoreTeamB{{game.oficialGameId}}" name="scoreTeamB{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamB" required>
-                  <span *ngIf="shared.user.id != game.userId || !game.CanChangeMyHunch">{{ game.scoreTeamB }}</span>
+                  <input *ngIf="shared.user.id == game.userId && game.canChangeMyHunch" type="number" id="scoreTeamB{{game.oficialGameId}}" name="scoreTeamB{{game.oficialGameId}}" [(ngModel)]="game.scoreTeamB" required>
+                  <span *ngIf="shared.user.id != game.userId || !game.canChangeMyHunch">{{ game.scoreTeamB }}</span>
                 </td>
                 <td class="col-lg-3">{{ game.teamB }}</td>
             </tbody>

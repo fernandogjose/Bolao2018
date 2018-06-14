@@ -9,4 +9,5 @@ export class Game {
     public teamB: string;  
     public canSave: boolean;
     public isCreateScore: boolean;
+    public canChangeMyHunch: boolean;
 }

@@ -71,23 +71,23 @@ namespace Core.Data.Repositories {
                 return false;
             }
 
-            // if (groupName == "Oitavas de final" && DateTime.Now > new DateTime (2018, 6, 29)) {
+            // if (groupName == "Oitavas de final" && new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) > new DateTime (2018, 6, 29)) {
             //     return false;
             // }
 
-            // if (groupName == "Quartas de final" && DateTime.Now > new DateTime (2018, 7, 5)) {
+            // if (groupName == "Quartas de final" && new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) > new DateTime (2018, 7, 5)) {
             //     return false;
             // }
 
-            // if (groupName == "Semifinal" && DateTime.Now > new DateTime (2018, 7, 9)) {
+            // if (groupName == "Semifinal" && new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) > new DateTime (2018, 7, 9)) {
             //     return false;
             // }
 
-            // if (groupName == "3º lugar" && DateTime.Now > new DateTime (2018, 7, 13)) {
+            // if (groupName == "3º lugar" && new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) > new DateTime (2018, 7, 13)) {
             //     return false;
             // }
 
-            // if (groupName == "Final" && DateTime.Now > new DateTime (2018, 7, 14)) {
+            // if (groupName == "Final" && new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) > new DateTime (2018, 7, 14)) {
             //     return false;
             // }
 

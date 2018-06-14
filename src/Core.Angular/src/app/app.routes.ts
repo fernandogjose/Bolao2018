@@ -19,4 +19,4 @@ export const ROUTES: Routes = [
     { path: 'resultado-oficial', component: OficialGameComponent, canActivate: [AuthGuard] },
 ]
 
-export const routes: ModuleWithProviders = RouterModule.forRoot(ROUTES);
+export const routes: ModuleWithProviders = RouterModule.forRoot(ROUTES, { useHash: true });
