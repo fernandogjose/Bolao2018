@@ -13,7 +13,7 @@ export class OficialGameService {
   }
 
   updateScore(game: Game) {
-    return this.http.put(`${BASE_URL_API}/oficialgame`, game);
+    return this.http.post(`${BASE_URL_API}/oficialgame`, game);
   }
 
   deleteScore(oficialGameId: number) {

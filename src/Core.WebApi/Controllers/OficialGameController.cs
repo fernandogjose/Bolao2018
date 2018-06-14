@@ -29,7 +29,7 @@ namespace Core.WebApi.Controllers {
             return gamesByGroupResponse;
         }
 
-        [HttpPut]
+        [HttpPost]
         public void UpdateScore ([FromBody] OficialGameSaveRequest oficialGameSaveRequest) {
             oficialGameSaveRequest.UserId = GetUserId ();
             _oficialGameService.UpdateScore (oficialGameSaveRequest);
