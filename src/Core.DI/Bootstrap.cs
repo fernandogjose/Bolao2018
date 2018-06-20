@@ -14,12 +14,14 @@ namespace Core.DI {
             services.AddSingleton<UserPointSql> ();
             services.AddSingleton<UserSql> ();
             services.AddSingleton<ChatSql> ();
+            services.AddSingleton<ReportSql> ();
 
             services.AddSingleton<IOficialGameRepository, OficialGameRepository> ();
             services.AddSingleton<IUserGameRepository, UserGameRepository> ();
             services.AddSingleton<IUserPointRepository, UserPointRepository> ();
             services.AddSingleton<IUserRepository, UserRepository> ();
             services.AddSingleton<IChatRepository, ChatRepository> ();
+            services.AddSingleton<IReportRepository, ReportRepository> ();
 
             services.AddSingleton<OficialGameValidation> ();
             services.AddSingleton<UserGameValidation> ();
@@ -30,6 +32,7 @@ namespace Core.DI {
             services.AddSingleton<UserPointService> ();
             services.AddSingleton<UserService> ();
             services.AddSingleton<ChatService> ();
+            services.AddSingleton<ReportService> ();
         }
     }
 }

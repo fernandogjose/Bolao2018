@@ -1,0 +1,101 @@
+<section class="content-header">
+  <h1>Palpites por jogo</h1>
+  <ol class="breadcrumb">
+    <li>
+      <a [routerLink]="['/classificacao']"><i class="fa fa-table"></i> Classificação</a>
+    </li>
+    <li>
+      <a [routerLink]="['/palpites']"><i class="fa fa-table"></i> Palpites</a>
+    </li>
+    <li class="active">Palpites por jogo</li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-success">
+        <!-- titulo -->
+        <div class="box-header">
+          <h3 class="box-title">Palpites para {{ reportBetDetailByType.teamAName }} como vencedor</h3>
+        </div>
+
+        <div class="box-body table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Jogador</th>
+                <th class="text-center">{{ reportBetDetailByType.teamAName }}</th>
+                <th class="text-center">{{ reportBetDetailByType.teamBName }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of reportBetDetailByType.winsTeamA">
+                <td>{{ item.userName }}</td>
+                <td class="text-center">{{ item.scoreTeamA }}</td>
+                <td class="text-center">{{ item.scoreTeamB }}</td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-warning">
+        <!-- titulo -->
+        <div class="box-header">
+          <h3 class="box-title">Palpites para {{ reportBetDetailByType.teamBName }} como vencedor</h3>
+        </div>
+
+        <div class="box-body table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Jogador</th>
+                <th class="text-center">{{ reportBetDetailByType.teamAName }}</th>
+                <th class="text-center">{{ reportBetDetailByType.teamBName }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of reportBetDetailByType.winsTeamB">
+                <td>{{ item.userName }}</td>
+                <td class="text-center">{{ item.scoreTeamA }}</td>
+                <td class="text-center">{{ item.scoreTeamB }}</td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-danger">
+        <!-- titulo -->
+        <div class="box-header">
+          <h3 class="box-title">Palpites para empate</h3>
+        </div>
+
+        <div class="box-body table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Jogador</th>
+                <th class="text-center">{{ reportBetDetailByType.teamAName }}</th>
+                <th class="text-center">{{ reportBetDetailByType.teamBName }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of reportBetDetailByType.draws">
+                <td>{{ item.userName }}</td>
+                <td class="text-center">{{ item.scoreTeamA }}</td>
+                <td class="text-center">{{ item.scoreTeamB }}</td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

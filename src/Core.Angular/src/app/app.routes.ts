@@ -7,6 +7,8 @@ import { UserGameComponent } from './components/user-game/user-game.component';
 import { OficialGameComponent } from './components/oficial-game/oficial-game.component';
 import { RuleComponent } from './components/rule/rule.component';
 import { ClassificationComponent } from './components/classification/classification.component';
+import { BetComponent } from './components/reports/bet/bet.component';
+import { BetByGameComponent } from './components/reports/bet-by-game/bet-by-game.component';
 
 export const ROUTES: Routes = [
     { path: '', component: LoginComponent },
@@ -17,6 +19,8 @@ export const ROUTES: Routes = [
     { path: 'meu-jogo', component: UserGameComponent, canActivate: [AuthGuard] },
     { path: 'espiar-jogo/:userId', component: UserGameComponent, canActivate: [AuthGuard] },
     { path: 'resultado-oficial', component: OficialGameComponent, canActivate: [AuthGuard] },
+    { path: 'palpites', component: BetComponent, canActivate: [AuthGuard] },
+    { path: 'palpites-por-jogo/:oficialGameId', component: BetByGameComponent, canActivate: [AuthGuard] },
 ]
 
 export const routes: ModuleWithProviders = RouterModule.forRoot(ROUTES, { useHash: true });

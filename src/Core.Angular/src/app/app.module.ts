@@ -24,6 +24,10 @@ import { TruncatePipe } from './filters/truncate-pipe.filter';
 import { UserLocalstorage } from './localstorage/user.localstorage';
 import { ClassificationComponent } from './components/classification/classification.component';
 import { ErrorInterceptor } from './security/error.interceptor';
+import { BetComponent } from './components/reports/bet/bet.component';
+import { ReportBet } from './models/report-bet.model';
+import { ReportService } from './services/report.service';
+import { BetByGameComponent } from './components/reports/bet-by-game/bet-by-game.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,9 @@ import { ErrorInterceptor } from './security/error.interceptor';
     OficialGameComponent,
     RuleComponent,
     TruncatePipe,
-    ClassificationComponent
+    ClassificationComponent,
+    BetComponent,
+    BetByGameComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +58,7 @@ import { ErrorInterceptor } from './security/error.interceptor';
     SharedService,
     HomeService,
     ChatService,
+    ReportService,
     UserLocalstorage,
     ErrorInterceptor,
     AuthGuard,

@@ -1,0 +1,45 @@
+<section class="content-header">
+  <h1>Palpites</h1>
+  <ol class="breadcrumb">
+    <li>
+      <a [routerLink]="['/classificacao']">
+        <i class="fa fa-table"></i> Classificação</a>
+    </li>
+    <li class="active">Palpites</li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-success">
+        <!-- titulo -->
+        <div class="box-header">
+          <h3 class="box-title">Palpites por jogo</h3>
+        </div>
+
+        <div class="box-body table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Grupo</th>
+                <th>Jogo</th>
+                <th colspan="3">Palpites</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let reportBet of reportBets">
+                <td>{{ reportBet.groupName }}</td>
+                <td>{{ reportBet.teamAName }} x {{ reportBet.teamBName }}</td>
+                <td>{{ reportBet.winTeamA }} palpites no {{ reportBet.teamAName }}</td>
+                <td>{{ reportBet.winTeamB }} palpites no {{ reportBet.teamBName }}</td>
+                <td>{{ reportBet.draw }} palpites no empate</td>
+                <td><button class="btn btn-warning" [routerLink]="['/palpites-por-jogo', reportBet.oficialGameId]">detalhar</button></td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
