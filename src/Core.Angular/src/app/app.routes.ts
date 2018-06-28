@@ -9,12 +9,14 @@ import { RuleComponent } from './components/rule/rule.component';
 import { ClassificationComponent } from './components/classification/classification.component';
 import { BetComponent } from './components/reports/bet/bet.component';
 import { BetByGameComponent } from './components/reports/bet-by-game/bet-by-game.component';
+import { OutComponent } from './components/out/out.component';
 
 export const ROUTES: Routes = [
     { path: '', component: LoginComponent },
     { path: 'login', component: LoginComponent },
     { path: 'regulamento', component: RuleComponent },
     { path: 'novo-usuario', component: UserNewComponent },
+    { path: 'hoje-nao', component: OutComponent },
     { path: 'classificacao', component: ClassificationComponent, canActivate: [AuthGuard] },
     { path: 'meu-jogo', component: UserGameComponent, canActivate: [AuthGuard] },
     { path: 'espiar-jogo/:userId', component: UserGameComponent, canActivate: [AuthGuard] },

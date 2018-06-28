@@ -36,6 +36,8 @@ export class UserGameComponent implements OnInit {
     let userId: number = this.activatedRoute.snapshot.params['userId'];
     if (userId == undefined) {
       userId = this.userLocalstorage.getUserLogged().id;
+    } else {
+      this.router.navigate(['/hoje-nao']);
     }
 
     this.getByUserId(userId);
