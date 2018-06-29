@@ -37,7 +37,7 @@ export class UserGameComponent implements OnInit {
     if (userId == undefined) {
       userId = this.userLocalstorage.getUserLogged().id;
     } else {
-      this.router.navigate(['/hoje-nao']);
+      // this.router.navigate(['/hoje-nao']);
     }
 
     this.getByUserId(userId);

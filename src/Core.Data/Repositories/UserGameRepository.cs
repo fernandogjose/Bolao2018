@@ -67,29 +67,15 @@ namespace Core.Data.Repositories {
                 groupName == "Grupo E" ||
                 groupName == "Grupo F" ||
                 groupName == "Grupo G" ||
-                groupName == "Grupo H") {
+                groupName == "Grupo H" ||
+                groupName == "Oitavas de final") {
                 return false;
             }
 
-            // if (groupName == "Oitavas de final" && new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) > new DateTime (2018, 6, 29)) {
-            //     return false;
-            // }
-
-            // if (groupName == "Quartas de final" && new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) > new DateTime (2018, 7, 5)) {
-            //     return false;
-            // }
-
-            // if (groupName == "Semifinal" && new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) > new DateTime (2018, 7, 9)) {
-            //     return false;
-            // }
-
-            // if (groupName == "3º lugar" && new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) > new DateTime (2018, 7, 13)) {
-            //     return false;
-            // }
-
-            // if (groupName == "Final" && new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) > new DateTime (2018, 7, 14)) {
-            //     return false;
-            // }
+            //groupName == "Quartas de final" 
+            //groupName == "Semifinal"
+            //groupName == "3º lugar"
+            //groupName == "Final"
 
             return true;
         }

@@ -22,13 +22,13 @@ export class BetByGameComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.router.navigate(['/hoje-nao']);
-    // let oficialGameId: number = this.activatedRoute.snapshot.params['oficialGameId'];
-    // if (oficialGameId == undefined) {
-    //   this.router.navigate(['/classificacao']);
-    // }
+    // this.router.navigate(['/hoje-nao']);
+    let oficialGameId: number = this.activatedRoute.snapshot.params['oficialGameId'];
+    if (oficialGameId == undefined) {
+      this.router.navigate(['/classificacao']);
+    }
     
-    // this.listByGame(oficialGameId);
+    this.listByGame(oficialGameId);
   }
 
   listByGame(oficialGameId: number) {

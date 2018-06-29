@@ -18,8 +18,8 @@ export class BetComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.router.navigate(['/hoje-nao']);
-    //this.list();
+    // this.router.navigate(['/hoje-nao']);
+    this.list();
   }
 
   list() {
