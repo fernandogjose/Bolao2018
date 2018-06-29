@@ -28,6 +28,7 @@ import { BetComponent } from './components/reports/bet/bet.component';
 import { ReportBet } from './models/report-bet.model';
 import { ReportService } from './services/report.service';
 import { BetByGameComponent } from './components/reports/bet-by-game/bet-by-game.component';
+import { OutComponent } from './components/out/out.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { BetByGameComponent } from './components/reports/bet-by-game/bet-by-game
     TruncatePipe,
     ClassificationComponent,
     BetComponent,
-    BetByGameComponent
+    BetByGameComponent,
+    OutComponent
   ],
   imports: [
     BrowserModule,
