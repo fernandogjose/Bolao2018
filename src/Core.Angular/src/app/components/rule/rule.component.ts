@@ -14,7 +14,7 @@ export class RuleComponent implements OnInit {
 
   shared: SharedService;
 
-  constructor(private homeService: HomeService, private router: Router) {
+  constructor(private homeService: HomeService) {
     this.shared = SharedService.getInstance();
   }
 
@@ -23,7 +23,6 @@ export class RuleComponent implements OnInit {
   }
 
   classificationList() {
-    // this.shared.showTemplate.emit(false);
     this.homeService
       .list()
       .subscribe((userPointClassifications: UserPointClassification[]) => {

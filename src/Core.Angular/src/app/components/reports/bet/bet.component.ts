@@ -19,7 +19,7 @@ export class BetComponent implements OnInit {
 
   ngOnInit() {
     this.router.navigate(['/hoje-nao']);
-    this.list();
+    //this.list();
   }
 
   list() {

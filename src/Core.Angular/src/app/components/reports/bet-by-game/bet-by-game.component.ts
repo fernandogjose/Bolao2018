@@ -18,18 +18,17 @@ export class BetByGameComponent implements OnInit {
     private reportService: ReportService,
     private errorInteceptor: ErrorInterceptor,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.router.navigate(['/hoje-nao']);
-
-    let oficialGameId: number = this.activatedRoute.snapshot.params['oficialGameId'];
-    if (oficialGameId == undefined) {
-      this.router.navigate(['/classificacao']);
-    }
+    // let oficialGameId: number = this.activatedRoute.snapshot.params['oficialGameId'];
+    // if (oficialGameId == undefined) {
+    //   this.router.navigate(['/classificacao']);
+    // }
     
-    this.listByGame(oficialGameId);
+    // this.listByGame(oficialGameId);
   }
 
   listByGame(oficialGameId: number) {
